@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/gal21/CLionProjects/cProject/spmat.c
+stdlib.h
+-
+spmat.h
+C:/Users/gal21/CLionProjects/cProject/spmat.h
+
+C:/Users/gal21/CLionProjects/cProject/spmat.h
+
