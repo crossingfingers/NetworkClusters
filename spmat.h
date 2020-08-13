@@ -7,13 +7,15 @@ typedef struct _spmat {
 
     /* Adds row i the matrix. Called before any other call,
      * exactly n times in order (i = 0 to n-1) */
-    void (*add_row)(struct _spmat *A, const double *row, int i);
+    void (*add_row)(struct _spmat *A, int *row, int i, int k);
 
     /* Frees all resources used by A */
     void (*free)(struct _spmat *A);
 
     /* Multiplies matrix A by vector v, into result (result is pre-allocated) */
     void (*mult)(const struct _spmat *A, const double *v, double *result);
+
+    void (*print_list)(struct _spmat *A);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */

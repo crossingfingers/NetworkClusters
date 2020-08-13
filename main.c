@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "spmat.h"
+#include "divider.c"
 int main(int argc, char **argv) {
     int elem[1];
     int size;
@@ -18,7 +19,7 @@ int main(int argc, char **argv) {
     fread(elem, sizeof(int), 1, input);
     size = *elem;
     graph = spmat_allocate_list(size);
-    printf("%d\n", *elem);
+//    printf("%d\n", *elem);
     row = malloc(sizeof(int)*size);
     if (row == NULL){
         printf("ERROR - memory allocation unsuccessful");
@@ -27,11 +28,13 @@ int main(int argc, char **argv) {
     for(i = 0; i<size; ++i){
         fread(elem, sizeof(int), 1, input);
         fread(row, sizeof(int), *elem, input);
+        graph->add_row(graph, row, i, *elem);
         printf("%d - \t", i);
         for(j=0; j<*elem; ++j){
             printf("%d\t", row[j]);
         }
         printf("\n");
     }
+    graph->print_list(graph);
     return 0;
 }

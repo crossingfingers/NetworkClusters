@@ -3,4 +3,4 @@ project(cProject C)
 
 set(CMAKE_C_STANDARD 90)
 
-add_executable(cProject main.c spmat.c)
+add_executable(cProject main.c spmat.c divider.c divider.h)
