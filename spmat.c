@@ -1,12 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "spmat.h"
-
-
-typedef struct _list {
-    struct _node *node;
-    int k;
-} list;
+#include <math.h>
 
 typedef struct _node {
     struct _node *next;
@@ -24,24 +19,22 @@ typedef struct _node {
 //    int nnz;
 //}array;
 
-void add_row_list(struct _spmat *A, const int *row, int i, int k) {
+void add_row_list(struct _spmat *A, int *row, int i, int k) {
     int j;
-    list **rows = (list **) A->private;
+    node **rows = (node **) A->private;
     node *idx;
     node *temp = NULL;
     node *now = NULL;
     A->M += k;
+    A->k[i] = k;
     if (k == 0) {
-        rows[i] = malloc(sizeof(list));
-        rows[i]->k = k;
-        rows[i]->node = NULL;
+        rows[i] = malloc(sizeof(node));
+        rows[i] = NULL;
     }
     for (j = 0; j < k; j++) {
         if (rows[i] == NULL) {
-            rows[i] = malloc(sizeof(list));
-            rows[i]->k = k;
-            rows[i]->node = malloc(sizeof(node));
-            idx = rows[i]->node;
+            rows[i] = malloc(sizeof(node));
+            idx = rows[i];
             idx->value = 1;
             idx->next = NULL;
             idx->col_idx = row[j];
@@ -96,11 +89,11 @@ void print_list(struct _spmat *A) {
     int i;
     int j;
     node *curr;
-    list **rows = (list **) A->private;
+    node **rows = (node **) A->private;
     for (i = 0; i < A->n; ++i) {
         printf("%d - \t", i);
-        curr = rows[i]->node;
-        for (j = 0; j < rows[i]->k; ++j) {
+        curr = rows[i];
+        for (j = 0; j < A->k[i]; ++j) {
             printf("%d\t", curr->col_idx);
             curr = curr->next;
         }
@@ -170,80 +163,52 @@ void mult_list(const struct _spmat *A, const double *v, double *result) {
 //
 //}
 
-int findNextRowList(spmat *A, int i) {
-    list **rows = (list **) A->private;
-    int k = rows[i]->k;
-    while (k == 0 && i < A->n) {
-        k = rows[++i]->k;
-    }
-    if (i < A->n) {
-        return i;
-    }
-    return -1;
-    spIterator *iter = A->iter;
-    iter->rowIdx = i;
-    iter->colIdx = rows[i]->node->col_idx;
-    iter->kRow = k;
-    iter->kCol = rows[iter->colIdx]->k;
-    iter->private = (void *) rows[i]->node;
-}
 
-void setIterRowList(spmat *A, int i) {
-    list **rows = (list **) A->private;
-    spIterator *iter = A->iter;
-    iter->rowIdx = i;
-    iter->colIdx = rows[i]->node->col_idx;
-    iter->kRow = rows[i]->k;
-    iter->kCol = rows[iter->colIdx]->k;
-    iter->private = (void *) rows[i]->node;
-}
-
-void initListIter(spmat *A) {
-    setIterRowList(A, 0);
-}
-
-int listHasNext(spmat *A) {
+double listShifting(spmat *A){
+    double max = 0;
+    double sum = 0;
+    int val=0;
+    node *curr;
+    node **rows = (node **) A->private;
     int i;
-    node *curr = (node *) A->iter->private;
-    if (curr->next != NULL) {
-        return 1;
+    int j;
+    for(i=0; i<A->n; ++i){
+        curr = rows[i];
+        for(j = 0; j< A->n; ++j){
+            if(curr != NULL && curr->col_idx == j){
+                val = 1;
+                curr = curr->next;
+            }
+            else
+                val = 0;
+            sum += fabs((double)val - ((double)(A->k[i] * A->k[j])/A->M));
+        }
+        max = (max>=sum)? max:sum;
     }
-    i = A->iter->rowIdx + 1;
-    if (i < A->n) {
-        if (findNextRowList(A, i) > 0)
-            return 1;
-    }
-    return 0;
+    return max;
 }
 
-void iterListNext(spmat *A) {
+void initk(spmat* A){
     int i;
-    list **rows = (list **) A->private;
-    node *curr = (node *)A->iter->private;
-    if (curr->next != NULL) {
-        A->iter->private = (void *)curr->next;
-        A->iter->colIdx = curr->next->col_idx;
-        A->iter->kCol = rows[A->iter->colIdx]->k;
+    for(i = 0; i<A->n; ++i){
+        A->k[i] = 0;
     }
-    i = A->iter->rowIdx + 1;
-    setIterRowList(A, findNextRowList(A, i));
 }
 
 spmat *spmat_allocate_list(int n) {
     spmat *sp;
-    list **rows = calloc(n, sizeof(list *));
+    node **rows = calloc(n, sizeof(node *));
     sp = malloc(sizeof(spmat));
     sp->n = n;
     sp->M = 0;
+    sp->k = malloc(sizeof(int)*n);
+    initk(sp);
     sp->add_row = add_row_list;
     sp->free = free_list;
     sp->mult = mult_list;
     sp->private = rows;
     sp->print_list = print_list;
-    sp->iter = malloc(sizeof(spIterator));
-    sp->initIterator = initListIter;
-    sp->hasNext = listHasNext;
-    sp->iterNext = iterListNext;
+    sp->matShifting = listShifting;
     return sp;
 }
 

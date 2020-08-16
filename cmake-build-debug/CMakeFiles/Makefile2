@@ -73,12 +73,12 @@ preinstall:
 CMakeFiles/cProject.dir/all:
 	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/depend
 	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gal21\CLionProjects\cProject\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4 "Built target cProject"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gal21\CLionProjects\cProject\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target cProject"
 .PHONY : CMakeFiles/cProject.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/cProject.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\cProject\cmake-build-debug\CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\cProject\cmake-build-debug\CMakeFiles 3
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/cProject.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\cProject\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/cProject.dir/rule

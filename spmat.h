@@ -1,18 +1,11 @@
 #ifndef _SPMAT_H
 #define _SPMAT_H
 
-typedef struct _spIterator {
-    int colIdx;
-    int rowIdx;
-    int kRow;
-    int kCol;
-    void *private;
-} spIterator;
-
 typedef struct _spmat {
     /* Matrix size (n*n) */
     int n;
     int M;
+    int *k;
 
     /* Adds row i the matrix. Called before any other call,
      * exactly n times in order (i = 0 to n-1) */
@@ -31,12 +24,11 @@ typedef struct _spmat {
     void (*initIterator)(struct _spmat *A);
 
     void (*iterNext)(struct _spmat *A);
+    double (*matShifting)(struct _spmat *A);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */
     void *private;
-
-    spIterator *iter;
 } spmat;
 
 /* Allocates a new linked-lists sparse matrix of size n */

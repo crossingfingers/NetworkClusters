@@ -36,5 +36,11 @@ int main(int argc, char **argv) {
         printf("\n");
     }
     graph->print_list(graph);
+    printf("%f", graph->matShifting(graph));
+    double* b0 = malloc(sizeof(double)*graph->n);
+    double* res = malloc(sizeof(double)*graph->n);
+    randomizeVec(graph->n,b0);
+    powerIter(graph, b0,graph->matShifting(graph), res);
+    printVector(res, graph->n);
     return 0;
 }

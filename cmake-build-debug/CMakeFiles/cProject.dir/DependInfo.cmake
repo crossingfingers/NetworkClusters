@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/gal21/CLionProjects/cProject/divider.c" "C:/Users/gal21/CLionProjects/cProject/cmake-build-debug/CMakeFiles/cProject.dir/divider.c.obj"
   "C:/Users/gal21/CLionProjects/cProject/main.c" "C:/Users/gal21/CLionProjects/cProject/cmake-build-debug/CMakeFiles/cProject.dir/main.c.obj"
   "C:/Users/gal21/CLionProjects/cProject/spmat.c" "C:/Users/gal21/CLionProjects/cProject/cmake-build-debug/CMakeFiles/cProject.dir/spmat.c.obj"
   )
