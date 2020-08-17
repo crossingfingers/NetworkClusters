@@ -54,17 +54,47 @@ void vecDec(double *vec1, double *vec2, int n){
 void printVector(double *vec, int n){
     int i;
     for(i = 0; i< n; ++i){
-        printf("%d\t", vec[i]);
+        printf("%f\t", vec[i]);
     }printf("\n");
 }
 
-void powerIter(spmat *sp, double *b0, double shifting, double *result) {
+void scalarMult(double *vec, double x, int n){
+    int i;
+    for(i = 0; i<n; ++i){
+        vec[i]*=x;
+    }
+}
+
+double dotProd(const int *vec1, const double *vec2, int n){
+    double res = 0;
+    int i;
+    for(i=0; i<n; ++i){
+        res += vec1[i] * vec2[i];
+    }
+    return res;
+}
+
+void copyVec(const int *src, double *dst, int n){
+    int i;
+    for (i=0; i<n; ++i){
+        dst[i] = src[i];
+    }
+}
+
+int powerIter(spmat *sp, double *b0, double shifting, double *result) {
     int flag = 1, i;
+    double dot;
     double * res1 = malloc(sp->n * sizeof(double));
     while (flag == 1) {
         flag = 0;
-        vecMult(sp->k, b0, res1, sp->n);
-        vecMult(sp->k, res1, res1, sp->n);
+        dot = dotProd(sp->k, b0, sp->n);
+//        vecMult(sp->k, res1, res1, sp->n);
+        if(sp->M ==0) {
+            printf("ERROR - divide in zero");
+            return 0;
+        }
+        copyVec(sp->k, res1, sp->n);
+        scalarMult(res1, (double)dot/sp->M, sp->n);
         sp->mult(sp, b0, result);
         vecDec(result, res1, sp->n);
         vecSum(result, b0, shifting, sp->n);
@@ -78,6 +108,7 @@ void powerIter(spmat *sp, double *b0, double shifting, double *result) {
         }
     }
     free(res1);
+    return 1;
 }
 
 

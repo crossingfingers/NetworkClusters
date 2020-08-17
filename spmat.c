@@ -174,6 +174,7 @@ double listShifting(spmat *A){
     int j;
     for(i=0; i<A->n; ++i){
         curr = rows[i];
+        sum = 0;
         for(j = 0; j< A->n; ++j){
             if(curr != NULL && curr->col_idx == j){
                 val = 1;
@@ -193,6 +194,10 @@ void initk(spmat* A){
     for(i = 0; i<A->n; ++i){
         A->k[i] = 0;
     }
+}
+
+void printMatrix(spmat *A){
+    
 }
 
 spmat *spmat_allocate_list(int n) {

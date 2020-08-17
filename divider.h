@@ -5,7 +5,7 @@
 #ifndef CPROJECT_DIVIDER_H
 #define CPROJECT_DIVIDER_H
 
-void powerIter(spmat *A, double *b0, double shifting, double *result);
+int powerIter(spmat *A, double *b0, double shifting, double *result);
 
 void randomizeVec(int size, double *vec);
 
