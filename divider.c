@@ -101,7 +101,7 @@ int powerIter(spmat *sp, double *b0, double shifting, double *result) {
         normalize(sp->n, result);
         for(i=0; i<sp->n; i++){
 //            if(IS_POSITIVE(fabs(result[i] - b0[i])))
-            printf("%f\n",fabs(result[i] - b0[i]));
+//            printf("%f\n",fabs(result[i] - b0[i]));
             if(fabs(result[i] - b0[i]) >= 0.00001)
                 flag = 1;
             b0[i] = result[i];

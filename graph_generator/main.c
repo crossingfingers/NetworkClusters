@@ -44,6 +44,7 @@ int main(int argc, char **argv) {
             }
         }
     }
+    fwrite(&size, sizeof(int),1,out);
     for (i = 0; i < size; ++i) {
         k = calcK(mat, size, i);
         printf("i=%d, k=%d  -  \t", i, k);
