@@ -12,7 +12,7 @@ typedef struct _division {
     double Q;
 
 
-    void (*split)(struct _division *d, spmat *A, double *vec);
+    void (*split)(struct _division *d, spmat *A, double *vec, int group);
 
     void (*freeDivision)(struct _division *d);
 
@@ -22,10 +22,10 @@ typedef struct _division {
 
 division *allocateDivision(int n);
 
-void powerIter(spmat *A, double *b0, double shifting, double *result);
+void powerIter(spmat *A, double *b0, double shifting, int group, const int *groupid ,double *result);
 
 void randomizeVec(int size, double *vec);
 
-double modularityCalc(spmat *A, double *vec);
+double modularityCalc(spmat *A, double *vec, int group, const int *groupid);
 
 #endif //CPROJECT_DIVIDER_H

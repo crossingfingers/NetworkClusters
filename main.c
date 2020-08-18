@@ -48,13 +48,13 @@ int main(int argc, char **argv) {
     }
     div = allocateDivision(graph->n);
     graph->print_list(graph);
-    printf("%f\n", graph->matShifting(graph));
+    printf("%f\n", graph->matShifting(graph, 0, div->groupid));
     b0 = malloc(sizeof(double) * graph->n);
     res = malloc(sizeof(double) * graph->n);
     randomizeVec(graph->n, b0);
-    powerIter(graph, b0, graph->matShifting(graph), res);
+    powerIter(graph, b0, graph->matShifting(graph, 0, div->groupid), 0, div->groupid , res);
     printVector(res, graph->n);
-    div->split(div, graph, res);
+    div->split(div, graph, res, 0);
     div->printGroups(div);
     return 0;
 }

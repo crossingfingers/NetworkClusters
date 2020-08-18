@@ -24,7 +24,7 @@ typedef struct _spmat {
     void (*initIterator)(struct _spmat *A);
 
     void (*iterNext)(struct _spmat *A);
-    double (*matShifting)(struct _spmat *A);
+    double (*matShifting)(struct _spmat *A, int group, const int *groupid);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */

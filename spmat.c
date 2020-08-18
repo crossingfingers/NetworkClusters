@@ -164,7 +164,7 @@ void mult_list(const struct _spmat *A, const double *v, double *result) {
 //}
 
 
-double listShifting(spmat *A){
+double listShifting(spmat *A, int group, const int *groupid){
     double max = 0;
     double sum = 0;
     int val=0;
@@ -173,6 +173,8 @@ double listShifting(spmat *A){
     int i;
     int j;
     for(i=0; i<A->n; ++i){
+        if(group != groupid[i])
+            continue;
         curr = rows[i];
         sum = 0;
         for(j = 0; j< A->n; ++j){
@@ -182,7 +184,8 @@ double listShifting(spmat *A){
             }
             else
                 val = 0;
-            sum += fabs((double)val - ((double)(A->k[i] * A->k[j])/A->M));
+            if(groupid[j] == group)
+                sum += fabs((double)val - ((double)(A->k[i] * A->k[j])/A->M));
         }
         max = (max>=sum)? max:sum;
     }
