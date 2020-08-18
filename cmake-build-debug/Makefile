@@ -122,6 +122,33 @@ cProject/fast:
 	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/build
 .PHONY : cProject/fast
 
+divider.obj: divider.c.obj
+
+.PHONY : divider.obj
+
+# target to build an object file
+divider.c.obj:
+	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/divider.c.obj
+.PHONY : divider.c.obj
+
+divider.i: divider.c.i
+
+.PHONY : divider.i
+
+# target to preprocess a source file
+divider.c.i:
+	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/divider.c.i
+.PHONY : divider.c.i
+
+divider.s: divider.c.s
+
+.PHONY : divider.s
+
+# target to generate assembly for a file
+divider.c.s:
+	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/divider.c.s
+.PHONY : divider.c.s
+
 main.obj: main.c.obj
 
 .PHONY : main.obj
@@ -185,6 +212,9 @@ help:
 	@echo ... cProject
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... divider.obj
+	@echo ... divider.i
+	@echo ... divider.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

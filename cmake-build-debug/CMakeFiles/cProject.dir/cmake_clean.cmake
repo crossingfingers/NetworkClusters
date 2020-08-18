@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/cProject.dir/divider.c.obj"
   "CMakeFiles/cProject.dir/main.c.obj"
   "CMakeFiles/cProject.dir/spmat.c.obj"
   "cProject.exe"

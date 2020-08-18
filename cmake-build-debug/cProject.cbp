@@ -74,6 +74,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/gal21/CLionProjects/cProject/divider.c">
+			<Option target="cProject"/>
+		</Unit>
+		<Unit filename="C:/Users/gal21/CLionProjects/cProject/divider.h">
+			<Option target="cProject"/>
+		</Unit>
 		<Unit filename="C:/Users/gal21/CLionProjects/cProject/main.c">
 			<Option target="cProject"/>
 		</Unit>
