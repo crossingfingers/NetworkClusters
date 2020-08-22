@@ -163,7 +163,6 @@ void mult_list(const struct _spmat *A, const double *v, double *result) {
 //
 //}
 
-
 double listShifting(spmat *A, int group, const int *groupid){
     double max = 0;
     double sum = 0;

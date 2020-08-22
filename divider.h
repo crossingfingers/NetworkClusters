@@ -14,7 +14,7 @@ typedef struct _division {
 
     void (*split)(struct _division *d, spmat *A, double *vec, int group);
 
-    void (*freeDivision)(struct _division *d);
+    void (*free)(struct _division *d);
 
     void (*printGroups)(struct _division *d);
 
