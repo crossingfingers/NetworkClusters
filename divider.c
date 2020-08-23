@@ -286,25 +286,20 @@ void optimize(double q0, double *divVec,double *deltaQ,int *unmoved,int *indices
     int maxScore;
     for(i=0;i<size;i++){unmoved[i]=1;}  /*keeps track who moved */
 
-
     for(j=0;j<sp->n;j++)
-    {   if(groupID[j]==group){
+    {   if(groupID[j]==group)
+    {
         *deltaQ=0;
         maxIndex=moveVertice(q0,divVec,sp,unmoved,deltaQ,group,groupID,size);     /*finds vertice that maximizes deltaQ*/
         unmoved[maxIndex]=0;    /*moves vertice*/
         divVec[maxIndex]=(-1)*divVec[maxIndex];  /*moves vertice*/
         indices[counter]=maxIndex;
 
-
         if(counter==0){improve[counter]=(*deltaQ); maxScore=counter;}
         else { improve[counter] = (*deltaQ);}
-        if (improve[counter] > improve[maxScore]) { maxScore = counter; }
-            /*saves max division state */
-
-            counter++;
-
+        if (improve[counter] > improve[maxScore]) { maxScore = counter; }   /*saves max division state */
+        counter++;
     }
-
     }
 
     if(IS_POSITIVE(improve[maxScore]))
