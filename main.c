@@ -51,7 +51,6 @@ spmat *readGraph(FILE *input) {
 }
 
 int main(int argc, char **argv) {
-    double *res, *b0;
     spmat *graph = NULL;
     division *div;
     FILE *input;
