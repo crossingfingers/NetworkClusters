@@ -17,7 +17,8 @@ typedef struct _division {
     void (*free)(struct _division *d);
 
     void (*printGroups)(struct _division *d);
-
+    double (*modularityCalc)(spmat *A, double *vec, int group, const int *groupid);
+    void (*divOptimization)(struct _division *div,int group,double q0,double *maxDiv, spmat *sp);
 } division;
 
 division *allocateDivision(int n);
@@ -27,5 +28,7 @@ void powerIter(spmat *A, double *b0, double shifting, int group, const int *grou
 void randomizeVec(int size, double *vec);
 
 double modularityCalc(spmat *A, double *vec, int group, const int *groupid);
+
+void divOptimization(division *div,int group,double q0,double *maxDiv, spmat *sp);
 
 #endif //CPROJECT_DIVIDER_H
