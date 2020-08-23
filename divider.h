@@ -32,4 +32,6 @@ double eigenValue(spmat *A, double *vec, int group, const int* groupid);
 
 int divideToTwo(division *div, spmat *sp, int group);
 
+void findGroups(division *div, spmat *sp);
+
 #endif //CPROJECT_DIVIDER_H

@@ -217,7 +217,8 @@ void split(struct _division *d, spmat *sp, double *vec, int group) {
     free(copyGroup);
 }
 
-int divideToTwo(division *div, spmat *sp, int group){
+int divideToTwo(division *div, spmat *sp, int group) {
+    printf("working on group: %d\n",group);
     int size = sp->n;
     double *b0 = malloc(sizeof(double) * size);
     double *res = malloc(sizeof(double) * size);
@@ -229,13 +230,25 @@ int divideToTwo(division *div, spmat *sp, int group){
     powerIter(sp, b0, sp->matShifting(sp, 0, div->groupid), group, div->groupid, res);
     double eigen = eigenValue(sp, res, 0, div->groupid);
     printf("eigen %f\n", eigen);
-    if(!IS_POSITIVE(eigen))
+    if (!IS_POSITIVE(eigen))
         return 0;
     div->split(div, sp, res, 0);
     div->printGroups(div);
     free(b0);
     free(res);
     return 1;
+}
+
+void findGroups(division *div, spmat *sp) {
+    int flag = 1;
+    int last = div->numOfGroups - 1;
+    while (last < div->numOfGroups) {
+        while(flag == 1){
+            flag = divideToTwo(div, sp, last);
+        }
+        last++;
+    }
+    div->printGroups(div);
 }
 
 void printGroups(division *d) {
