@@ -51,6 +51,7 @@ spmat *readGraph(FILE *input) {
 }
 
 int main(int argc, char **argv) {
+    double *res, *b0;
     spmat *graph = NULL;
     division *div;
     FILE *input;
@@ -79,7 +80,7 @@ int main(int argc, char **argv) {
     div->split(div, graph, res, 0);
      div->printGroups(div);
 
-    double b1[]={0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    double b1[]={0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 
     divOptimization(div,1,div->Q,b1,graph);
     div->free(div);
