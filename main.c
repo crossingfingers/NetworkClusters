@@ -63,23 +63,10 @@ int main(int argc, char **argv) {
     graph = readGraph(input);
     div = allocateDivision(graph->n);
     graph->print_list(graph);
-    printf("%f\n", graph->matShifting(graph, 0, div->groupid));
-    b0 = malloc(sizeof(double) * graph->n);
-    res = malloc(sizeof(double) * graph->n);
-    if (b0 == NULL || res == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
-    randomizeVec(graph->n, b0);
-    powerIter(graph, b0, graph->matShifting(graph, 0, div->groupid), 0, div->groupid, res);
-//    printVector(res, graph->n);
-    div->split(div, graph, res, 0);
-    div->printGroups(div);
+    divideToTwo(div, graph, 0);
     div->free(div);
     graph->free(graph);
-    free(b0);
     free(graph);
     free(div);
-    free(res);
     return 0;
 }
