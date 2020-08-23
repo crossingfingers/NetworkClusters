@@ -7,7 +7,6 @@
 #include <time.h>
 
 #define IS_POSITIVE(X) ((X) > 0.00001)
-#define IS_NEGATIVE(X) ((X) < -0.00001)
 
 void randomizeVec(int size, double *vec) {
     int i;
@@ -225,13 +224,6 @@ division *allocateDivision(int n) {
     return d;
 }
 
-void printdVector(double *vec, int n) {
-    int i;
-    for (i = 0; i < n; ++i) {
-        printf("%f\t", vec[i]);
-    }
-    printf("\n");
-}
 int getDivSize(division *div, int group) {
     int i;
     int counter=0;
