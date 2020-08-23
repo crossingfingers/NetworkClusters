@@ -277,7 +277,7 @@ int moveVertice(double q0,double *divVec,spmat *sp, const int *unmoved, double *
 
 }
 
-
+/*optimizes division by moving one node from g1 to g2, saves division in res*/
 void optimize(double q0, double *divVec,double *deltaQ,int *unmoved,int *indices, double *improve, spmat*sp,int group,int *groupID,int size)
 {   int j;
     int i;
@@ -313,24 +313,22 @@ void optimize(double q0, double *divVec,double *deltaQ,int *unmoved,int *indices
 
 
 }
-/*optimizes division by moving one node from g1 to g2, saves division in res*/
 
-void divOptimization(division *div,int group,double q0,double *initialdiv, spmat *sp)
+
+void divOptimization(division *div,int group,double q0,double *divVector, spmat *sp)
 {
     int size=getDivSize(div,group);
     int *unmoved=malloc(sizeof(int)*div->n);
     double *deltaQ=malloc(sizeof(double)); /*DeltaQ result*/
     int *indices=malloc(sizeof(int)*size);
     double *improve=malloc(sizeof(double)*size);
-    optimize(q0,initialdiv,deltaQ,unmoved,indices,improve,sp,group,div->groupid,size);
-    div->split(div,sp,initialdiv,1);
+    optimize(q0,divVector,deltaQ,unmoved,indices,improve,sp,group,div->groupid,size);
+    div->split(div,sp,divVector,group);
     div->printGroups(div);
     free(deltaQ);
     free(unmoved);
     free(indices);
     free(improve);
- //   div->split(div,sp,initialdiv,group);
- //  div->printGroups(div);
 }
 
 
