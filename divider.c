@@ -182,7 +182,7 @@ double modularityCalc(spmat *sp, double *vec, int group, const int *groupid) {
     return res / 2;
 }
 
-void split(struct _division *d, spmat *sp, double *vec, int group) {
+int split(struct _division *d, spmat *sp, double *vec, int group) {
     int flag;
     double delta;
     int newGroup = -1;
@@ -213,12 +213,15 @@ void split(struct _division *d, spmat *sp, double *vec, int group) {
         }
     }
     delta = modularityCalc(sp, vec, group, copyGroup);
+    if (delta == 0)
+        return 0;
     d->Q += delta;
     free(copyGroup);
+    return 1;
 }
 
 int divideToTwo(division *div, spmat *sp, int group) {
-    printf("working on group: %d\n",group);
+    printf("working on group: %d\n", group);
     int size = sp->n;
     double *b0 = malloc(sizeof(double) * size);
     double *res = malloc(sizeof(double) * size);
@@ -232,7 +235,8 @@ int divideToTwo(division *div, spmat *sp, int group) {
     printf("eigen %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
-    div->split(div, sp, res, 0);
+    if (div->split(div, sp, res, 0) == 0)
+        return 0;
     div->printGroups(div);
     free(b0);
     free(res);
@@ -243,7 +247,7 @@ void findGroups(division *div, spmat *sp) {
     int flag = 1;
     int last = div->numOfGroups - 1;
     while (last < div->numOfGroups) {
-        while(flag == 1){
+        while (flag == 1) {
             flag = divideToTwo(div, sp, last);
         }
         last++;

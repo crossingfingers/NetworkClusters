@@ -12,7 +12,7 @@ typedef struct _division {
     double Q;
 
 
-    void (*split)(struct _division *d, spmat *A, double *vec, int group);
+    int (*split)(struct _division *d, spmat *A, double *vec, int group);
 
     void (*free)(struct _division *d);
 
