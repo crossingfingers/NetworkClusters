@@ -328,6 +328,8 @@ void divOptimization(division *div,int group,double q0,double *initialdiv, spmat
     int *indices=malloc(sizeof(int)*size);
     double *improve=malloc(sizeof(double)*size);
     optimize(q0,initialdiv,deltaQ,unmoved,indices,improve,sp,group,div->groupid,size);
+    div->split(div,sp,initialdiv,1);
+    div->printGroups(div);
     free(deltaQ);
     free(unmoved);
     free(indices);
