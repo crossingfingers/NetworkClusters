@@ -9,6 +9,7 @@ typedef struct _division {
     int n;
     int *groupid;
     int numOfGroups;
+    int *nodesforGroup;
     double Q;
 
 
@@ -17,6 +18,8 @@ typedef struct _division {
     void (*free)(struct _division *d);
 
     void (*printGroups)(struct _division *d);
+
+    void (*writeDivision)(struct _division *div, FILE *output);
 
 } division;
 
