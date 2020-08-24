@@ -63,9 +63,17 @@ int main(int argc, char **argv) {
     output = fopen(argv[2], "wb");
     graph = readGraph(input);
     div = allocateDivision(graph->n);
-//    graph->print_list(graph);
-    findGroups(div, graph);
-    div->writeDivision(div, output);
+      graph->print_list(graph);
+    double maxDiv[5]={1,1,1,1,1};
+    divOptimization(div,0,0,maxDiv,graph);
+    double maxDiv2[5]={0,0,1,1,1};
+    divOptimization(div,1,2,maxDiv2,graph);
+
+    //findGroups(div, graph);
+
+    //div->writeDivision(div, output);
+
+
     div->free(div);
     graph->free(graph);
     free(graph);

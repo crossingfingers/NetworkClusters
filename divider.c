@@ -151,12 +151,15 @@ void powerIter(spmat *sp, double *b0, double shifting, int group, const int *gro
         multBRoof(sp, b0, group, groupid, result);
         vecSum(result, b0, shifting, group, groupid, size);
         normalize(size, result, group, groupid);
+
         for (i = 0; i < size; i++) {
             if (IS_POSITIVE(fabs(result[i] - b0[i])))
                 flag = 1;
             b0[i] = result[i];
         }
     }
+
+
 }
 
 double eigenValue(spmat *sp, double *vec, int group, const int *groupid) {
@@ -407,12 +410,14 @@ void optimize(double q0, double *divVec,double *deltaQ,int *unmoved,int *indices
 
 void divOptimization(division *div,int group,double q0,double *divVector, spmat *sp)
 {
+
     int size=getDivSize(div,group);
     int *unmoved=malloc(sizeof(int)*div->n);
     double *deltaQ=malloc(sizeof(double)); /*DeltaQ result*/
     int *indices=malloc(sizeof(int)*size);
     double *improve=malloc(sizeof(double)*size);
     optimize(q0,divVector,deltaQ,unmoved,indices,improve,sp,group,div->groupid,size);
+    printVector(divVector,sp->n);
     div->split(div,sp,divVector,group);
     div->printGroups(div);
     free(deltaQ);
