@@ -246,6 +246,7 @@ int divideToTwo(division *div, spmat *sp, int group) {
     randomizeVec(size, b0);
     powerIter(sp, b0, sp->matShifting(sp, group, div->groupid), group, div->groupid, res);
 //    printVector(res, size);
+    divOptimization(div,group,div->Q,res,sp);
     double eigen = eigenValue(sp, res, group, div->groupid);
     printf("eigen %f\n", eigen);
     if (!IS_POSITIVE(eigen))
@@ -351,7 +352,7 @@ int moveVertice(double q0,double *divVec,spmat *sp, const int *unmoved, double *
     double deltaQ;
     int maxIndex;
     int flag=1;
-
+    
     for(j=0;j<sp->n;j++)
     {   if(group==groupID[j])
         {
@@ -406,10 +407,8 @@ void optimize(double q0, double *divVec,double *deltaQ,int *unmoved,int *indices
         optimize(improve[maxScore]+q0,divVec,deltaQ,unmoved,indices,improve,sp,group,groupID,size);
     }  /*finds max division state, if Q is positive, we try again */
 
+
     else {for(j=0;j<size;j++){divVec[indices[j]]=(-1)*divVec[indices[j]];}}
-
-
-
 }
 
 
@@ -421,10 +420,10 @@ void divOptimization(division *div,int group,double q0,double *divVector, spmat 
     double *deltaQ=malloc(sizeof(double)); /*DeltaQ result*/
     int *indices=malloc(sizeof(int)*size);
     double *improve=malloc(sizeof(double)*size);
+    printVector(divVector,sp->n);
     optimize(q0,divVector,deltaQ,unmoved,indices,improve,sp,group,div->groupid,size);
     printVector(divVector,sp->n);
-    div->split(div,sp,divVector,group);
-    div->printGroups(div);
+
     free(deltaQ);
     free(unmoved);
     free(indices);
