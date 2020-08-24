@@ -40,11 +40,11 @@ spmat *readGraph(FILE *input) {
             exit(EXIT_FAILURE);
         }
         graph->add_row(graph, row, i, elem);
-        printf("%d - \t", i);
-        for (j = 0; j < elem; ++j) {
-            printf("%d\t", row[j]);
-        }
-        printf("\n");
+//        printf("%d - \t", i);
+//        for (j = 0; j < elem; ++j) {
+//            printf("%d\t", row[j]);
+//        }
+//        printf("\n");
     }
     free(row);
     return graph;
@@ -54,18 +54,23 @@ int main(int argc, char **argv) {
     spmat *graph = NULL;
     division *div;
     FILE *input;
+    FILE *output;
     if (argc != 3) {
         printf("ERROR - there is not 2 arguments");
         exit(EXIT_FAILURE);
     }
     input = fopen(argv[1], "rb");
+    output = fopen(argv[2], "wb");
     graph = readGraph(input);
     div = allocateDivision(graph->n);
-    graph->print_list(graph);
+//    graph->print_list(graph);
     findGroups(div, graph);
+    div->writeDivision(div, output);
     div->free(div);
     graph->free(graph);
     free(graph);
     free(div);
+    fclose(input);
+    fclose(output);
     return 0;
 }

@@ -17,19 +17,6 @@ void randomizeVec(int size, double *vec) {
     }
 }
 
-
-void normalize(int size, double *vec) {
-    int i;
-    double res = 0;
-    for (i = 0; i < size; i++) {
-        res += vec[i] * vec[i];
-    }
-    res = sqrt(res);
-    for (i = 0; i < size; i++) {
-        vec[i] /= res;
-    }
-}
-
 void vecMult(const int *vec1, const double *vec2, double *res, int size) {
     int i;
     for (i = 0; i < size; ++i) {
@@ -38,10 +25,13 @@ void vecMult(const int *vec1, const double *vec2, double *res, int size) {
     }
 }
 
-void vecSum(double *vec, const double *b0, double shifting, int n) {
+void vecSum(double *vec, const double *b0, double shifting, int group, const int *groupid, int n) {
     int i;
     for (i = 0; i < n; ++i) {
-        vec[i] += b0[i] * shifting;
+        if (group == groupid[i])
+            vec[i] += b0[i] * shifting;
+        else
+            vec[i] = 0;
     }
 }
 
@@ -92,6 +82,12 @@ void copyVec(const int *src, double *dst, int n) {
     }
 }
 
+void normalize(int size, double *vec, int group, const int *groupid) {
+    double res = dotDoubleProd(vec, vec, group, groupid, size);
+    res = sqrt(res);
+    scalarMult(vec, 1 / res, group, groupid, size);
+}
+
 void multBv(spmat *sp, double *vec, int group, const int *groupid, double *res) {
     double dot;
     int size = sp->n;
@@ -123,6 +119,14 @@ void printVector(double *vec, int n) {
     printf("\n");
 }
 
+void printIntVector(int *vec, int n) {
+    int i;
+    for (i = 0; i < n; ++i) {
+        printf("%d\t", vec[i]);
+    }
+    printf("\n");
+}
+
 void multBRoof(spmat *sp, double *vec, int group, const int *groupid, double *res) {
     int size = sp->n;
     double *unitVec = malloc(size * sizeof(double));
@@ -145,8 +149,8 @@ void powerIter(spmat *sp, double *b0, double shifting, int group, const int *gro
     while (flag == 1) {
         flag = 0;
         multBRoof(sp, b0, group, groupid, result);
-        vecSum(result, b0, shifting, size);
-        normalize(size, result);
+        vecSum(result, b0, shifting, group, groupid, size);
+        normalize(size, result, group, groupid);
         for (i = 0; i < size; i++) {
             if (IS_POSITIVE(fabs(result[i] - b0[i])))
                 flag = 1;
@@ -207,13 +211,15 @@ int split(struct _division *d, spmat *sp, double *vec, int group) {
                 d->numOfGroups += 1;
             }
             groupid[i] = newGroup;
+            d->nodesforGroup[newGroup]++;
+            d->nodesforGroup[group]--;
             vec[i] = -1;
         } else {
             vec[i] = 1;
         }
     }
     delta = modularityCalc(sp, vec, group, copyGroup);
-    if (delta == 0)
+    if (!IS_POSITIVE(delta))
         return 0;
     d->Q += delta;
     free(copyGroup);
@@ -230,12 +236,13 @@ int divideToTwo(division *div, spmat *sp, int group) {
         exit(EXIT_FAILURE);
     }
     randomizeVec(size, b0);
-    powerIter(sp, b0, sp->matShifting(sp, 0, div->groupid), group, div->groupid, res);
-    double eigen = eigenValue(sp, res, 0, div->groupid);
+    powerIter(sp, b0, sp->matShifting(sp, group, div->groupid), group, div->groupid, res);
+    printVector(res, size);
+    double eigen = eigenValue(sp, res, group, div->groupid);
     printf("eigen %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
-    if (div->split(div, sp, res, 0) == 0)
+    if (div->split(div, sp, res, group) == 0)
         return 0;
     div->printGroups(div);
     free(b0);
@@ -244,10 +251,12 @@ int divideToTwo(division *div, spmat *sp, int group) {
 }
 
 void findGroups(division *div, spmat *sp) {
-    int flag = 1;
+    int flag;
     int last = div->numOfGroups - 1;
     while (last < div->numOfGroups) {
+        flag = 1;
         while (flag == 1) {
+            printf("last is %d\n", last);
             flag = divideToTwo(div, sp, last);
         }
         last++;
@@ -268,6 +277,23 @@ void freeDivision(division *d) {
     free(d->groupid);
 }
 
+void writeDivision(struct _division *div, FILE *output) {
+    int numOfGroups = div->numOfGroups;
+    int *vertexForGroup = div->nodesforGroup;
+    int *groupid = div->groupid;
+    int i;
+    int n = div->n;
+    int j;
+    fwrite(&numOfGroups, sizeof(int), 1, output);
+    for (i = 0; i < numOfGroups; ++i) {
+        fwrite(&vertexForGroup[i], sizeof(int), 1, output);
+        for (j = 0; j < n; ++j) {
+            if (groupid[j] == i)
+                fwrite(&j, sizeof(int), 1, output);
+        }
+    }
+}
+
 division *allocateDivision(int n) {
     int i;
     division *d = malloc(sizeof(division));
@@ -280,17 +306,19 @@ division *allocateDivision(int n) {
     d->split = split;
     d->free = freeDivision;
     d->groupid = malloc(sizeof(int) * n);
+    d->nodesforGroup = malloc(sizeof(int) * n);
+    d->writeDivision = writeDivision;
     d->Q = 0;
-    d->divOptimization=divOptimization;
-    d->modularityCalc=modularityCalc;
-    if (d->groupid == NULL) {
+    if (d->groupid == NULL || d->nodesforGroup == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
     d->numOfGroups = 1;
     for (i = 0; i < n; ++i) {
         d->groupid[i] = 0;
+        d->nodesforGroup[i] = 0;
     }
+    d->nodesforGroup[0] = n;
     return d;
 }
 

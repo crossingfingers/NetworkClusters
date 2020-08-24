@@ -4,11 +4,12 @@
 
 #ifndef CPROJECT_DIVIDER_H
 #define CPROJECT_DIVIDER_H
-#include "spmat.h"
+
 typedef struct _division {
     int n;
     int *groupid;
     int numOfGroups;
+    int *nodesforGroup;
     double Q;
 
 
@@ -19,6 +20,9 @@ typedef struct _division {
     void (*printGroups)(struct _division *d);
     double (*modularityCalc)(spmat *A, double *vec, int group, const int *groupid);
     void (*divOptimization)(struct _division *div,int group,double q0,double *maxDiv, spmat *sp);
+
+    void (*writeDivision)(struct _division *div, FILE *output);
+
 } division;
 
 division *allocateDivision(int n);
