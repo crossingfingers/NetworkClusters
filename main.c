@@ -40,18 +40,17 @@ spmat *readGraph(FILE *input) {
             exit(EXIT_FAILURE);
         }
         graph->add_row(graph, row, i, elem);
- //       printf("%d - \t", i);
+        printf("%d - \t", i);
         for (j = 0; j < elem; ++j) {
-    //        printf("%d\t", row[j]);
+            printf("%d\t", row[j]);
         }
-   //     printf("\n");
+        printf("\n");
     }
     free(row);
     return graph;
 }
 
 int main(int argc, char **argv) {
-    double *res, *b0;
     spmat *graph = NULL;
     division *div;
     FILE *input;
@@ -62,32 +61,11 @@ int main(int argc, char **argv) {
     input = fopen(argv[1], "rb");
     graph = readGraph(input);
     div = allocateDivision(graph->n);
- //   graph->print_list(graph);
- //   printf("%f\n", graph->matShifting(graph, 0, div->groupid));
-    b0 = malloc(sizeof(double) * graph->n);
-    res = malloc(sizeof(double) * graph->n);
-    if (b0 == NULL || res == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
-    randomizeVec(graph->n, b0);
-
-
-
-
-    powerIter(graph, b0, graph->matShifting(graph, 0, div->groupid), 0, div->groupid, res);
-
-    div->split(div, graph, res, 0);
-     div->printGroups(div);
-
-    double b1[]={0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-
-    divOptimization(div,1,div->Q,b1,graph);
+    graph->print_list(graph);
+    findGroups(div, graph);
     div->free(div);
     graph->free(graph);
-    free(b0);
     free(graph);
     free(div);
-    free(res);
     return 0;
 }

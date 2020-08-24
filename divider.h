@@ -4,7 +4,7 @@
 
 #ifndef CPROJECT_DIVIDER_H
 #define CPROJECT_DIVIDER_H
-
+#include "spmat.h"
 typedef struct _division {
     int n;
     int *groupid;
@@ -12,7 +12,7 @@ typedef struct _division {
     double Q;
 
 
-    void (*split)(struct _division *d, spmat *A, double *vec, int group);
+    int (*split)(struct _division *d, spmat *A, double *vec, int group);
 
     void (*free)(struct _division *d);
 
@@ -30,5 +30,11 @@ void randomizeVec(int size, double *vec);
 double modularityCalc(spmat *A, double *vec, int group, const int *groupid);
 
 void divOptimization(division *div,int group,double q0,double *maxDiv, spmat *sp);
+
+double eigenValue(spmat *A, double *vec, int group, const int* groupid);
+
+int divideToTwo(division *div, spmat *sp, int group);
+
+void findGroups(division *div, spmat *sp);
 
 #endif //CPROJECT_DIVIDER_H

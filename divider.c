@@ -123,22 +123,29 @@ void printVector(double *vec, int n) {
     printf("\n");
 }
 
-void powerIter(spmat *sp, double *b0, double shifting, int group, const int *groupid, double *result) {
-    int flag = 1, i;
+void multBRoof(spmat *sp, double *vec, int group, const int *groupid, double *res) {
     int size = sp->n;
     double *unitVec = malloc(size * sizeof(double));
-    double *tmp = malloc(size * sizeof(double));
-    if (unitVec == NULL || tmp == NULL) {
+    double *vecF = malloc(size * sizeof(double));
+    if (unitVec == NULL || vecF == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
     initUnitVec(unitVec, size);
-    multBv(sp, unitVec, group, groupid, tmp);
+    multBv(sp, unitVec, group, groupid, vecF);
+    multBv(sp, vec, group, groupid, res);
+    vecDec(res, vecF, group, groupid, size);
+    free(vecF);
+    free(unitVec);
+}
+
+void powerIter(spmat *sp, double *b0, double shifting, int group, const int *groupid, double *result) {
+    int flag = 1, i;
+    int size = sp->n;
     while (flag == 1) {
         flag = 0;
-        multBv(sp, b0, group, groupid, result);
+        multBRoof(sp, b0, group, groupid, result);
         vecSum(result, b0, shifting, size);
-        vecDec(result, tmp, group, groupid, size);
         normalize(size, result);
         for (i = 0; i < size; i++) {
             if (IS_POSITIVE(fabs(result[i] - b0[i])))
@@ -146,43 +153,106 @@ void powerIter(spmat *sp, double *b0, double shifting, int group, const int *gro
             b0[i] = result[i];
         }
     }
+}
+
+double eigenValue(spmat *sp, double *vec, int group, const int *groupid) {
+    int size = sp->n;
+    double *tmp = malloc(sizeof(double) * size);
+    double res;
+    double div;
+    multBRoof(sp, vec, group, groupid, tmp);
+    res = dotDoubleProd(tmp, vec, group, groupid, size);
+//    printVector(tmp, size);
+    div = dotDoubleProd(vec, vec, group, groupid, size);
+    if (div == 0) {
+        printf("ERROR - divide in zero");
+        exit(EXIT_FAILURE);
+    }
     free(tmp);
-    free(unitVec);
+    return res / div;
 }
 
 double modularityCalc(spmat *sp, double *vec, int group, const int *groupid) {
     double res = 0;
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
-    multBv(sp, vec, group, groupid, tmp);
+    multBRoof(sp, vec, group, groupid, tmp);
     res = dotDoubleProd(tmp, vec, group, groupid, size);
     free(tmp);
     return res / 2;
 }
 
-void split(struct _division *d, spmat *sp, double *vec, int group) {
+int split(struct _division *d, spmat *sp, double *vec, int group) {
     int flag;
     double delta;
     int newGroup = -1;
     int i;
+    int size = sp->n;
+    int *groupid = d->groupid;
+    int *copyGroup = malloc(sizeof(int) * size);
+    if (copyGroup == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     flag = IS_POSITIVE(vec[0]) ? 1 : 0;
+    copyGroup[0] = groupid[0];
     vec[0] = 1;
-    for (i = 1; i < sp->n; ++i) {
-        if (group != d->groupid[i])
+    for (i = 1; i < size; ++i) {
+        copyGroup[i] = groupid[i];
+        if (group != groupid[i])
             continue;
         if (IS_POSITIVE(vec[i]) != flag) {
             if (newGroup == -1) {
                 newGroup = d->numOfGroups;
                 d->numOfGroups += 1;
             }
-            d->groupid[i] = newGroup;
+            groupid[i] = newGroup;
             vec[i] = -1;
         } else {
             vec[i] = 1;
         }
     }
-    delta = modularityCalc(sp, vec, group, d->groupid);
+    delta = modularityCalc(sp, vec, group, copyGroup);
+    if (delta == 0)
+        return 0;
     d->Q += delta;
+    free(copyGroup);
+    return 1;
+}
+
+int divideToTwo(division *div, spmat *sp, int group) {
+    printf("working on group: %d\n", group);
+    int size = sp->n;
+    double *b0 = malloc(sizeof(double) * size);
+    double *res = malloc(sizeof(double) * size);
+    if (b0 == NULL || res == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
+    randomizeVec(size, b0);
+    powerIter(sp, b0, sp->matShifting(sp, 0, div->groupid), group, div->groupid, res);
+    double eigen = eigenValue(sp, res, 0, div->groupid);
+    printf("eigen %f\n", eigen);
+    if (!IS_POSITIVE(eigen))
+        return 0;
+    if (div->split(div, sp, res, 0) == 0)
+        return 0;
+    div->printGroups(div);
+    free(b0);
+    free(res);
+    return 1;
+}
+
+void findGroups(division *div, spmat *sp) {
+    int flag = 1;
+    int last = div->numOfGroups - 1;
+    while (last < div->numOfGroups) {
+        while (flag == 1) {
+            flag = divideToTwo(div, sp, last);
+        }
+        last++;
+    }
+    div->printGroups(div);
 }
 
 void printGroups(division *d) {
