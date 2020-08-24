@@ -17,11 +17,13 @@ void randomizeVec(int size, double *vec) {
     }
 }
 
-void vecMult(const int *vec1, const double *vec2, double *res, int size) {
+void vecMult(double *vec1, const double *vec2, int group,const int *groupid, int size) {
     int i;
     for (i = 0; i < size; ++i) {
-//        printf("%f\n", vec1[i]);
-        res[i] = vec1[i] * vec2[i];
+        if(group == groupid[i])
+            vec1[i] = vec1[i] * vec2[i];
+        else
+            vec1[i] = 0;
     }
 }
 
@@ -137,6 +139,9 @@ void multBRoof(spmat *sp, double *vec, int group, const int *groupid, double *re
     }
     initUnitVec(unitVec, size);
     multBv(sp, unitVec, group, groupid, vecF);
+    vecMult(vecF, vec, group, groupid, size);
+//    printf("FFF\n");
+//    printVector(vecF, size);
     multBv(sp, vec, group, groupid, res);
     vecDec(res, vecF, group, groupid, size);
     free(vecF);
@@ -240,7 +245,7 @@ int divideToTwo(division *div, spmat *sp, int group) {
     }
     randomizeVec(size, b0);
     powerIter(sp, b0, sp->matShifting(sp, group, div->groupid), group, div->groupid, res);
-    printVector(res, size);
+//    printVector(res, size);
     double eigen = eigenValue(sp, res, group, div->groupid);
     printf("eigen %f\n", eigen);
     if (!IS_POSITIVE(eigen))
