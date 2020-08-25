@@ -303,6 +303,8 @@ void writeDivision(struct _division *div, FILE *output) {
     }
 }
 
+
+
 division *allocateDivision(int n) {
     int i;
     division *d = malloc(sizeof(division));
@@ -331,6 +333,9 @@ division *allocateDivision(int n) {
     return d;
 }
 
+
+
+
 int getDivSize(division *div, int group) {
     int i;
     int counter=0;
@@ -342,6 +347,8 @@ int getDivSize(division *div, int group) {
     }  return counter;
 
 }
+
+
 
 
 /*find vertice movement that maximizes Q*/
@@ -375,6 +382,9 @@ int moveVertice(double q0,double *divVec,spmat *sp, const int *unmoved, double *
     return maxIndex;
 
 }
+
+
+
 
 /*optimizes division by moving one node from g1 to g2, saves division in res*/
 void optimize(double q0, double *divVec,double *deltaQ,int *unmoved,int *indices, double *improve, spmat*sp,int group,int *groupID,int size)
@@ -410,6 +420,8 @@ void optimize(double q0, double *divVec,double *deltaQ,int *unmoved,int *indices
 
     else {for(j=0;j<size;j++){divVec[indices[j]]=(-1)*divVec[indices[j]];}}
 }
+
+
 
 
 void divOptimization(division *div,int group,double q0,double *divVector, spmat *sp)

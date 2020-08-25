@@ -9,15 +9,16 @@ typedef struct _node {
     int value;
 } node;
 
-//typedef struct _array{
-//    double *values;
-//    int *colind;
-//    int *rowptr;
-//    double *lastvalue;
-//    int *lastcolind;
-//    int *lastrowptr;
-//    int nnz;
-//}array;
+typedef struct _array{
+    int *values;
+    int *colind;
+    int *rowptr;
+    int *lastvalue;
+    int *lastcolind;
+    int *lastrowptr;
+    int lastindex;
+    int nnz;
+}array;
 
 void add_row_list(struct _spmat *A, int *row, int i, int k) {
     int j;
@@ -50,40 +51,39 @@ void add_row_list(struct _spmat *A, int *row, int i, int k) {
     }
 }
 
-//void add_row_array(struct _spmat *A, const double *row, int i){
-//    double *valarr;
-//    int *rowptrarr;
-//    int *colindarr;
-//    int ci;
-//    array *sparray= (array *) A->private;
-//    int temp=*sparray->lastrowptr;
-//    sparray->lastrowptr++;
-//    *sparray->lastrowptr=temp;
-//
-//     valarr=(double *)sparray->lastvalue;
-//     rowptrarr=(int *)sparray->lastrowptr;
-//     colindarr=(int *) sparray->lastcolind;
-//
-//    ci=i;
-//
-///*updates values array*/
-//    for(ci=0;ci<A->n;ci++)
-//    {   if((*row)!=0)
-//        {
-//        *valarr=*row;
-//        *colindarr=ci;
-//        (*rowptrarr)++;
-//        valarr++;
-//        colindarr++;
-//        }
-//        row++;
-//
-//    }
-//
-//   sparray->lastvalue= valarr;
-//   sparray->lastrowptr=rowptrarr;
-//   sparray->lastcolind=colindarr;
-//}
+/*works*/
+void add_row_array(struct _spmat *A,  int *row, int i,int k){
+    array *sparray= (array *) A->private;
+    int *valarr=(int *)sparray->lastvalue;
+    int *rowptrarr=(int *)sparray->lastrowptr;
+    int *colindarr=(int *) sparray->lastcolind;
+    int firstrowidx;
+    int ci;
+    A->M += k;
+    A->k[i] = k;
+    if(!sparray->lastindex){firstrowidx=0;}
+    else{firstrowidx=(sparray->rowptr[sparray->lastindex-1])+1; }
+
+/*updates values array*/
+    for(ci=0;ci<k;ci++)
+    {
+
+        *valarr=1;
+        *colindarr=*row;
+        *rowptrarr=firstrowidx;
+
+
+        valarr++;
+        colindarr++;
+        rowptrarr++;
+        row++;
+        sparray->lastindex++;
+
+    }
+   sparray->lastvalue= valarr;
+   sparray->lastcolind=colindarr;
+    sparray->lastrowptr=rowptrarr;
+}
 
 void print_list(struct _spmat *A) {
     int i;
@@ -99,7 +99,30 @@ void print_list(struct _spmat *A) {
         }
         printf("\n");
     }
-};
+}
+
+/*works*/
+void print_array(struct _spmat *A) {
+    int i;
+    int j;
+    array *sparray= (array *) A->private;
+    double *valarr=(double *)sparray->values;
+    int *rowptrarr=(int *)sparray->rowptr;
+    int *colindarr=(int *) sparray->colind;
+    int nnz=(int)sparray->nnz;
+
+    for (i = 0; i < A->n; ++i) {
+        printf("%d - \t", i);
+
+        for (j = 0; j < A->k[i]; ++j) {
+            printf("%d\t", *colindarr);
+           colindarr++;
+
+        }
+        printf("\n");
+    }
+    printf("nnz val is %d",*(++rowptrarr));
+}
 
 void free_list(struct _spmat *A) {
     node **rows = (node **) A->private;
@@ -116,15 +139,15 @@ void free_list(struct _spmat *A) {
     free(rows);
 }
 
-//void free_array(struct _spmat *A) {
-//    array *sparray= (array *) A->private;
-//
-//    free(sparray->colind);
-//    free(sparray->rowptr);
-//    free(sparray->values);
-//    free(A->private);
-//
-//}
+/*works*/
+void free_array(struct _spmat *A) {
+    array *sparray= (array *) A->private;
+   free(sparray->colind);
+   free(sparray->rowptr);
+   free(sparray->values);
+   free(A->private);
+   free(A->k);
+}
 
 void mult_list(const struct _spmat *A, const double *v, double *result) {
     double res;
@@ -141,27 +164,6 @@ void mult_list(const struct _spmat *A, const double *v, double *result) {
         result[i] = res;
     }
 }
-
-//void mult_array(const struct _spmat *A, const double *v, double *result) {
-//    double sum = 0;
-//    int vi=0;
-//    int ri;
-//    array *sparray = (array *) A->private;
-//    double *val = (double *) sparray->values;
-//    int *rowptr = (int *) sparray->rowptr;
-//    int *colin = (int *) sparray->colind;
-//
-//
-//    for(ri=1;ri<A->n+1;ri++) {
-//        sum=0;
-//       while(vi < rowptr[ri])  {
-//            sum =sum+ val[vi] * v[colin[vi]];
-//           vi++;
-//        }
-//       result[ri-1]=sum;
-//    }
-//
-//}
 
 double listShifting(spmat *A, int group, const int *groupid){
     double max = 0;
@@ -191,6 +193,59 @@ double listShifting(spmat *A, int group, const int *groupid){
     return max;
 }
 
+
+
+void mult_array(const struct _spmat *A, const double *v, double *result) {
+    double sum = 0;
+    int vi=0;
+    int ri;
+    array *sparray = (array *) A->private;
+    double *val = (int *) sparray->values;
+    int *rowptr = (int *) sparray->rowptr;
+    int *colin = (int *) sparray->colind;
+
+    for(ri=1;ri<A->n+1;ri++) {
+        sum=0;
+        while(vi < rowptr[ri])  {
+            sum =+ (val[vi] * v[colin[vi]]);
+            vi++;
+        }
+        result[ri-1]=sum;
+    }
+
+}
+/*
+need to fix
+*/
+double arrayShifting(spmat *A, int group, const int *groupid){
+    double max = 0;
+    double sum = 0;
+    int val=0;
+    node *curr;
+    node **rows = (node **) A->private;
+    int i;
+    int j;
+    for(i=0; i<A->n; ++i){
+        if(group != groupid[i])
+            continue;
+        curr = rows[i];
+        sum = 0;
+        for(j = 0; j< A->n; ++j){
+            if(curr != NULL && curr->col_idx == j){
+                val = 1;
+                curr = curr->next;
+            }
+            else
+                val = 0;
+            if(groupid[j] == group)
+                sum += fabs((double)val - ((double)(A->k[i] * A->k[j])/A->M));
+        }
+        max = (max>=sum)? max:sum;
+    }
+    return max;
+}
+
+
 void initk(spmat* A){
     int i;
     for(i = 0; i<A->n; ++i){
@@ -199,7 +254,25 @@ void initk(spmat* A){
 }
 
 void printMatrix(spmat *A){
-    
+
+    int i;
+    array *sparr=( array *) A->private;
+    printf("\nvalarr:\n");
+    for( i=0;i< sparr->nnz;i++)
+    {  printf("%d",*sparr->values);
+        sparr->values++;
+    }
+    printf("\ncollarr:\n");
+    for( i=0;i< sparr->nnz;i++)
+    {  printf("%d",*sparr->colind);
+        sparr->colind++;
+    }
+    printf("\nrowptrarr:\n");
+    for( i=0;i<= sparr->nnz;i++)
+    {  printf("%d",*sparr->rowptr);
+        sparr->rowptr++;
+    }
+
 }
 
 spmat *spmat_allocate_list(int n) {
@@ -221,23 +294,30 @@ spmat *spmat_allocate_list(int n) {
 
 
 
-//spmat *spmat_allocate_array(int n, int nnz){
-//    spmat *sp;
-//    array *sparray=malloc(sizeof(array));
-//    sparray->values=calloc(nnz, sizeof(double));
-//    sparray->colind=calloc(nnz, sizeof(int));
-//    sparray->rowptr=calloc(n+1, sizeof(int));
-//    sparray->lastvalue= sparray->values;
-//    sparray->lastcolind= sparray->colind;
-//    sparray->lastrowptr=  sparray->rowptr;
-//    sparray->nnz= nnz;
-//    sp = malloc(sizeof(spmat));
-//    sp->n = n;
-//    sp->add_row = add_row_array;
-//    sp->free = free_array;
-//    sp->mult = mult_array;
-//    sp->private = sparray;
-//    return sp;
-//}
+spmat *spmat_allocate_array(int n, int nnz){
+    spmat *sp;
+    array *sparray=malloc(sizeof(array));
+    sparray->values=calloc(nnz, sizeof(int));
+    sparray->colind=calloc(nnz, sizeof(int));
+    sparray->rowptr=calloc(nnz+1, sizeof(int));
+    sparray->lastvalue= sparray->values;
+    sparray->lastcolind= sparray->colind;
+    sparray->lastrowptr=  sparray->rowptr;
+    sparray->lastindex=0;
+    sparray->rowptr[nnz]=nnz;
+    sparray->nnz= nnz;
+    sp = malloc(sizeof(spmat));
+    sp->n = n;
+    sp->add_row = add_row_array;
+    sp->free = free_array;
+    sp->mult = mult_array;
+    sp->private = sparray;
+    sp->M = 0;
+    sp->k = malloc(sizeof(int)*n);
+    initk(sp);
+    sp->print_list = print_array;
+    sp->matShifting = arrayShifting;
+    return sp;
+}
 
 

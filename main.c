@@ -21,7 +21,8 @@ spmat *readGraph(FILE *input) {
         exit(EXIT_FAILURE);
     }
     size = elem;
-    graph = spmat_allocate_list(size);
+  //graph = spmat_allocate_list(size);
+  graph = spmat_allocate_array(size,22);
 //    printf("%d\n", *elem);
     row = malloc(sizeof(int) * size);
     if (row == NULL) {
@@ -39,7 +40,9 @@ spmat *readGraph(FILE *input) {
             printf("ERROR - mismatch reading value");
             exit(EXIT_FAILURE);
         }
+
         graph->add_row(graph, row, i, elem);
+       // graph->print_list(graph);
 //        printf("%d - \t", i);
 //        for (j = 0; j < elem; ++j) {
 //            printf("%d\t", row[j]);
@@ -47,6 +50,7 @@ spmat *readGraph(FILE *input) {
 //        printf("\n");
     }
     free(row);
+    graph->print_list(graph);
     return graph;
 }
 
@@ -62,20 +66,22 @@ int main(int argc, char **argv) {
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
     graph = readGraph(input);
-    div = allocateDivision(graph->n);
-    graph->print_list(graph);
+    printf("\nM is:%d\n",graph->M);
 
-    double divVec[]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-    divOptimization(div,0,0,divVec,graph);
-     findGroups(div, graph);
+//    div = allocateDivision(graph->n);
+ //   graph->print_list(graph);
 
-    div->writeDivision(div, output);
+//    double divVec[]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+//    divOptimization(div,0,0,divVec,graph);
+//     findGroups(div, graph);
+//
+//    div->writeDivision(div, output);
 
 
-    div->free(div);
+    //div->free(div);
     graph->free(graph);
     free(graph);
-    free(div);
+ //   free(div);
     fclose(input);
     fclose(output);
     return 0;
