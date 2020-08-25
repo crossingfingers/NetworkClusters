@@ -17,10 +17,10 @@ void randomizeVec(int size, double *vec) {
     }
 }
 
-void vecMult(double *vec1, const double *vec2, int group,const int *groupid, int size) {
+void vecMult(double *vec1, const double *vec2, int group, const int *groupid, int size) {
     int i;
     for (i = 0; i < size; ++i) {
-        if(group == groupid[i])
+        if (group == groupid[i])
             vec1[i] = vec1[i] * vec2[i];
         else
             vec1[i] = 0;
@@ -192,25 +192,32 @@ double modularityCalc(spmat *sp, double *vec, int group, const int *groupid) {
 }
 
 int split(struct _division *d, spmat *sp, double *vec, int group) {
-    int flag;
+    int flag = -1;
     double delta;
     int newGroup = -1;
     int i;
     int size = sp->n;
     int *groupid = d->groupid;
-    int *copyGroup = malloc(sizeof(int) * size);
-    if (copyGroup == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
-    flag = IS_POSITIVE(vec[0]) ? 1 : 0;
-    copyGroup[0] = groupid[0];
-    vec[0] = 1;
-    for (i = 1; i < size; ++i) {
-        copyGroup[i] = groupid[i];
+    /* make the leading eigen-vector, a +-1 vector*/
+    for (i = 0; i < size; ++i) {
         if (group != groupid[i])
             continue;
-        if (IS_POSITIVE(vec[i]) != flag) {
+        if (flag == -1)
+            flag = IS_POSITIVE(vec[i]) ? 1 : 0;
+        if (IS_POSITIVE(vec[i]) != flag)
+            vec[i] = -1;
+        else
+            vec[i] = 1;
+    }
+    delta = modularityCalc(sp, vec, group, groupid);
+    if (!IS_POSITIVE(delta))
+        return 0;
+    d->Q += delta;
+    /*create a new group for the -1 indexes in the +-1 vector*/
+    for (i = 0; i < size; ++i) {
+        if (group != groupid[i])
+            continue;
+        if (vec[i] == -1) {
             if (newGroup == -1) {
                 newGroup = d->numOfGroups;
                 d->numOfGroups += 1;
@@ -218,16 +225,8 @@ int split(struct _division *d, spmat *sp, double *vec, int group) {
             groupid[i] = newGroup;
             d->nodesforGroup[newGroup]++;
             d->nodesforGroup[group]--;
-            vec[i] = -1;
-        } else {
-            vec[i] = 1;
         }
     }
-    delta = modularityCalc(sp, vec, group, copyGroup);
-    if (!IS_POSITIVE(delta))
-        return 0;
-    d->Q += delta;
-    free(copyGroup);
     return 1;
 }
 
@@ -326,4 +325,21 @@ division *allocateDivision(int n) {
     d->nodesforGroup[0] = n;
     return d;
 }
+
+//void resetUnmoved(int *groupid, int group, int *unmoved){
+//
+//}
+//
+//void divisionOptimizer(division *div, spmat *sp, double *vec, int group) {
+//    double delta = 1;
+//    int size = sp->n;
+//    int *unmoved = malloc(sizeof(int) * size);
+//    if (unmoved == NULL) {
+//        printf("ERROR - memory allocation unsuccessful");
+//        exit(EXIT_FAILURE);
+//    }
+//    while(IS_POSITIVE(delta)){
+//        unmoved = resetUnmoved(div->groupid, group, unmoved);
+//    }
+//}
 
