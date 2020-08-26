@@ -18,12 +18,6 @@ typedef struct _spmat {
     void (*mult)(const struct _spmat *A, const double *v, double *result);
 
     void (*print_list)(struct _spmat *A);
-
-    int (*hasNext)(struct _spmat *A);
-
-    void (*initIterator)(struct _spmat *A);
-
-    void (*iterNext)(struct _spmat *A);
     double (*matShifting)(struct _spmat *A, int group, const int *groupid);
 
     /* Private field for inner implementation.
@@ -31,12 +25,6 @@ typedef struct _spmat {
     void *private;
 } spmat;
 
-/* Allocates a new linked-lists sparse matrix of size n */
-//spmat *spmat_allocate_list(int n);
-
 spmat *readGraph(FILE *input);
-
-/* Allocates a new arrays sparse matrix of size n with nnz non-zero elements */
-spmat *spmat_allocate_array(int n, int nnz);
 
 #endif
