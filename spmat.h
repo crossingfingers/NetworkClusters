@@ -15,10 +15,11 @@ typedef struct _spmat {
     void (*free)(struct _spmat *A);
 
     /* Multiplies matrix A by vector v, into result (result is pre-allocated) */
-    void (*mult)(const struct _spmat *A, const double *v, double *result);
+    void (*mult)(const struct _spmat *A, const double *v, double *result, int group, const int *groupid);
 
-    void (*print_list)(struct _spmat *A);
-    double (*matShifting)(struct _spmat *A, int group, const int *groupid);
+    void (*printSprase)(struct _spmat *A);
+
+    double (*matShifting)(struct _spmat *A, int group, const int *groupid, double *vecF);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */

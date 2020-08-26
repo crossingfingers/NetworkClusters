@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "spmat.h"
 #include "divider.h"
+#include <time.h>
 //
 
 int main(int argc, char **argv) {
@@ -9,10 +10,13 @@ int main(int argc, char **argv) {
     division *div;
     FILE *input;
     FILE *output;
+    double start;
+    double end;
     if (argc != 3) {
         printf("ERROR - there is not 2 arguments");
         exit(EXIT_FAILURE);
     }
+    start = clock();
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
     graph = readGraph(input);
@@ -21,6 +25,8 @@ int main(int argc, char **argv) {
     div->writeDivision(div, output);
     div->free(div);
     graph->free(graph);
+    end = clock();
+    printf("took %f seconds\n", ((double)(end-start)/ CLOCKS_PER_SEC));
     free(graph);
     free(div);
     fclose(input);
