@@ -248,12 +248,12 @@ int divideToTwo(division *div, spmat *sp, int group) {
 //    printVector(res, size);
     divOptimization(div, group, div->Q, res, sp);
     double eigen = eigenValue(sp, res, group, div->groupid);
-    printf("eigen %f\n", eigen);
+   // printf("eigen %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
     if (div->split(div, sp, res, group) == 0)
         return 0;
-    div->printGroups(div);
+//    div->printGroups(div);
     free(b0);
     free(res);
     return 1;
@@ -265,12 +265,12 @@ void findGroups(division *div, spmat *sp) {
     while (last < div->numOfGroups) {
         flag = 1;
         while (flag == 1) {
-            printf("last is %d\n", last);
+   //         printf("last is %d\n", last);
             flag = divideToTwo(div, sp, last);
         }
         last++;
     }
-    div->printGroups(div);
+  //  div->printGroups(div);
 }
 
 void printGroups(division *d) {
@@ -431,9 +431,9 @@ void divOptimization(division *div, int group, double q0, double *divVector, spm
     double *deltaQ = malloc(sizeof(double)); /*DeltaQ result*/
     int *indices = malloc(sizeof(int) * size);
     double *improve = malloc(sizeof(double) * size);
-    printVector(divVector, sp->n);
+  //  printVector(divVector, sp->n);
     optimize(q0, divVector, deltaQ, unmoved, indices, improve, sp, group, div->groupid, size);
-    printVector(divVector, sp->n);
+    //printVector(divVector, sp->n);
 
     free(deltaQ);
     free(unmoved);

@@ -22,7 +22,7 @@ spmat *readGraph(FILE *input) {
     }
     size = elem;
 //  graph = spmat_allocate_list(size);
-  graph = spmat_allocate_array(size,22);
+  graph = spmat_allocate_array(size,82);
 //    printf("%d\n", *elem);
     row = malloc(sizeof(int) * size);
     if (row == NULL) {
@@ -78,11 +78,11 @@ int main(int argc, char **argv) {
 //    div->writeDivision(div, output);
 
 
-    div->free(div);
+ //   div->free(div);
     graph->free(graph);
 
-    free(graph);
-    free(div);
+   free(graph);
+   // free(div);
     fclose(input);
    // fclose(output);
     return 0;

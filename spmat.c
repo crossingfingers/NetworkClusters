@@ -110,12 +110,13 @@ void print_array(struct _spmat *A) {
     int j;
     array *sparray = (array *) A->private;
     int *colindarr = (int *) sparray->colind;
-
+    int counter = 0;
     for (i = 0; i < A->n; ++i) {
         printf("%d - \t", i);
 
         for (j = 0; j < A->k[i]; ++j) {
-            printf("%d\t", colindarr[i + j]);
+            printf("%d\t", colindarr[counter]);
+            counter++;
         }
         printf("\n");
     }
@@ -145,7 +146,6 @@ void free_array(struct _spmat *A) {
     free(sparray->rowptr);
     free(sparray->colind);
     free(A->private);
-    free(A);
 
 }
 
@@ -168,7 +168,7 @@ void mult_list(const struct _spmat *A, const double *v, double *result) {
 void mult_array(const struct _spmat *A, const double *vec, double *result) {
     double sum = 0;
     int vecIDX = 0;
-    int rowIDX=0;
+    int rowIDX = 0;
     array *sparray = (array *) A->private;
     int *val = (int *) sparray->values;
     int *rowptr = (int *) sparray->rowptr;
@@ -215,6 +215,7 @@ double listShifting(spmat *A, int group, const int *groupid) {
 double arrayShifting(spmat *A, int group, const int *groupid) {
     double max = 0;
     double sum;
+    int counter = 0;
     int val = 0;
     int idx;
     array *sparray = (array *) A->private;
@@ -224,15 +225,22 @@ double arrayShifting(spmat *A, int group, const int *groupid) {
         if (group != groupid[i])
             continue;
         sum = 0;
-        j = 0;
-        idx = *sparray->rowptr;
-        while ((sparray->rowptr[j] == idx) && (j < sparray->nnz)) {
-            if (groupid[sparray->colind[j]] == group)
+        idx = sparray->rowptr[counter];
+        for (j = 0; j < A->n; ++j) {
+            val = 0;
+            if (group == groupid[j]) {
+                if (sparray->rowptr[counter] == idx) {
+                    if(sparray->colind[counter] == j){
+                    val = 1;
+                    counter++;}
+                }
                 sum += fabs((double) val - ((double) (A->k[i] * A->k[j]) / A->M));
-            j++;
+            }
+
         }
         max = (max >= sum) ? max : sum;
     }
+    printf("\nmax shifting is %f\n", max);
     return max;
 }
 

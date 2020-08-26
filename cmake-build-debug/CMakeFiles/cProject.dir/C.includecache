@@ -6,18 +6,6 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/divin/CLionProjects/cProject/divider.h
-
-C:/Users/divin/CLionProjects/cProject/main.c
-stdio.h
--
-stdlib.h
--
-spmat.h
-C:/Users/divin/CLionProjects/cProject/spmat.h
-divider.h
-C:/Users/divin/CLionProjects/cProject/divider.h
-
 C:/Users/divin/CLionProjects/cProject/spmat.c
 stdlib.h
 -
