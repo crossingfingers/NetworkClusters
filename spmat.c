@@ -202,6 +202,7 @@ void printMatrix(spmat *A){
     
 }
 
+
 spmat *spmat_allocate_list(int n) {
     spmat *sp;
     node **rows = calloc(n, sizeof(node *));
@@ -219,7 +220,44 @@ spmat *spmat_allocate_list(int n) {
     return sp;
 }
 
-
+spmat *readGraph(FILE *input) {
+    spmat *graph;
+    int i, size, elem, *row, j;
+    unsigned int n;
+    n = fread(&elem, sizeof(int), 1, input);
+    if (n != 1) {
+        printf("ERROR - mismatch reading value");
+        exit(EXIT_FAILURE);
+    }
+    size = elem;
+    graph = spmat_allocate_list(size);
+//    printf("%d\n", *elem);
+    row = malloc(sizeof(int) * size);
+    if (row == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
+    for (i = 0; i < size; ++i) {
+        n = fread(&elem, sizeof(int), 1, input);
+        if (n != 1) {
+            printf("ERROR - mismatch reading value");
+            exit(EXIT_FAILURE);
+        }
+        n = fread(row, sizeof(int), elem, input);
+        if (n != elem) {
+            printf("ERROR - mismatch reading value");
+            exit(EXIT_FAILURE);
+        }
+        graph->add_row(graph, row, i, elem);
+//        printf("%d - \t", i);
+//        for (j = 0; j < elem; ++j) {
+//            printf("%d\t", row[j]);
+//        }
+//        printf("\n");
+    }
+    free(row);
+    return graph;
+}
 
 //spmat *spmat_allocate_array(int n, int nnz){
 //    spmat *sp;

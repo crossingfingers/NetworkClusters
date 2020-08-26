@@ -6,22 +6,16 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/gal21/CLionProjects/cProject/divider.c
+C:/Users/gal21/CLionProjects/cProject/divider.h
+
+C:/Users/gal21/CLionProjects/cProject/main.c
 stdio.h
 -
 stdlib.h
 -
 spmat.h
 C:/Users/gal21/CLionProjects/cProject/spmat.h
-assert.h
--
-math.h
--
 divider.h
-C:/Users/gal21/CLionProjects/cProject/divider.h
-time.h
--
-
 C:/Users/gal21/CLionProjects/cProject/divider.h
 
 C:/Users/gal21/CLionProjects/cProject/spmat.h
