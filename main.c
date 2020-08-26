@@ -21,7 +21,7 @@ spmat *readGraph(FILE *input) {
         exit(EXIT_FAILURE);
     }
     size = elem;
-  //graph = spmat_allocate_list(size);
+//  graph = spmat_allocate_list(size);
   graph = spmat_allocate_array(size,22);
 //    printf("%d\n", *elem);
     row = malloc(sizeof(int) * size);
@@ -64,25 +64,26 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     input = fopen(argv[1], "rb");
-    output = fopen(argv[2], "wb");
+  //  output = fopen(argv[2], "wb");
     graph = readGraph(input);
     printf("\nM is:%d\n",graph->M);
 
-//    div = allocateDivision(graph->n);
+    div = allocateDivision(graph->n);
  //   graph->print_list(graph);
 
 //    double divVec[]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
 //    divOptimization(div,0,0,divVec,graph);
-//     findGroups(div, graph);
+     findGroups(div, graph);
 //
 //    div->writeDivision(div, output);
 
 
-    //div->free(div);
+    div->free(div);
     graph->free(graph);
+
     free(graph);
- //   free(div);
+    free(div);
     fclose(input);
-    fclose(output);
+   // fclose(output);
     return 0;
 }
