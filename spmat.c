@@ -36,7 +36,6 @@ void printMatrix(spmat *A) {
 
 }
 
-
 void add_row_list(struct _spmat *A, int *row, int i, int k) {
     int j;
     node **rows = (node **) A->private;
@@ -169,7 +168,7 @@ void mult_list(const struct _spmat *A, const double *v, double *result) {
 void mult_array(const struct _spmat *A, const double *vec, double *result) {
     double sum = 0;
     int vecIDX = 0;
-    int rowIDX;
+    int rowIDX=0;
     array *sparray = (array *) A->private;
     int *val = (int *) sparray->values;
     int *rowptr = (int *) sparray->rowptr;
@@ -236,7 +235,6 @@ double arrayShifting(spmat *A, int group, const int *groupid) {
     }
     return max;
 }
-
 
 void initk(spmat *A) {
     int i;
