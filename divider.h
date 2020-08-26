@@ -33,7 +33,7 @@ double modularityCalc(spmat *A, double *vec, int group, const int *groupid);
 
 double eigenValue(spmat *A, double *vec, int group, const int* groupid);
 
-int divideToTwo(division *div, spmat *sp, int group);
+//int divideToTwo(division *div, spmat *sp, int group);
 
 void findGroups(division *div, spmat *sp);
 

@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
     output = fopen(argv[2], "wb");
     graph = readGraph(input);
     div = allocateDivision(graph->n);
-    graph->print_list(graph);
+//    graph->print_list(graph);
     findGroups(div, graph);
     div->writeDivision(div, output);
     div->free(div);

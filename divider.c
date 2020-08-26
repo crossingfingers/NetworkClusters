@@ -230,42 +230,20 @@ int split(struct _division *d, spmat *sp, double *vec, int group) {
     return 1;
 }
 
-int divideToTwo(division *div, spmat *sp, int group) {
+int divideToTwo(division *div, spmat *sp, int group, double *res, double *b0) {
     printf("working on group: %d\n", group);
     int size = sp->n;
-    double *b0 = malloc(sizeof(double) * size);
-    double *res = malloc(sizeof(double) * size);
-    if (b0 == NULL || res == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
     randomizeVec(size, b0);
     powerIter(sp, b0, sp->matShifting(sp, group, div->groupid), group, div->groupid, res);
 //    printVector(res, size);
     double eigen = eigenValue(sp, res, group, div->groupid);
-    printf("eigen %f\n", eigen);
+//    printf("eigen %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
     if (div->split(div, sp, res, group) == 0)
         return 0;
-    div->printGroups(div);
-    free(b0);
-    free(res);
+//    div->printGroups(div);
     return 1;
-}
-
-void findGroups(division *div, spmat *sp) {
-    int flag;
-    int last = div->numOfGroups - 1;
-    while (last < div->numOfGroups) {
-        flag = 1;
-        while (flag == 1) {
-            printf("last is %d\n", last);
-            flag = divideToTwo(div, sp, last);
-        }
-        last++;
-    }
-    div->printGroups(div);
 }
 
 void printGroups(division *d) {
@@ -324,6 +302,120 @@ division *allocateDivision(int n) {
     }
     d->nodesforGroup[0] = n;
     return d;
+}
+
+
+/*find vertice movement that maximizes Q*/
+int
+moveVertice(double q0, double *divVec, spmat *sp, const int *unmoved, double *maxDeltaQ, int group, const int *groupID) {
+    int j;
+    double deltaQ;
+    int maxIndex=-1;
+    int flag = 1;
+
+    for (j = 0; j < sp->n; j++) {
+        if (group == groupID[j]) {
+            if (unmoved[j]) {
+
+                divVec[j] = (-1 * divVec[j]);  /*moves vertice j */
+                deltaQ = modularityCalc(sp, divVec, group, groupID) - q0;  /*calcs new deltaQ */
+
+                divVec[j] = (-1 * divVec[j]);  /*moves back vertice j */
+
+                if (flag) {
+                    *maxDeltaQ = deltaQ;
+                    maxIndex = j;
+                    flag = 0;
+                }
+
+                if (deltaQ >= *maxDeltaQ) {
+                    *maxDeltaQ = deltaQ;
+                    maxIndex = j;
+                } /*keeps track of max Q */
+
+            }
+        }
+    }
+
+    return maxIndex;
+
+}
+
+/*optimizes division by moving one node from g1 to g2, saves division in res*/
+void
+optimize(double q0, double *divVec, double *deltaQ, int *unmoved, int *indices, double *improve, spmat *sp, int group,
+         int *groupID, int size) {
+    int j;
+    int i;
+    int counter = 0;
+    int maxIndex;
+    int maxScoreIdx = -1;
+    for (i = 0; i < size; i++) { unmoved[i] = 1; }  /*keeps track who moved */
+
+    for (j = 0; j < sp->n; j++) {
+        if (groupID[j] == group) {
+            *deltaQ = 0;
+            maxIndex = moveVertice(q0, divVec, sp, unmoved, deltaQ, group, groupID);     /*finds vertice that maximizes deltaQ*/
+            unmoved[maxIndex] = 0;    /*moves vertice*/
+            divVec[maxIndex] = (-1) * divVec[maxIndex];  /*moves vertice*/
+            indices[counter] = maxIndex;
+            if (counter == 0) {
+                improve[counter] = (*deltaQ);
+                maxScoreIdx = counter;
+            } else { improve[counter] = (*deltaQ); }
+            if (improve[counter] > improve[maxScoreIdx]) { maxScoreIdx = counter; }   /*saves max division state */
+            counter++;
+        }
+    }
+
+    if (IS_POSITIVE(improve[maxScoreIdx])) {
+        for (j = (size - 1); j > maxScoreIdx; j--) { divVec[indices[j]] = (-1) * divVec[indices[j]]; }
+        optimize(improve[maxScoreIdx] + q0, divVec, deltaQ, unmoved, indices, improve, sp, group, groupID, size);
+    }  /*finds max division state, if Q is positive, we try again */
+
+
+    else { for (j = 0; j < size; j++) { divVec[indices[j]] = (-1) * divVec[indices[j]]; }}
+}
+
+
+void divOptimization(division *div, int group, double q0, double *divVector, spmat *sp) {
+
+    int size = div->nodesforGroup[group];
+    int *unmoved = malloc(sizeof(int) * div->n);
+    double *deltaQ = malloc(sizeof(double)); /*DeltaQ result*/
+    int *indices = malloc(sizeof(int) * size);
+    double *improve = malloc(sizeof(double) * size);
+//    printVector(divVector, sp->n);
+    optimize(q0, divVector, deltaQ, unmoved, indices, improve, sp, group, div->groupid, size);
+//    printVector(divVector, sp->n);
+
+    free(deltaQ);
+    free(unmoved);
+    free(indices);
+    free(improve);
+}
+
+void findGroups(division *div, spmat *sp) {
+    int flag;
+    int size = sp->n;
+    int last = div->numOfGroups - 1;
+    double *b0 = malloc(sizeof(double) * size);
+    double *res = malloc(sizeof(double) * size);
+    if (b0 == NULL || res == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
+    while (last < div->numOfGroups) {
+        flag = 1;
+        while (flag == 1) {
+            flag = divideToTwo(div, sp, last, res, b0);
+            divOptimization(div, last, div->Q, res, sp);
+        }
+        last++;
+    }
+    div->printGroups(div);
+    free(b0);
+    free(res);
 }
 
 //void resetUnmoved(int *groupid, int group, int *unmoved){
