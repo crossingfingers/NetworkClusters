@@ -166,23 +166,10 @@ void mult_list(const struct _spmat *A, const double *v, double *result) {
 }
 
 void mult_array(const struct _spmat *A, const double *vec, double *result) {
-    double sum = 0;
-    int vecIDX = 0;
-    int rowIDX = 0;
     array *sparray = (array *) A->private;
-    int *val = (int *) sparray->values;
-    int *rowptr = (int *) sparray->rowptr;
-    int *colin = (int *) sparray->colind;
-
-    for (rowIDX = 1; rowIDX < A->n + 1; rowIDX++) {
-        sum = 0;
-        while (vecIDX < rowptr[rowIDX]) {
-            sum += (val[vecIDX] * vec[colin[vecIDX]]);
-            vecIDX++;
-        }
-        result[rowIDX - 1] = sum;
-    }
-
+  int i=0;
+  for(i=0;i<sparray->nnz;i++)
+      result[sparray->rowptr[i]]+=sparray->values[i]*vec[sparray->colind[i]];
 }
 
 double listShifting(spmat *A, int group, const int *groupid) {
@@ -221,21 +208,19 @@ double arrayShifting(spmat *A, int group, const int *groupid) {
     array *sparray = (array *) A->private;
     int i;
     int j;
+    int rowIDX=1;
+    int vecIDX=0;
     for (i = 0; i < A->n; ++i) {
-        if (group != groupid[i])
-            continue;
         sum = 0;
-        idx = sparray->rowptr[counter];
+        rowIDX++;
         for (j = 0; j < A->n; ++j) {
             val = 0;
-            if (group == groupid[j]) {
-                if (sparray->rowptr[counter] == idx) {
-                    if(sparray->colind[counter] == j){
-                    val = 1;
-                    counter++;}
+                if((sparray->colind[vecIDX]==j)&&(sparray->rowptr[vecIDX]<sparray->rowptr[rowIDX]))
+                { val = 1;
+                    vecIDX++;
                 }
                 sum += fabs((double) val - ((double) (A->k[i] * A->k[j]) / A->M));
-            }
+
 
         }
         max = (max >= sum) ? max : sum;
