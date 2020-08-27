@@ -196,36 +196,36 @@ double listShifting(spmat *A, int group, const int *groupid) {
         }
         max = (max >= sum) ? max : sum;
     }
+    printf("\nmax shifting is %f\n", max);
+
     return max;
 }
 
 double arrayShifting(spmat *A, int group, const int *groupid) {
     double max = 0;
-    double sum;
-    int counter = 0;
+    double sum = 0;
     int val = 0;
-    int idx;
-    array *sparray = (array *) A->private;
+    int curr=0;
+    array *sparray=A->private;
     int i;
     int j;
-    int rowIDX=1;
-    int vecIDX=0;
     for (i = 0; i < A->n; ++i) {
+        if (group != groupid[i])
+            continue;
         sum = 0;
-        rowIDX++;
         for (j = 0; j < A->n; ++j) {
-            val = 0;
-                if((sparray->colind[vecIDX]==j)&&(sparray->rowptr[vecIDX]<sparray->rowptr[rowIDX]))
-                { val = 1;
-                    vecIDX++;
-                }
+            if (sparray->rowptr[curr]==i && sparray->colind[curr] == j) {
+                val = 1;
+                curr++;
+            } else
+                val = 0;
+            if (groupid[j] == group)
                 sum += fabs((double) val - ((double) (A->k[i] * A->k[j]) / A->M));
-
-
         }
         max = (max >= sum) ? max : sum;
     }
     printf("\nmax shifting is %f\n", max);
+
     return max;
 }
 

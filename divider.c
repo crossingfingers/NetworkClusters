@@ -246,7 +246,7 @@ int divideToTwo(division *div, spmat *sp, int group) {
     randomizeVec(size, b0);
     powerIter(sp, b0, sp->matShifting(sp, group, div->groupid), group, div->groupid, res);
 //    printVector(res, size);
-    divOptimization(div, group, div->Q, res, sp);
+   // divOptimization(div, group, div->Q, res, sp);
     double eigen = eigenValue(sp, res, group, div->groupid);
    // printf("eigen %f\n", eigen);
     if (!IS_POSITIVE(eigen))
