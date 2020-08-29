@@ -20,12 +20,13 @@ typedef struct _spmat {
     void (*printSprase)(struct _spmat *A);
 
     double (*matShifting)(struct _spmat *A, int group, const int *groupid, double *vecF);
-
+    int (*isVal)(struct _spmat *A, int row, int col,int group, int *groupID);
     /* Private field for inner implementation.
      * Should not be read or modified externally */
     void *private;
 } spmat;
 
 spmat *readGraph(FILE *input);
+
 
 #endif

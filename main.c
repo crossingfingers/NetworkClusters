@@ -20,9 +20,13 @@ int main(int argc, char **argv) {
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
     graph = readGraph(input);
+    graph->printSprase(graph);
     div = allocateDivision(graph->n);
-    div->findGroups(div, graph);
-    div->writeDivision(div, output);
+
+    double vec[]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    divOptimization(div,0,0,vec,graph);
+//    div->findGroups(div, graph);
+//    div->writeDivision(div, output);
     div->free(div);
     graph->free(graph);
     end = clock();

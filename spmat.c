@@ -130,7 +130,6 @@ void initk(spmat *A) {
     }
 }
 
-
 spmat *spmat_allocate_list(int n) {
     spmat *sp;
     node **rows = calloc(n, sizeof(node *));
@@ -178,22 +177,21 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
     }
 }
 
-void mult_array(const struct _spmat *A, const double *vec, double *result) {
-    double sum = 0;
-    int vecIdx = 0;
-    int rowIdx = 0;
+void mult_array(const struct _spmat *A, const double *vec, double *result, int group, const int *groupid) {
     array *sparray = (array *) A->private;
-    int *val = (int *) sparray->values;
-    int *rowptr = (int *) sparray->rowptr;
-    int *colin = (int *) sparray->colind;
-
-    for (rowIdx = 1; rowIdx < A->n + 1; rowIdx++) {
-        sum = 0;
-        while (vecIdx < rowptr[rowIdx]) {
-            sum += (val[vecIdx] * vec[colin[vecIdx]]);
-            vecIdx++;
-        }
-        result[rowIdx - 1] = sum;
+    int i = 0;
+    double res = 0;
+    int rowIdx;
+    int curr = 0;
+    for (i = 0; i < A->n; i++) {
+        res = 0;
+        rowIdx = sparray->rowptr[curr];
+            while (rowIdx == sparray->rowptr[curr]) {
+                if (groupid[sparray->colind[curr]] == group)
+                    res += sparray->values[curr] * vec[sparray->colind[curr]];
+                curr++;
+            }
+        result[i] = res;
     }
 }
 
@@ -241,20 +239,60 @@ void print_array(struct _spmat *A) {
         }
         printf("\n");
     }
-    printMatrix(A);
+
 
 }
 
-double arrayShifting(spmat *A, int group, const int *groupid) {
+double arrayShifting(spmat *A, int group, const int *groupid, double *F) {
     double max = 0;
     double sum = 0;
-    array *spArr = (array *) A->private;
-    int size = A->n;
-    int i, j, currRow = spArr->rowptr[0], currCol = spArr->colind[0];
-    for (i = 0; i < size; ++i) {
+    int val = 0;
+    int curr = 0;
+    int i;
+    int j;
+    array *sparray = A->private;
+    for (i = 0; i < A->n; ++i) {
+        if (group != groupid[i])
+            continue;
+        sum = 0;
+        for (j = 0; j < A->n; ++j) {
+            if (sparray->rowptr[curr] == i && sparray->colind[curr] == j) {
+                val = 1;
+                curr++;
+            } else {
+                val = 0;
+            }
+            if (groupid[j] == group) {
+                if (i != j) {
+                    sum += fabs((double) val - ((double) (A->k[i] * A->k[j]) / A->M));
+                } else {
+                    sum += fabs((double) val - ((double) (A->k[i] * A->k[j]) / A->M) - (double) F[i]);
+                }
+            }
+
+        }
+        max = (max >= sum) ? max : sum;
+
 
     }
     return max;
+}
+
+int isVal(spmat *A, int row, int col,int group, int *groupID)
+{int i;
+    array *arr=A->private;
+    for(i=0;i<arr->nnz;i++)
+    {
+        if(groupID[arr->colind[i]]==group)
+        {
+            if((arr->colind[i]==col)&&(arr->rowptr[i]==row))
+                return 1;
+
+        }
+
+    }
+    return 0;
+
 }
 
 spmat *spmat_allocate_array(int n, int nnz) {
@@ -270,13 +308,14 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->n = n;
     sp->add_row = add_row_array;
     sp->free = free_array;
-//    sp->mult = mult_array;
+    sp->mult = mult_array;
     sp->private = sparray;
     sp->printSprase = print_array;
     sp->M = 0;
     sp->k = malloc(sizeof(int) * n);
     initk(sp);
-//    sp->matShifting = arrayShifting;
+    sp->matShifting = arrayShifting;
+    sp->isVal=isVal;
     return sp;
 }
 
@@ -297,16 +336,16 @@ spmat *readGraph(FILE *input) {
     spmat *graph;
     int i, size, elem, *row, j;
     unsigned int n;
-//    int nnz = find_nnz(input);
-//    printf("nnz is %d\n",nnz);
+    int nnz = find_nnz(input);
+    //  printf("nnz is %d\n",nnz);
     n = fread(&elem, sizeof(int), 1, input);
     if (n != 1) {
         printf("ERROR - mismatch reading value");
         exit(EXIT_FAILURE);
     }
     size = elem;
-    graph = spmat_allocate_list(size);
-//    graph = spmat_allocate_array(size, nnz);
+//    graph = spmat_allocate_list(size);
+    graph = spmat_allocate_array(size, nnz);
 //    printf("%d\n", *elem);
     row = malloc(sizeof(int) * size);
     if (row == NULL) {
@@ -330,6 +369,7 @@ spmat *readGraph(FILE *input) {
 //    graph->printSprase(graph);
     return graph;
 }
+
 
 
 

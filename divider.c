@@ -9,6 +9,8 @@
 #define IS_POSITIVE(X) ((X) > 0.00001)
 
 
+void divOptimization(division *div, int group, double q0, double *divVector, spmat *sp);
+
 /*get a vector and the size of it and init any value to a random value*/
 void randomizeVec(int size, double *vec) {
     int i;
@@ -18,6 +20,7 @@ void randomizeVec(int size, double *vec) {
         vec[i] = rand();
     }
 }
+
 /* used for the F vector as a Matrix to multiply it by the v vector*/
 void vecMult(double *vec1, const double *vec2, int group, const int *groupid, int size) {
     int i;
@@ -28,6 +31,7 @@ void vecMult(double *vec1, const double *vec2, int group, const int *groupid, in
             vec1[i] = 0;
     }
 }
+
 /* gets to vectors and return the sum of vec with b0*shifting (shifting is the value from matrix shifting*/
 void vecSum(double *vec, const double *b0, double shifting, int group, const int *groupid, int n) {
     int i;
@@ -59,6 +63,7 @@ void scalarMult(double *vec, double x, int group, const int *groupid, int n) {
             vec[i] = 0;
     }
 }
+
 /*this is a dot product of int vector with double vector*/
 double dotProd(const int *vec1, const double *vec2, int group, const int *groupid, int n) {
     double res = 0;
@@ -69,6 +74,7 @@ double dotProd(const int *vec1, const double *vec2, int group, const int *groupi
     }
     return res;
 }
+
 /* dot product of two double vectors*/
 double dotDoubleProd(const double *vec1, const double *vec2, int group, const int *groupid, int n) {
     double res = 0;
@@ -175,13 +181,13 @@ void powerIter(spmat *sp, double *b0, double shifting, int group, const int *gro
         vecSum(result, b0, shifting, group, groupid, size);
         normalize(size, result, group, groupid);
         for (i = 0; i < size; i++) {
-            if(group != groupid[i])
+            if (group != groupid[i])
                 continue;
             if (IS_POSITIVE(fabs(result[i] - b0[i])))
                 flag = 1;
             b0[i] = result[i];
         }
-        counter ++;
+        counter++;
     }
 //    printf("took %d iterations\n", counter);
 }
@@ -273,10 +279,11 @@ int divideToTwo(division *div, spmat *sp, int group, double *res, double *b0) {
     double eigen = eigenValue(sp, res, group, div->groupid);
     if (!IS_POSITIVE(eigen))
         return 0;
+    // divOptimization(div,group,modularityCalc(sp,res,group,groupid),res,sp);
     delta = split(div, sp, res, group);
     if (delta == 0)
         return 0;
-//    div->printGroups(div);
+    div->printGroups(div);
     return 1;
 }
 
@@ -312,35 +319,31 @@ void writeDivision(struct _division *div, FILE *output) {
 
 /*find vertice movement that maximizes Q*/
 int
-moveVertice(double q0, double *divVec, spmat *sp, const int *unmoved, double *maxDeltaQ, int group, const int *groupID) {
+moveVertice(int k, double *divVec, spmat *sp, int size, const int *unmoved, double *maxDeltaQ, int group,
+             int *groupID, double *score) {
     int j;
-    double deltaQ;
-    int maxIndex=-1;
+    int i;
+    double maxscore = 0;
+    int maxIndex = -1;
     int flag = 1;
+    int counter = 0;
+
 
     for (j = 0; j < sp->n; j++) {
         if (group == groupID[j]) {
             if (unmoved[j]) {
+                if (j == k)
+                    score[j] = -1 * score[j];  /*calcs new deltaQ */
+                else
+                    score[j] = score[j] - (4 * divVec[j] * divVec[k] * (((double) sp->isVal(sp, i, k, group, groupID)) -
+                                                                        (((double) sp->k[i] * (double) sp->k[i]) /
+                                                                         sp->M)));
+                if (score[i] >= maxscore) { maxIndex = i, maxscore = score[i]; }
+            } /*keeps track of max Q */
 
-                divVec[j] = (-1 * divVec[j]);  /*moves vertice j */
-                deltaQ = modularityCalc(sp, divVec, group, groupID) - q0;  /*calcs new deltaQ */
-
-                divVec[j] = (-1 * divVec[j]);  /*moves back vertice j */
-
-                if (flag) {
-                    *maxDeltaQ = deltaQ;
-                    maxIndex = j;
-                    flag = 0;
-                }
-
-                if (deltaQ >= *maxDeltaQ) {
-                    *maxDeltaQ = deltaQ;
-                    maxIndex = j;
-                } /*keeps track of max Q */
-
-            }
         }
     }
+
 
     return maxIndex;
 
@@ -350,29 +353,44 @@ moveVertice(double q0, double *divVec, spmat *sp, const int *unmoved, double *ma
 void
 optimize(double q0, double *divVec, double *deltaQ, int *unmoved, int *indices, double *improve, spmat *sp, int group,
          int *groupID, int size) {
+
+    if (sp->M == 0) {
+        printf("ERROR - divide in zero");
+        exit(EXIT_FAILURE);
+    }
     int j;
     int i;
-    int counter = 0;
     int maxIndex;
     int maxScoreIdx = -1;
+    double maxscore;
     for (i = 0; i < size; i++) { unmoved[i] = 1; }  /*keeps track who moved */
+    double *score = malloc(sp->n * sizeof(double));
+    double *vec = malloc(sp->n * sizeof(double));
+    multBv(sp, divVec, group, groupID, vec);
 
-    for (j = 0; j < sp->n; j++) {
-        if (groupID[j] == group) {
-            *deltaQ = 0;
-            maxIndex = moveVertice(q0, divVec, sp, unmoved, deltaQ, group, groupID);     /*finds vertice that maximizes deltaQ*/
-            unmoved[maxIndex] = 0;    /*moves vertice*/
-            divVec[maxIndex] = (-1) * divVec[maxIndex];  /*moves vertice*/
-            indices[counter] = maxIndex;
-            if (counter == 0) {
-                improve[counter] = (*deltaQ);
-                maxScoreIdx = counter;
-            } else { improve[counter] = (*deltaQ); }
-            if (improve[counter] > improve[maxScoreIdx]) { maxScoreIdx = counter; }   /*saves max division state */
-            counter++;
+/*
+   done before moving first node
+*/
+    for (i = 0; i < sp->n; i++) {
+        if (groupID[i] == group) {
+            score[i] = (-2) * (divVec[i] * vec[i] + (((double) sp->k[i] * (double) sp->k[i])) / sp->M);
+            if (score[i] >= maxscore) { maxIndex = i, maxscore = score[i]; }
         }
     }
+    printf("max score is: %f",score[maxIndex]);
+    for (j = 0; j < sp->n; j++) {
+        if (groupID[j] == group) {
+            /*finds vertice that maximizes deltaQ*/
+            unmoved[maxIndex] = 0;    /*moves vertice*/
+            divVec[maxIndex] = (-1) * divVec[maxIndex];  /*moves vertice*/
+            indices[j] = maxIndex;
+            improve[j] = score[maxIndex];
+            if (improve[j] > improve[maxScoreIdx]) { maxScoreIdx = j; }   /*saves max division state */
+            maxIndex = moveVertice(maxIndex, divVec, sp, size, unmoved, deltaQ, group, groupID, score);
 
+        }
+    }
+    printf("max score is: %f",improve[maxScoreIdx]);
     if (IS_POSITIVE(improve[maxScoreIdx])) {
         for (j = (size - 1); j > maxScoreIdx; j--) { divVec[indices[j]] = (-1) * divVec[indices[j]]; }
         optimize(improve[maxScoreIdx] + q0, divVec, deltaQ, unmoved, indices, improve, sp, group, groupID, size);
@@ -390,14 +408,23 @@ void divOptimization(division *div, int group, double q0, double *divVector, spm
     double *deltaQ = malloc(sizeof(double)); /*DeltaQ result*/
     int *indices = malloc(sizeof(int) * size);
     double *improve = malloc(sizeof(double) * size);
-//    printVector(divVector, sp->n);
+    printf("vector 0:");
+    printVector(divVector, sp->n);
     optimize(q0, divVector, deltaQ, unmoved, indices, improve, sp, group, div->groupid, size);
-//    printVector(divVector, sp->n);
+    printf("vector 0:");
+    printVector(divVector, sp->n);
 
     free(deltaQ);
-    free(unmoved);
+
+
+     // free(unmoved);
+
+
     free(indices);
+
     free(improve);
+
+
 }
 
 void findGroups(division *div, spmat *sp) {
