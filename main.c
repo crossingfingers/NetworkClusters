@@ -22,11 +22,8 @@ int main(int argc, char **argv) {
     graph = readGraph(input);
     graph->printSprase(graph);
     div = allocateDivision(graph->n);
-
-    double vec[]={1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
-    divOptimization(div,0,0,vec,graph);
-//    div->findGroups(div, graph);
-//    div->writeDivision(div, output);
+    div->findGroups(div, graph);
+    div->writeDivision(div, output);
     div->free(div);
     graph->free(graph);
     end = clock();
