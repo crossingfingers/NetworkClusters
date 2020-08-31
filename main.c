@@ -20,9 +20,10 @@ int main(int argc, char **argv) {
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
     graph = readGraph(input);
-    graph->printSprase(graph);
+//    graph->printSprase(graph);
     div = allocateDivision(graph->n);
     div->findGroups(div, graph);
+    div->printGroups(div);
     div->writeDivision(div, output);
     div->free(div);
     graph->free(graph);

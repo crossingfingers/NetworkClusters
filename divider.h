@@ -36,7 +36,8 @@ division *allocateDivision(int n);
 
 //int divideToTwo(division *div, spmat *sp, int group);
 
-void divOptimization(division *div, int group, double *divVector, spmat *sp);
+
+void divOptimization(int *groupid,int size, int group, double *divVector, spmat *sp);
 
 
 #endif //CPROJECT_DIVIDER_H
