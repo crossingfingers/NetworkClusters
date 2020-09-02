@@ -244,6 +244,8 @@ double split(struct _division *d, spmat *sp, double *vec, int group) {
     delta = modularityCalc(sp, vec, group, groupid);
     if (!IS_POSITIVE(delta))
         return 0;
+
+    delta = modularityCalc(sp, vec, group, groupid);
     d->Q += delta;
     /*create a new group for the -1 indexes in the +-1 vector*/
     for (i = 0; i < size; ++i) {
@@ -319,7 +321,8 @@ void writeDivision(struct _division *div, FILE *output) {
 
 /*find vertice movement that maximizes Q*/
 int
-calcScore(int *maxScoreIdx, int k, const double *divVec, spmat *sp, const int *unmoved, int group, int *groupID,
+calcScore(double *Bvec, int *maxScoreIdx, int k, const double *divVec, spmat *sp, const int *unmoved, int group,
+          int *groupID,
           double *score) {
     int i;
     int scoreIdx = 0;
@@ -328,15 +331,14 @@ calcScore(int *maxScoreIdx, int k, const double *divVec, spmat *sp, const int *u
     for (i = 0; i < sp->n; i++) {
         if (group == groupID[i]) {
             if (unmoved[i]) {
-                score[scoreIdx]=modularityCalc(sp,divVec,group,groupID);
-//                if (i == k) {
-//                    score[scoreIdx] = -1 * score[scoreIdx];  /*calcs new deltaQ */
-//                } else {
-//                    score[scoreIdx] = score[scoreIdx] -
-//                                      (4 * divVec[i] * divVec[k] * (((double) sp->isVal(sp, i, k, group, groupID)) -
-//                                                                    (((double) sp->k[i] * (double) sp->k[i]) /
-//                                                                     (double) sp->M)));
-//                }
+
+                if (i == k) {
+                    score[scoreIdx] = -1 * score[scoreIdx];  /*calcs new deltaQ */
+                } else {
+
+                    score[scoreIdx] = score[scoreIdx] -
+                                      (4 * divVec[i] * divVec[k] * Bvec[i]);
+                }
                 if (score[scoreIdx] >= score[*maxScoreIdx]) {
                     *maxScoreIdx = scoreIdx;
                     maxIdx = i;
@@ -352,11 +354,18 @@ calcScore(int *maxScoreIdx, int k, const double *divVec, spmat *sp, const int *u
 
 }
 
+void initZeroVec(double *vec, int size, int group, const int *groupid) {
+    int i;
+    for (i = 0; i < size; ++i) {
+        if (group == groupid[i])
+            vec[i] = 0;
+    }
+}
+
 /*optimizes division by moving one node from g1 to g2, saves division in res*/
 void
 optimize(double *divVec, int *unmoved, int *indices, double *improve, double *score, spmat *sp, int group,
          int *groupID, int size, double *vec) {
-
     if (sp->M == 0) {
         printf("ERROR - divide in zero");
         exit(EXIT_FAILURE);
@@ -364,18 +373,21 @@ optimize(double *divVec, int *unmoved, int *indices, double *improve, double *sc
     int i;
     int scoreIdx = 0;
     int verticeIdx;
-    int maxModularityIdx = 0;
+    int maxModularityIdx = size - 1;
+    double deltaQ = 0;
+    //TODO: FIX MEM RELEASE
     int *maxScoreIdx = malloc(sizeof(int));
-    for (i = 0; i < sp->n; i++) { unmoved[i] = 1; }  /*keeps track who moved */
+    double *zeroVec = malloc(sizeof(double) * sp->n);
+    double *bVec = malloc(sizeof(double) * sp->n);
+    initZeroVec(zeroVec, sp->n, group, groupID);
+    for (i = 0; i < sp->n; i++) { unmoved[i] = 1; }
     multBv(sp, divVec, group, groupID, vec);
     *maxScoreIdx = 0;
 
-/*
-   done before moving first node
-*/
     for (i = 0; i < sp->n; i++) {
         if (groupID[i] == group) {
-            score[scoreIdx] = (-2) * (  (divVec[i] * vec[i]) + (((double) sp->k[i] * (double) sp->k[i]) / (double) sp->M));
+            score[scoreIdx] =
+                    (-2) * ((divVec[i] * vec[i]) + (((double) sp->k[i] * (double) sp->k[i]) / (double) sp->M));
             if (score[scoreIdx] >= score[*maxScoreIdx]) {
                 *maxScoreIdx = scoreIdx;
                 verticeIdx = i;
@@ -385,42 +397,56 @@ optimize(double *divVec, int *unmoved, int *indices, double *improve, double *sc
     }
 
     scoreIdx = 1;
-    unmoved[verticeIdx] = 0;    /*moves vertice*/
-    divVec[verticeIdx] = (-1) * divVec[verticeIdx];  /*moves vertice*/
+    unmoved[verticeIdx] = 0;
+    divVec[verticeIdx] = (-1) * divVec[verticeIdx];
     indices[0] = verticeIdx;
     improve[0] = score[*maxScoreIdx];
+    zeroVec[verticeIdx] = 1;
+    multBv(sp, zeroVec, group, groupID, bVec);
+    zeroVec[verticeIdx] = 0;
 
-    /*saves max division state */
 
-    for (i = 1; i < sp->n; i++) {
-        if (groupID[i] == group) {
-            verticeIdx = calcScore(maxScoreIdx, verticeIdx, divVec, sp, unmoved, group, groupID, score);
-            divVec[verticeIdx] = (-1) * divVec[verticeIdx];  /*moves vertice*/
-            indices[scoreIdx] = verticeIdx;
-            improve[scoreIdx] = improve[scoreIdx - 1] + score[*maxScoreIdx];
-            if (improve[scoreIdx] >
-                improve[maxModularityIdx]) { maxModularityIdx = scoreIdx; }   /*saves max division state */
-            unmoved[verticeIdx] = 0;    /*moves vertice*/
-            scoreIdx++;
-        }
+    while (scoreIdx < size) {
+
+        verticeIdx = calcScore(bVec, maxScoreIdx, verticeIdx, divVec, sp, unmoved, group, groupID, score);
+        divVec[verticeIdx] = (-1) * divVec[verticeIdx];
+        indices[scoreIdx] = verticeIdx;
+        improve[scoreIdx] = improve[scoreIdx - 1] + score[*maxScoreIdx];
+        unmoved[verticeIdx] = 0;
+        zeroVec[verticeIdx] = 1;
+        multBv(sp, zeroVec, group, groupID, bVec);
+        zeroVec[verticeIdx] = 0;
+        scoreIdx++;
     }
+    free(maxScoreIdx);
 
-    if (IS_POSITIVE(improve[maxModularityIdx])) {
+    for (i = 0; i < size; i++) {
+        if (improve[i] >
+            improve[maxModularityIdx]) { maxModularityIdx = i; }   /*saves max division state */}
+
+    if ((maxModularityIdx == (size - 1)) || (improve[maxModularityIdx] < 0)) {
+        deltaQ = 0;
+        for (i = 0; i < size; i++) { divVec[indices[i]] = (-1) * divVec[indices[i]]; }
+    } else {
+        deltaQ = improve[maxModularityIdx];
         for (i = (size - 1); i > maxModularityIdx; i--) { divVec[indices[i]] = (-1) * divVec[indices[i]]; }
+    }
+    if (IS_POSITIVE(deltaQ)) {
         optimize(divVec, unmoved, indices, improve, score, sp, group, groupID, size, vec);
     }  /*finds max division state, if Q is positive, we try again */
-    else { for (i = 0; i < size; i++) { divVec[indices[i]] = (-1) * divVec[indices[i]]; }}
 }
 
 
 void divOptimization(int *groupid, int size, int group, double *divVector, spmat *sp) {
+    printf("optimization called\n");
+    printf("mod calc before %f\n",modularityCalc(sp,divVector,group,groupid));
     int *unmoved = malloc(sizeof(int) * sp->n);
     int *indices = malloc(sizeof(int) * size);
     double *improve = malloc(sizeof(double) * size);
     double *score = malloc(size * sizeof(double));
     double *vec = malloc(sp->n * sizeof(double));
     optimize(divVector, unmoved, indices, improve, score, sp, group, groupid, size, vec);
-
+    printf("mod calc after %f\n",modularityCalc(sp,divVector,group,groupid));
 //TODO: fix memory release
 // free(unmoved);
 //    free(indices);

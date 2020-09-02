@@ -18,7 +18,7 @@ typedef struct _spmat {
     void (*mult)(const struct _spmat *A, const double *v, double *result, int group, const int *groupid);
 
     void (*printSprase)(struct _spmat *A);
-
+    double (*calcSum)(struct _spmat *A, int group, int *groupID, int i, const double *divVec);
     double (*matShifting)(struct _spmat *A, int group, const int *groupid, double *vecF);
     int (*isVal)(struct _spmat *A, int row, int col,int group, int *groupID);
     /* Private field for inner implementation.

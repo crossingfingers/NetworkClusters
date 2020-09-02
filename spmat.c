@@ -186,11 +186,11 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, int g
     for (i = 0; i < A->n; i++) {
         res = 0;
         rowIdx = sparray->rowptr[curr];
-            while (rowIdx == sparray->rowptr[curr]) {
-                if (groupid[sparray->colind[curr]] == group)
-                    res += sparray->values[curr] * vec[sparray->colind[curr]];
-                curr++;
-            }
+        while (rowIdx == sparray->rowptr[curr]) {
+            if (groupid[sparray->colind[curr]] == group)
+                res += sparray->values[curr] * vec[sparray->colind[curr]];
+            curr++;
+        }
         result[i] = res;
     }
 }
@@ -278,14 +278,12 @@ double arrayShifting(spmat *A, int group, const int *groupid, double *F) {
     return max;
 }
 
-int isVal(spmat *A, int row, int col,int group, int *groupID)
-{int i;
-    array *arr=A->private;
-    for(i=0;i<arr->nnz;i++)
-    {
-        if(groupID[arr->colind[i]]==group)
-        {
-            if((arr->colind[i]==col)&&(arr->rowptr[i]==row))
+int isVal(spmat *A, int row, int col, int group, int *groupID) {
+    int i;
+    array *arr = A->private;
+    for (i = 0; i < arr->nnz; i++) {
+        if (groupID[arr->colind[i]] == group) {
+            if ((arr->colind[i] == col) && (arr->rowptr[i] == row))
                 return 1;
 
         }
@@ -295,6 +293,25 @@ int isVal(spmat *A, int row, int col,int group, int *groupID)
 
 }
 
+double calcSum(struct _spmat *A, int group, int *groupID, int i, const double *divVec) {
+    array *sparray = A->private;
+    double sum = 0;
+    int j;
+    int idx = 0;
+    double val = 0;
+    for (j = 0; j < A->n; j++) {
+        if (group == groupID[j]) {
+            if ((sparray->rowptr[idx] == i) && (sparray->colind[idx] == j)) {
+                val = 1;
+            } else
+            {   val = 0;}
+            sum+=(val-(((double) A->k[i] * (double) A->k[j]) /
+                       (double) A->M))*divVec[j];
+
+        }
+    }
+    return sum;
+}
 spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
@@ -315,9 +332,11 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->k = malloc(sizeof(int) * n);
     initk(sp);
     sp->matShifting = arrayShifting;
-    sp->isVal=isVal;
+    sp->isVal = isVal;
+    sp->calcSum=calcSum;
     return sp;
 }
+
 
 int find_nnz(FILE *input) {
     int res;
