@@ -130,6 +130,7 @@ void initk(spmat *A) {
     }
 }
 
+
 spmat *spmat_allocate_list(int n) {
     spmat *sp;
     node **rows = calloc(n, sizeof(node *));
@@ -239,7 +240,7 @@ void print_array(struct _spmat *A) {
         }
         printf("\n");
     }
-
+    printMatrix(A);
 
 }
 
@@ -278,40 +279,6 @@ double arrayShifting(spmat *A, int group, const int *groupid, double *F) {
     return max;
 }
 
-int isVal(spmat *A, int row, int col, int group, int *groupID) {
-    int i;
-    array *arr = A->private;
-    for (i = 0; i < arr->nnz; i++) {
-        if (groupID[arr->colind[i]] == group) {
-            if ((arr->colind[i] == col) && (arr->rowptr[i] == row))
-                return 1;
-
-        }
-
-    }
-    return 0;
-
-}
-
-double calcSum(struct _spmat *A, int group, int *groupID, int i, const double *divVec) {
-    array *sparray = A->private;
-    double sum = 0;
-    int j;
-    int idx = 0;
-    double val = 0;
-    for (j = 0; j < A->n; j++) {
-        if (group == groupID[j]) {
-            if ((sparray->rowptr[idx] == i) && (sparray->colind[idx] == j)) {
-                val = 1;
-            } else
-            {   val = 0;}
-            sum+=(val-(((double) A->k[i] * (double) A->k[j]) /
-                       (double) A->M))*divVec[j];
-
-        }
-    }
-    return sum;
-}
 spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
@@ -332,11 +299,8 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->k = malloc(sizeof(int) * n);
     initk(sp);
     sp->matShifting = arrayShifting;
-    sp->isVal = isVal;
-    sp->calcSum=calcSum;
     return sp;
 }
-
 
 int find_nnz(FILE *input) {
     int res;
@@ -355,16 +319,16 @@ spmat *readGraph(FILE *input) {
     spmat *graph;
     int i, size, elem, *row, j;
     unsigned int n;
-    int nnz = find_nnz(input);
-    //  printf("nnz is %d\n",nnz);
+//    int nnz = find_nnz(input);
+//    printf("nnz is %d\n",nnz);
     n = fread(&elem, sizeof(int), 1, input);
     if (n != 1) {
         printf("ERROR - mismatch reading value");
         exit(EXIT_FAILURE);
     }
     size = elem;
-//    graph = spmat_allocate_list(size);
-    graph = spmat_allocate_array(size, nnz);
+    graph = spmat_allocate_list(size);
+//    graph = spmat_allocate_array(size, nnz);
 //    printf("%d\n", *elem);
     row = malloc(sizeof(int) * size);
     if (row == NULL) {
@@ -388,7 +352,6 @@ spmat *readGraph(FILE *input) {
 //    graph->printSprase(graph);
     return graph;
 }
-
 
 
 
