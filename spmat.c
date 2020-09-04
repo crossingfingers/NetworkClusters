@@ -111,19 +111,25 @@ double listShifting(spmat *A, const int *group, int groupSize, const int *vertex
         curr = rows[group[i]];
         sum = 0;
         ki = A->k[group[i]];
-        for (j = 0; j <= group[groupSize - 1]; ++j){
-            if (vertexToGroup[j] != groupIdx)
+        j = 0;
+        while (j <= group[groupSize - 1]){
+            if (vertexToGroup[j] != groupIdx) {
+                j++;
                 continue;
+            }
             kj = A->k[j];
             if (curr != NULL && curr->col_idx == j) {
                 val = 1;
                 curr = curr->next;
+                j++;
             } else {
                 val = 0;
                 if(curr != NULL && curr->col_idx < j)
                     curr = curr->next;
+                else
+                    j++;
             }
-            if (group[i] != group[j]) {
+            if (group[i] != j) {
                 sum += fabs((double) val - ((double) (ki * kj) / A->M));
             } else {
                 sum += fabs((double) val - ((double) (ki * kj) / A->M) - (double) F[i]);
