@@ -212,6 +212,8 @@ double modularityCalc(spmat *sp, double *vec, int *group, int groupSize) {
     return res / 2;
 }
 
+
+
 void resetUnmoved(int *unmoved, int groupSize) {
     int i;
     for (i = 0; i < groupSize; ++i) {
@@ -352,6 +354,7 @@ int getNewGroupSize(const double *s, const int *group, int groupSize) {
     return counter;
 }
 
+
 double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
     int flag = -1;
     double delta;
@@ -373,12 +376,9 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
         } else
             vec[g[i]] = 1;
     }
-    delta = modularityCalc(sp, vec, g, size);
-    printf("mod before opt %f\n", delta);
 //    optimize(sp, vec, g, size);
-    counter = getNewGroupSize(vec, g, size);
+//    counter = getNewGroupSize(vec, g, size);
     delta = modularityCalc(sp, vec, g, size);
-    printf("mod after opt %f\n", delta);
     if (!IS_POSITIVE(delta))
         return 0;
     d->Q += delta;
@@ -412,7 +412,7 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
 }
 
 int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0) {
-    printf("working on group %d\n", groupIdx);
+//    printf("working on group %d\n", groupIdx);
     int size = sp->n;
     double delta;
     randomizeVec(size, b0);
@@ -434,7 +434,7 @@ int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0)
     powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, res);
 //    printf("HERE11\n");
     double eigen = eigenValue(sp, res, group, groupSize);
-    printf("eigen value is %f\n", eigen);
+//    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
     delta = split(div, sp, res, groupIdx);

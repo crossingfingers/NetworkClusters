@@ -105,34 +105,29 @@ double listShifting(spmat *A, const int *group, int groupSize, const int *vertex
     node *curr;
     int ki, kj;
     node **rows = (node **) A->private;
-    int i;
-    int j;
+    int i, idxI;
+    int idxJ;
     for (i = 0; i < groupSize; ++i) {
-        curr = rows[group[i]];
+        idxI = group[i];
+        curr = rows[idxI];
         sum = 0;
-        ki = A->k[group[i]];
-        j = 0;
-        while (j <= group[groupSize - 1]){
-            if (vertexToGroup[j] != groupIdx) {
-                j++;
-                continue;
-            }
-            kj = A->k[j];
-            if (curr != NULL && curr->col_idx == j) {
+        ki = A->k[idxI];
+        for (idxJ= 0; idxJ <= group[groupSize-1]; ++idxJ) {
+            kj = A->k[idxJ];
+            if (curr != NULL && curr->col_idx == idxJ) {
                 val = 1;
                 curr = curr->next;
-                j++;
             } else {
                 val = 0;
-                if(curr != NULL && curr->col_idx < j)
+                if(curr != NULL && curr->col_idx < idxJ)
                     curr = curr->next;
-                else
-                    j++;
             }
-            if (group[i] != j) {
-                sum += fabs((double) val - ((double) (ki * kj) / A->M));
-            } else {
-                sum += fabs((double) val - ((double) (ki * kj) / A->M) - (double) F[i]);
+            if (vertexToGroup[idxJ] == groupIdx) {
+                if (idxI != idxJ) {
+                    sum += fabs((double) val - ((double) (ki * kj) / A->M));
+                } else {
+                    sum += fabs((double) val - ((double) (ki * kj) / A->M) - (double) F[i]);
+                }
             }
         }
         max = (max >= sum) ? max : sum;
