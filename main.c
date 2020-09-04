@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
     FILE *output;
     double start;
     double end;
+    srand(time(NULL));
     if (argc != 3) {
         printf("ERROR - there is not 2 arguments");
         exit(EXIT_FAILURE);

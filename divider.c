@@ -13,7 +13,6 @@
 /*get a vector and the size of it and init any value to a random value*/
 void randomizeVec(int size, double *vec) {
     int i;
-    srand(time(NULL));
     assert(vec != NULL);
     for (i = 0; i < size; i++) {
         vec[i] = rand();
@@ -373,7 +372,7 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
             flag = IS_POSITIVE(vec[g[i]]) ? 1 : 0;
         if (IS_POSITIVE(vec[g[i]]) != flag) {
             vec[g[i]] = -1;
-//            counter++;
+            counter++;
         } else
             vec[g[i]] = 1;
     }
@@ -431,11 +430,11 @@ int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0)
     //TODO fix mult Bv and shifting
 //    printf("vec f is :");
 //    printVector(vecF, size);
-//    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
+    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
     powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, res);
 //    printf("HERE11\n");
     double eigen = eigenValue(sp, res, group, groupSize);
-//    printf("eigen value is %f\n", eigen);
+    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
     delta = split(div, sp, res, groupIdx);
