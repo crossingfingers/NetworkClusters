@@ -373,7 +373,7 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
             flag = IS_POSITIVE(vec[g[i]]) ? 1 : 0;
         if (IS_POSITIVE(vec[g[i]]) != flag) {
             vec[g[i]] = -1;
-            counter++;
+//            counter++;
         } else
             vec[g[i]] = 1;
     }
