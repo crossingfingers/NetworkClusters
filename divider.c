@@ -101,6 +101,14 @@ void copyVec(const int *src, double *dst, const int *group, int n) {
     }
 }
 
+void copyDoubleVec(const double *src, double *dst, const int *group, int n) {
+    int i, idx;
+    for (i = 0; i < n; ++i) {
+        idx = group[i];
+        dst[idx] = src[idx];
+    }
+}
+
 void normalize(int size, double *vec, const int *group, int groupSize) {
     double res = dotDoubleProd(vec, vec, group, groupSize);
     res = sqrt(res);
@@ -146,32 +154,27 @@ void initOneValVec(double *unitVec, int n, const int *group, int val) {
 
 
 /* calculate the vector B^*v to res, by split the B^ into B and F vector as values of diag matrix*/
-void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res) {
-    int size = sp->n;
-    double *unitVec = malloc(size * sizeof(double));
-    double *vecF = malloc(size * sizeof(double));
-    if (unitVec == NULL || vecF == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
-    initOneValVec(unitVec, groupSize, group, 1);
-    multBv(sp, unitVec, group, vecF, groupSize, 0);
+void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF) {
     vecMult(vecF, vec, group, groupSize);
     multBv(sp, vec, group, res, groupSize, 0);
     vecDec(res, vecF, group, groupSize);
-    free(vecF);
-    free(unitVec);
 }
 
 
 /*power iteration on B^ to calculate the leading eigenvalue, using matrix shifting*/
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result) {
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize,double *vecF, double *result) {
     int flag = 1, i, idx;
     int size = sp->n;
     int counter = 0;
+    double *vecFCopy = malloc(size * sizeof(double));
+    if (vecFCopy == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     while (flag == 1 && counter < 10000) {
         flag = 0;
-        multBRoof(sp, b0, group, groupSize, result);
+        copyDoubleVec(vecF, vecFCopy, group, groupSize);
+        multBRoof(sp, b0, group, groupSize, result, vecFCopy);
         vecSum(result, b0, shifting, group, groupSize);
         normalize(size, result, group, groupSize);
         for (i = 0; i < groupSize; i++) {
@@ -183,6 +186,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
         counter++;
     }
 //    printf("took %d iterations\n", counter);
+    free(vecFCopy);
 }
 
 /*calculate the eigenvalue of the leading eigenVector found*/
@@ -190,9 +194,17 @@ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize) {
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
     double res;
-    multBRoof(sp, vec, group, groupSize, tmp);
+    double *vecF = malloc(size * sizeof(double));
+    if (tmp == NULL || vecF == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
+    initOneValVec(tmp, groupSize, group, 1);
+    multBv(sp, tmp, group, vecF, groupSize, 0);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
+    free(vecF);
 //    printf("eigen value is %f\n", res);
     return res;
 }
@@ -202,13 +214,17 @@ double modularityCalc(spmat *sp, double *vec, int *group, int groupSize) {
     double res = 0;
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
-    if (tmp == NULL) {
+    double *vecF = malloc(size * sizeof(double));
+    if (tmp == NULL || vecF == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
-    multBRoof(sp, vec, group, groupSize, tmp);
+    initOneValVec(tmp, groupSize, group, 1);
+    multBv(sp, tmp, group, vecF, groupSize, 0);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
+    free(vecF);
     return res / 2;
 }
 
@@ -413,6 +429,7 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
 
 int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0) {
 //    printf("working on group %d\n", groupIdx);
+//TODO make vecF only calculated here and send it to all functions !!!!
     int size = sp->n;
     double delta;
     randomizeVec(size, b0);
@@ -426,15 +443,11 @@ int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0)
     }
     initOneValVec(unitVec, div->nodesforGroup[groupIdx], group, 1);
     multBv(sp, unitVec, group, vecF, groupSize, 1);
-//    printVector(vecF, size);
-    //TODO fix mult Bv and shifting
-//    printf("vec f is :");
-//    printVector(vecF, size);
-    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
-    powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, res);
+//    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
+    powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, vecF,res);
 //    printf("HERE11\n");
     double eigen = eigenValue(sp, res, group, groupSize);
-    printf("eigen value is %f\n", eigen);
+//    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
     delta = split(div, sp, res, groupIdx);
