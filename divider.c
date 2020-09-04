@@ -5,6 +5,7 @@
 #include <math.h>
 #include "divider.h"
 #include <time.h>
+#include <float.h>
 
 #define IS_POSITIVE(X) ((X) > 0.00001)
 
@@ -248,8 +249,8 @@ void updateScore(spmat *sp, const double *s, double *score, const int *group, in
 }
 
 int findMaxIdx(const double *score, int groupSize, const int *unmoved) {
-    double max;
-    int maxIdx, i, flag = 0;
+    double max = -DBL_MAX;
+    int maxIdx=-1, i, flag = 0;
     for (i = 0; i < groupSize; ++i) {
         if (unmoved[i] == 0)
             continue;
@@ -330,7 +331,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
             square = sp->k[idx] * sp->k[idx];
             score[i] = -2 * ((s[idx] * res[idx]) + ((double) square / M));
         }
-        for (i = 0; i < size; ++i) {
+        for (i = 0; i < groupSize; ++i) {
             maxIdx = findMaxIdx(score, groupSize, unmoved);
             s[group[maxIdx]] = -s[group[maxIdx]];
             indices[i] = group[maxIdx];
@@ -376,8 +377,8 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
         } else
             vec[g[i]] = 1;
     }
-//    optimize(sp, vec, g, size);
-//    counter = getNewGroupSize(vec, g, size);
+    optimize(sp, vec, g, size);
+    counter = getNewGroupSize(vec, g, size);
     delta = modularityCalc(sp, vec, g, size);
     if (!IS_POSITIVE(delta))
         return 0;
