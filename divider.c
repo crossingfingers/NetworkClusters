@@ -248,52 +248,44 @@ void initZeroVec(double *vec, int size, int group, const int *groupid) {
     }
 }
 
-/*int findMaxIdx(spmat *sp, double *s, double *score, int group, const int *groupid, const int *unmoved) {
-    int maxIdx = -1;
-    int size = sp->n, i, k, square, M = sp->M;
-    double max = -1;
-    double *res = malloc(sizeof(double) * size);
-    double *zeroVec = malloc(sizeof(double) * size);
-    if (res == NULL || zeroVec == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
-    initZeroVec(zeroVec, size, group, groupid);
-    multBv(sp, s, group, groupid, res, 0);
-    for (i = 0; i < size; ++i) {
-        if (group != groupid[i])
-            continue;
-        square = sp->k[i] * sp->k[i];
-        score[i] = -2 * ((s[i] * res[i]) + ((double) square / M));
-    }
-    for (k = 0; k < size; ++k) {
-        if (group != groupid[k] || unmoved[k] == 0)
-            continue;
-        s[k] = -s[k];
-        for (i = 0; i < size; ++i) {
-            if (group != groupid[i])
-                continue;
-            if (k == i)
-                score[i] = -score[i];
-            else {
-                zeroVec[k] = 1;
-                multBv(sp, zeroVec, group, groupid, res, 0);
-                zeroVec[k] = 0;
-                score[i] = score[i] - (4 * s[i] * s[k] * res[i]);
-            }
-            if (score[i] > max) {
-                max = score[i];
-                maxIdx = i;
-            }
-        }
-        s[k] = -s[k];
-    }
-    free(res);
-    free(zeroVec);
-    return maxIdx;
-}*/
+void updateScore(spmat *sp, double *s, double *score, int group, const int *groupid, const int *unmoved, int k,
+                 double *zeroVec, double *res) {
+    int size = sp->n, i;
 
-int findMaxIdx(spmat *sp, double *s, double *score, int group, const int *groupid, const int *unmoved) {
+    zeroVec[k] = 1;
+    multBv(sp, zeroVec, group, groupid, res, 0);
+    for (i = 0; i < size; ++i) {
+        if (group != groupid[i] || unmoved[i] == 0)
+            continue;
+        if (k == i)
+            score[i] = -score[i];
+        else {
+            score[i] = score[i] - (4 * s[i] * s[k] * res[i]);
+        }
+    }
+    zeroVec[k] = 0;
+}
+
+int findMaxIdx(spmat *sp, const double *score, int group, const int *groupid, const int *unmoved) {
+    double max;
+    int maxIdx, i, size = sp->n, flag = 0;
+    for (i = 0; i < size; ++i) {
+        if (groupid[i] != group || unmoved[i] == 0)
+            continue;
+        if (flag == 0) {
+            flag = 1;
+            max = score[i];
+            maxIdx = i;
+        } else if (max < score[i]) {
+            max = score[i];
+            maxIdx = i;
+        }
+    }
+//    printf("maxidx is %d\n", maxIdx);
+    return maxIdx;
+}
+
+/*int findMaxIdx(spmat *sp, double *s, double *score, int group, const int *groupid, const int *unmoved) {
     double q0 = modularityCalc(sp, s, group, groupid), max = -1;
     int i, size = sp->n, maxIdx = -1;
     for (i = 0; i < size; ++i) {
@@ -308,15 +300,20 @@ int findMaxIdx(spmat *sp, double *s, double *score, int group, const int *groupi
         }
     }
     return maxIdx;
-}
+}*/
 
 double findMaxImprove(double *s, const double *improve, const int *indices, int size, int group, const int *groupid) {
     int last = -1, after = -1, i, idx = -1, j;
-    double delta, max = 0;
+    double delta, max;
     for (i = 0; i < size; ++i) {
         if (group != groupid[i])
             continue;
         after = (after == -1) ? i : after;
+        if (idx == -1) {
+            max = improve[i];
+            idx = i;
+            after = -1;
+        }
         if (improve[i] > max) {
             idx = i;
             after = -1;
@@ -324,7 +321,7 @@ double findMaxImprove(double *s, const double *improve, const int *indices, int 
         }
         last = i;
     }
-    for (i = last; i <= after; ++i) {
+    for (i = last; i >= after; --i) {
         if (group != groupid[i])
             continue;
         j = indices[i];
@@ -341,36 +338,46 @@ void optimize(spmat *sp, double *s, int group, int *groupid) {
     int size = sp->n;
     int i, prev = -1;
     int maxIdx;
-    double delta = -1;
+    double delta;
     int *unmoved = malloc(sizeof(int) * size);
     int *indices = malloc(sizeof(int) * size);
     double *score = malloc(sizeof(double) * size);
     double *improve = malloc(sizeof(double) * size);
-    if (unmoved == NULL || indices == NULL || score == NULL || improve == NULL) {
+    double *res = malloc(sizeof(double) * size);
+    double *zeroVec = malloc(sizeof(double) * size);
+    if (unmoved == NULL || indices == NULL || score == NULL || improve == NULL || res == NULL || zeroVec == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
+    initZeroVec(zeroVec, size, group, groupid);
     do {
         resetUnmoved(unmoved, group, groupid, size);
         int counter = 0;
+        //TODO if for the malloc, change the size to the groupsize
+        int square, M = sp->M;
+        multBv(sp, s, group, groupid, res, 0);
         for (i = 0; i < size; ++i) {
             if (group != groupid[i])
                 continue;
-            maxIdx = findMaxIdx(sp, s, score, group, groupid, unmoved);
-            printf("MAXIDX IS %d\n", maxIdx);
-            printf("counter is %d\n", counter++);
+            square = sp->k[i] * sp->k[i];
+            score[i] = -2 * ((s[i] * res[i]) + ((double) square / M));
+        }
+        for (i = 0; i < size; ++i) {
+            if (group != groupid[i])
+                continue;
+            maxIdx = findMaxIdx(sp, score, group, groupid, unmoved);
             s[maxIdx] = -s[maxIdx];
             indices[i] = maxIdx;
             if (prev == -1)
                 improve[i] = score[maxIdx];
             else
                 improve[i] = improve[prev] + score[maxIdx];
-            unmoved[i] = 0;
+            updateScore(sp, s, score, group, groupid, unmoved, maxIdx, zeroVec, res);
+            unmoved[maxIdx] = 0;
             prev = i;
         }
         delta = findMaxImprove(s, improve, indices, size, group, groupid);
-    } while (delta > 0);
-    printf("DONE\n");
+    } while (IS_POSITIVE(delta));
 }
 
 double split(struct _division *d, spmat *sp, double *vec, int group) {
