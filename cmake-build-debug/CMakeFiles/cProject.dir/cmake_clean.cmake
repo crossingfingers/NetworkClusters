@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/cProject.dir/main.c.obj"
   "CMakeFiles/cProject.dir/spmat.c.obj"
   "CMakeFiles/cProject.dir/stack.c.obj"
+  "CMakeFiles/cProject.dir/utils.c.obj"
   "cProject.exe"
   "cProject.exe.manifest"
   "cProject.pdb"

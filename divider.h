@@ -5,6 +5,8 @@
 #ifndef CPROJECT_DIVIDER_H
 #define CPROJECT_DIVIDER_H
 
+#include "spmat.h"
+
 typedef struct _division {
     int n;
     int **groups;

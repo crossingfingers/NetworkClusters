@@ -95,6 +95,12 @@
 		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/stack.h">
 			<Option target="cProject"/>
 		</Unit>
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/utils.c">
+			<Option target="cProject"/>
+		</Unit>
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/utils.h">
+			<Option target="cProject"/>
+		</Unit>
 		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
