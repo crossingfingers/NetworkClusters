@@ -5,22 +5,6 @@
 #include <float.h>
 #include "utils.h"
 
-void printVector(double *vec, int n) {
-    int i;
-    for (i = 0; i < n; ++i) {
-        printf("%f\t", vec[i]);
-    }
-    printf("\n");
-}
-
-void printIntVector(int *vec, int n) {
-    int i;
-    for (i = 0; i < n; ++i) {
-        printf("%d\t", vec[i]);
-    }
-    printf("\n");
-}
-
 
 void resetUnmoved(int *unmoved, int groupSize) {
     int i;
@@ -177,7 +161,7 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
         } else
             vec[g[i]] = 1;
     }
-    optimize(sp, vec, g, size);
+//    optimize(sp, vec, g, size);
     counter = getNewGroupSize(vec, g, size);
     delta = modularityCalc(sp, vec, g, size);
     if (!IS_POSITIVE(delta))
@@ -209,11 +193,12 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
     free(g);
     d->groups[groupIdx] = tempGroup;
     d->nodesforGroup[groupIdx] = size - counter;
+    printf("old group after split size is %d\n",d->nodesforGroup[groupIdx]);
     return delta;
 }
 
 int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0) {
-//    printf("working on group %d\n", groupIdx);
+    printf("working on group %d\n", groupIdx);
 //TODO make vecF only calculated here and send it to all functions !!!!
     int size = sp->n;
     double delta;
@@ -226,13 +211,20 @@ int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0)
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
+    printf("group is: ");
+    printIntVector(group, groupSize);
     initOneValVec(unitVec, div->nodesforGroup[groupIdx], group, 1);
     multBv(sp, unitVec, group, vecF, groupSize, 1);
-//    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
-    powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, vecF,res);
+//    printf("onevec is: ");
+//    printVector(unitVec, size);
+
+//    printf("vec f is: ");
+//    printVector(vecF, size);
+    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
+    powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize,res);
 //    printf("HERE11\n");
     double eigen = eigenValue(sp, res, group, groupSize);
-//    printf("eigen value is %f\n", eigen);
+    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;
     delta = split(div, sp, res, groupIdx);

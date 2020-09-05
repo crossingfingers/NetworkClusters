@@ -82,7 +82,7 @@ void mult_list(const struct _spmat *A, const double *v, double *result, const in
         res = 0;
         now = rows[group[i]];
         j = 0;
-        while (now != NULL) {
+        while (now != NULL && j<groupSize) {
             if (now->col_idx == group[j]) {
                 res += v[now->col_idx];
                 j++;
@@ -112,7 +112,7 @@ double listShifting(spmat *A, const int *group, int groupSize, const int *vertex
         curr = rows[idxI];
         sum = 0;
         ki = A->k[idxI];
-        for (idxJ= 0; idxJ <= group[groupSize-1]; ++idxJ) {
+        for (idxJ = 0; idxJ < A->n; ++idxJ) {
             kj = A->k[idxJ];
             if (curr != NULL && curr->col_idx == idxJ) {
                 val = 1;

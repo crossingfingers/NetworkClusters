@@ -4,7 +4,6 @@
 
 #ifndef CPROJECT_UTILS_H
 #define CPROJECT_UTILS_H
-//#include "spmat.h"
 
 #include "spmat.h"
 
@@ -32,12 +31,16 @@ void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize
 
 void initOneValVec(double *unitVec, int n, const int *group, int val);
 
-void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF);
+void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res);
 
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *vecF, double *result);
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result);
 
 double eigenValue(spmat *sp, double *vec, const int *group, int groupSize);
 
 double modularityCalc(spmat *sp, double *vec, int *group, int groupSize);
+
+void printVector(double *vec, int n, const int *group);
+
+void printIntVector(int *vec, int n);
 
 #endif //CPROJECT_UTILS_H
