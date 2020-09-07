@@ -98,7 +98,7 @@ void normalize(int size, double *vec, const int *group, int groupSize) {
 
 
 /*the calculation of Bv by split B to A, and KiKj matrix*/
-void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug) {
+void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug,const int *groupToVertice) {
     double dot;
     int size = sp->n;
     double *res1 = malloc(size * sizeof(double));
@@ -116,7 +116,8 @@ void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize
 //        printf("res1 is : ");
 //        printVector(res1, size);
 //    }
-    sp->mult(sp, vec, res, group, groupSize);
+    sp->mult(sp, vec, res, group, groupSize,groupToVertice);
+
 //    if (debug == 1){
 //        printf("res after mult A is : ");
 //        printVector(res, size);
@@ -135,15 +136,17 @@ void initOneValVec(double *unitVec, int n, const int *group, int val) {
 
 
 /* calculate the vector B^*v to res, by split the B^ into B and F vector as values of diag matrix*/
-void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF) {
+void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, const int *vertexToGroup) {
     vecMult(vecF, vec, group, groupSize);
-    multBv(sp, vec, group, res, groupSize, 0);
+
+    multBv(sp, vec, group, res, groupSize, 0,vertexToGroup);
+
     vecDec(res, vecF, group, groupSize);
 }
 
 
 /*power iteration on B^ to calculate the leading eigenvalue, using matrix shifting*/
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize,double *vecF, double *result) {
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize,double *vecF, double *result,const int *vertexToGroup) {
     int flag = 1, i, idx;
     int size = sp->n;
     int counter = 0;
@@ -155,7 +158,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
     while (flag == 1 && counter < 10000) {
         flag = 0;
         copyDoubleVec(vecF, vecFCopy, group, groupSize);
-        multBRoof(sp, b0, group, groupSize, result, vecFCopy);
+        multBRoof(sp, b0, group, groupSize, result, vecFCopy,vertexToGroup);
         vecSum(result, b0, shifting, group, groupSize);
         normalize(size, result, group, groupSize);
         for (i = 0; i < groupSize; i++) {
@@ -171,7 +174,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
 }
 
 /*calculate the eigenvalue of the leading eigenVector found*/
-double eigenValue(spmat *sp, double *vec, const int *group, int groupSize) {
+double eigenValue(spmat *sp, double *vec, const int *group, int groupSize,const int *vertexToGroup) {
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
     double res;
@@ -181,8 +184,8 @@ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize) {
         exit(EXIT_FAILURE);
     }
     initOneValVec(tmp, groupSize, group, 1);
-    multBv(sp, tmp, group, vecF, groupSize, 0);
-    multBRoof(sp, vec, group, groupSize, tmp, vecF);
+    multBv(sp, tmp, group, vecF, groupSize, 0,vertexToGroup);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF,vertexToGroup);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
     free(vecF);
@@ -191,7 +194,7 @@ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize) {
 }
 
 /*modularity calculation by multiply +-1 vector with B^*/
-double modularityCalc(spmat *sp, double *vec, int *group, int groupSize) {
+double modularityCalc(spmat *sp, double *vec, int *group, int groupSize,const int *vertexToGroup) {
     double res = 0;
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
@@ -201,8 +204,8 @@ double modularityCalc(spmat *sp, double *vec, int *group, int groupSize) {
         exit(EXIT_FAILURE);
     }
     initOneValVec(tmp, groupSize, group, 1);
-    multBv(sp, tmp, group, vecF, groupSize, 0);
-    multBRoof(sp, vec, group, groupSize, tmp, vecF);
+    multBv(sp, tmp, group, vecF, groupSize, 0,vertexToGroup);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF,vertexToGroup);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
     free(vecF);

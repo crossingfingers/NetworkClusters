@@ -15,7 +15,7 @@ typedef struct _spmat {
     void (*free)(struct _spmat *A);
 
     /* Multiplies matrix A by vector v, into result (result is pre-allocated) */
-    void (*mult)(const struct _spmat *A, const double *v, double *result, const int *group, int groupSize);
+    void (*mult)(const struct _spmat *A, const double *v, double *result, const int *group, int groupSize,const int *groupToVertice);
 
     void (*printSprase)(struct _spmat *A);
 
@@ -26,6 +26,6 @@ typedef struct _spmat {
     void *private;
 } spmat;
 
-spmat *readGraph(FILE *input);
+spmat *readGraph(FILE *input, int type);
 
 #endif

@@ -31,10 +31,10 @@ void resetUnmoved(int *unmoved, int groupSize) {
 
 
 void updateScore(spmat *sp, const double *s, double *score, const int *group, int groupSize, const int *unmoved, int k,
-                 double *zeroVec, double *res) {
+                 double *zeroVec, double *res,const int *groupToVertice) {
     int i, idx;
     zeroVec[k] = 1;
-    multBv(sp, zeroVec, group, res, groupSize, 0);
+    multBv(sp, zeroVec, group, res, groupSize, 0,groupToVertice);
     for (i = 0; i < groupSize; ++i) {
         if (unmoved[i] == 0)
             continue;
@@ -105,7 +105,7 @@ double findMaxImprove(double *s, const double *improve, const int *indices, cons
     return delta;
 }
 
-void optimize(spmat *sp, double *s, int *group, int groupSize) {
+void optimize(spmat *sp, double *s, int *group, int groupSize,const int *groupToVertice) {
     int size = sp->n;
     int i;
     int maxIdx, idx;
@@ -125,7 +125,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
     do {
         resetUnmoved(unmoved, groupSize);
         int square, M = sp->M;
-        multBv(sp, s, group, res, groupSize, 0);
+        multBv(sp, s, group, res, groupSize, 0,groupToVertice);
         for (i = 0; i < groupSize; ++i) {
             idx = group[i];
             square = sp->k[idx] * sp->k[idx];
@@ -139,7 +139,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
                 improve[i] = score[maxIdx];
             else
                 improve[i] = improve[i - 1] + score[maxIdx];
-            updateScore(sp, s, score, group, groupSize, unmoved, group[maxIdx], zeroVec, res);
+            updateScore(sp, s, score, group, groupSize, unmoved, group[maxIdx], zeroVec, res,groupToVertice);
             unmoved[maxIdx] = 0;
         }
         delta = findMaxImprove(s, improve, indices, group, groupSize);
@@ -177,9 +177,9 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx) {
         } else
             vec[g[i]] = 1;
     }
-    optimize(sp, vec, g, size);
+    optimize(sp, vec, g, size,d->vertexToGroup);
     counter = getNewGroupSize(vec, g, size);
-    delta = modularityCalc(sp, vec, g, size);
+    delta = modularityCalc(sp, vec, g, size,d->vertexToGroup);
     if (!IS_POSITIVE(delta))
         return 0;
     d->Q += delta;
@@ -227,11 +227,11 @@ int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0)
         exit(EXIT_FAILURE);
     }
     initOneValVec(unitVec, div->nodesforGroup[groupIdx], group, 1);
-    multBv(sp, unitVec, group, vecF, groupSize, 1);
+    multBv(sp, unitVec, group, vecF, groupSize, 1,div->vertexToGroup);
 //    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
-    powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, vecF,res);
+    powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, vecF,res,div->vertexToGroup);
 //    printf("HERE11\n");
-    double eigen = eigenValue(sp, res, group, groupSize);
+    double eigen = eigenValue(sp, res, group, groupSize,div->vertexToGroup);
 //    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         return 0;

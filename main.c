@@ -17,10 +17,23 @@ int main(int argc, char **argv) {
         printf("ERROR - there is not 2 arguments");
         exit(EXIT_FAILURE);
     }
-    start = clock();
+
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
-    graph = readGraph(input);
+    graph = readGraph(input,2);
+//
+//    int i;
+//    double res[]={0,0,0, 0,0,0, 0,0,0};
+//    double vec[]={1,2,3,4,5,6,7,8,9};
+//    int group[]={1,3,5};
+//    int verticeToGroup[]={0,1,0, 1,0,1, 0,0,0};
+//
+//    graph->mult(graph,vec,res,group,3,verticeToGroup);
+//
+//    for(i=0;i<9;i++){printf(" %f ",res[i]);}
+
+//    graph->printSprase(graph);
+    start = clock();
     div = allocateDivision(graph->n);
     div->findGroups(div, graph);
     div->writeDivision(div, output);

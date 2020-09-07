@@ -28,16 +28,16 @@ void randomizeVec(int size, double *vec);
 
 //void copyDoubleVec(const double *src, double *dst, const int *group, int n);
 
-void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug);
+void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug,const int *groupToVertice);
 
 void initOneValVec(double *unitVec, int n, const int *group, int val);
 
-void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF);
+void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF,const int *vertexToGroup);
 
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *vecF, double *result);
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *vecF, double *result,const int *vertexToGroup);
 
-double eigenValue(spmat *sp, double *vec, const int *group, int groupSize);
+double eigenValue(spmat *sp, double *vec, const int *group, int groupSize,const int *vertexToGroup);
 
-double modularityCalc(spmat *sp, double *vec, int *group, int groupSize);
+double modularityCalc(spmat *sp, double *vec, int *group, int groupSize,const int *vertexToGroup);
 
 #endif //CPROJECT_UTILS_H
