@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
     FILE *output;
     double start;
     double end;
+
     srand(time(NULL));
     if (argc != 3) {
         printf("ERROR - there is not 2 arguments");
@@ -20,9 +21,10 @@ int main(int argc, char **argv) {
 
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
+    start = clock();
     graph = readGraph(input,2);
-
-    /*int i;
+/*
+    int i;
     double res[]={0,0,0, 0,0,0, 0,0,0};
     double vec[]={1,2,3,4,5,6,7,8,9};
     int group[]={1,3,5};
@@ -33,8 +35,7 @@ int main(int argc, char **argv) {
     for(i=0;i<9;i++){printf(" %f ",res[i]);}
     printf("\n");*/
 
-   // graph->printSprase(graph);
-    start = clock();
+//    graph->printSprase(graph);
     div = allocateDivision(graph->n);
     div->findGroups(div, graph);
     div->writeDivision(div, output);
