@@ -6,20 +6,14 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/divin/CLionProjects/findbug/divider.h
-spmat.h
-C:/Users/divin/CLionProjects/findbug/spmat.h
-
-C:/Users/divin/CLionProjects/findbug/main.c
-stdio.h
--
+C:/Users/divin/CLionProjects/findbug/spmat.c
 stdlib.h
 -
+stdio.h
+-
 spmat.h
 C:/Users/divin/CLionProjects/findbug/spmat.h
-divider.h
-C:/Users/divin/CLionProjects/findbug/divider.h
-time.h
+math.h
 -
 
 C:/Users/divin/CLionProjects/findbug/spmat.h

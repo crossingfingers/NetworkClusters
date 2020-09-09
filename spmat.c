@@ -98,7 +98,6 @@ void mult_list(const struct _spmat *A, const double *v, double *result, const in
     }
 }
 
-
 double listShifting(spmat *A, const int *group, int groupSize, const int *vertexToGroup, int groupIdx, double *F) {
     double max = 0;
     double sum = 0;
@@ -166,54 +165,68 @@ typedef struct _array {
     int *colind;
     int *rowptr;
     int lastindex;
+    int lastRowPtr;
     int nnz;
 } array;
 
+//TODO remove values array, no need....
 void add_row_array(struct _spmat *A, int *row, int i, int k) {
     if (k) {
         array *sparray = (array *) A->private;
-        int firstrowIdx;
         int ci;
         A->M += k;
         A->k[i] = k;
-        if (!sparray->lastindex) { firstrowIdx = 0; }
-        else { firstrowIdx = (sparray->rowptr[sparray->lastindex - 1]) + 1; }
-
+        sparray->rowptr[sparray->lastRowPtr + 1] = sparray->rowptr[sparray->lastRowPtr] + k;
+        sparray->lastRowPtr++;
 /*updates values array*/
         for (ci = 0; ci < k; ci++) {
             sparray->values[sparray->lastindex] = 1;
             sparray->colind[sparray->lastindex] = *row;
-            sparray->rowptr[sparray->lastindex] = firstrowIdx;
-            sparray->lastindex++;
             row++;
+            sparray->lastindex++;
         }
 
     }
 }
 
+
 void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
                 int groupSize, const int *groupToVertice) {
 
     array *sparray = (array *) A->private;
-    int *rows = sparray->rowptr;
+    int *rowPtr = sparray->rowptr;
     int *cols = sparray->colind;
-    double res;
-    int rowIdx;
-    int curr = 0;
-    int nnz = sparray->nnz;
+    int rowIdx = 0;
+    int i;
+    int j;
+    int n = A->n;
     int groupID = groupToVertice[group[0]];
-    while (curr < nnz) {
-        rowIdx = *(rows + curr);
-        res = 0;
-        while ((rowIdx == *(rows + curr)) && (curr < nnz)) {
-            if ((*(groupToVertice + (*(cols + curr))) == groupID) &&
-                (*(groupToVertice + (*(rows + curr))) == groupID)) {
-                res += *(vec + (*(cols + curr)));
+    for (i = 0; i < n; ++i) {
+        if (groupToVertice[i] == groupID) {
+            result[i] = 0;
+            for (j = *(rowPtr + rowIdx); j < *(rowPtr + rowIdx + 1); ++j) {
+                if (groupToVertice[*(cols + j)] == groupID) {
+                    result[i] += vec[*(cols + j)];
+                }
             }
-            curr++;
         }
-        *(result + rowIdx) = res;
+        rowIdx++;
     }
+
+
+//
+//    while (curr < nnz) {
+//        rowIdx = *(rows + curr);
+//        res = 0;
+//        while ((rowIdx == *(rows + curr)) && (curr < nnz)) {
+//            if ((*(groupToVertice + (*(cols + curr))) == groupID) &&
+//                (*(groupToVertice + (*(rows + curr))) == groupID)) {
+//                res += *(vec + (*(cols + curr)));
+//            }
+//            curr++;
+//        }
+//        *(result + rowIdx) = res;
+//    }
 }
 
 //       for (i = 0; i < A->n; i++) { result[i] = 0; }
@@ -309,42 +322,48 @@ void print_array(struct _spmat *A) {
         }
         printf("\n");
     }
+    printMatrix(A);
 }
 
 double arrayShifting(spmat *A, const int *group, int groupSize, const int *vertexToGroup, int groupIdx, double *F) {
     double max = 0;
     double sum;
     int val;
+    int n=A->n;
+    int rowIdx=0;
+    int colIndx=0;
     array *sparray = A->private;
-    int *rows = sparray->rowptr;
+    int *rowPtr = sparray->rowptr;
     int *cols = sparray->colind;
     int curr = 0;
     int i;
     int j;
     int ki;
     int kj;
-    int M=A->M;
+    int M = A->M;
     double Fi;
-    for (i = 0; i < groupSize; ++i) {
+
+    for (i = 0; i < n; ++i) {
+        if(vertexToGroup[i]==groupIdx){
         sum = 0;
-        ki = A->k[group[i]];
-        Fi=(double) F[group[i]];
-        for (j = 0; j < groupSize; ++j) {
-            kj = A->k[group[j]];
-            if ((*(rows + curr) == group[i]) && *(cols + curr) == group[j]) {
+        ki = A->k[i];
+        Fi = (double) F[i];
+        for (j =0; j < n; ++j) {
+            kj = A->k[j];
+            if (*(cols + curr) == j) {
                 val = 1;
                 curr++;
             } else {
                 val = 0;
             }
-            if (group[i] != group[j]) {
+            if (i != j) {
                 sum += fabs((double) val - ((double) (ki * kj) / M));
             } else {
                 sum += fabs(
                         (double) val - ((double) (ki * kj) / M) - Fi);
             }
         }
-        max = (max >= sum) ? max : sum;
+        max = (max >= sum) ? max : sum;}
     }
     return max;
 }
@@ -356,7 +375,9 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sparray->colind = calloc(nnz, sizeof(int));
     sparray->rowptr = calloc(nnz + 1, sizeof(int));
     sparray->lastindex = 0;
+    sparray->lastRowPtr = 0;
     sparray->rowptr[nnz] = nnz;
+    sparray->rowptr[0] = 0;
     sparray->nnz = nnz;
     sp = malloc(sizeof(spmat));
     sp->n = n;
