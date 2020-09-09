@@ -170,7 +170,7 @@ typedef struct _array {
 
 //TODO remove values array, no need....
 void add_row_array(struct _spmat *A, int *row, int i, int k) {
-        array *sparray = (array *) A->private;
+    array *sparray = (array *) A->private;
         int ci;
         A->M += k;
         A->k[i] = k;
@@ -184,7 +184,7 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
         }
 }
 
-//TODO use pointers instead of []
+//TODO get second while loop even faster
 void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
                 int groupSize, const int *verticeToGroup) {
 
@@ -192,25 +192,34 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, const
     int *rowPtr = sparray->rowptr;
     int *cols = sparray->colind;
     int i;
-    int currVertex;
     int colStart;
     int colEnd;
+    int groupID = verticeToGroup[group[0]];
     for (i = 0; i < groupSize; ++i) {
         result[group[i]] = 0;
-        currVertex = 0;
         colStart = *(rowPtr + group[i]);
+        cols=sparray->colind+colStart;
         colEnd = *(rowPtr + group[i] + 1);
-        while ((colStart < colEnd) && (currVertex < groupSize)) {
-            if (*(cols + colStart) == group[currVertex]) {
-                result[group[i]] += vec[*(cols + colStart)];
-                colStart++;
-                currVertex++;
-            } else {
-                if (*(cols + colStart) > group[currVertex]) { currVertex++; }
-                else { colStart++; }
+        while (colStart < colEnd) {
+            if (verticeToGroup[*(cols)] == groupID) {
+                result[group[i]] += vec[*(cols)];
             }
+            colStart++;
+            if(colStart<colEnd){cols++;}
         }
     }
+}
+//        while ((colStart < colEnd) && (currVertex < groupSize)) {
+//            if (*(cols + colStart) == group[currVertex]) {
+//                result[group[i]] += vec[*(cols + colStart)];
+//                colStart++;
+//                currVertex++;
+//            } else {
+//                if (*(cols + colStart) > group[currVertex]) { currVertex++; }
+//                else { colStart++; }
+//            }
+//        }
+//    }
 
 
 //
@@ -226,7 +235,7 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, const
 //        }
 //        *(result + rowIdx) = res;
 //    }
-}
+//}
 
 //       for (i = 0; i < A->n; i++) { result[i] = 0; }
 //        for (curr = 0; curr < nnz; curr++) {
@@ -345,13 +354,25 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
         ki = A->k[vertice1];
         Fi = (double) F[vertice1];
         colStart = *(rowPtr + vertice1);
+        cols=sparray->colind+colStart;
         colEnd = *(rowPtr + vertice1 + 1);
+
+        while((vertexToGroup[*(cols)]!=groupIdx)&&(colStart<colEnd))
+        {colStart++;
+        if(colStart<colEnd){cols++;}
+        }
 
         for (j = 0; j < groupSize; ++j) {
             kj = A->k[group[j]];
-            if ((*(cols + colStart) == group[j])&&(colStart<colEnd)) {
+            if ((*(cols) == group[j])&&(colStart<colEnd)) {
                 val = 1;
                 colStart++;
+                if(colStart<colEnd){cols++;}
+                while((vertexToGroup[*(cols)]!=groupIdx)&&(colStart<colEnd))
+                {colStart++;
+                if(colStart<colEnd){cols++;}
+                }
+
             } else {
                 val = 0;
             }
