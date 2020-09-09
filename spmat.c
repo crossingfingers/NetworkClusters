@@ -170,7 +170,6 @@ typedef struct _array {
 
 //TODO remove values array, no need....
 void add_row_array(struct _spmat *A, int *row, int i, int k) {
-    if (k) {
         array *sparray = (array *) A->private;
         int ci;
         A->M += k;
@@ -183,8 +182,6 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
             row++;
             sparray->lastindex++;
         }
-
-    }
 }
 
 //TODO use pointers instead of []
@@ -300,7 +297,7 @@ void printMatrix(spmat *A) {
         printf("%d", sparr->colind[i]);
     }
     printf("\nrowptrarr:\n");
-    for (i = 0; i <= sparr->nnz; i++) {
+    for (i = 0; i <= A->n; i++) {
         printf("%d", sparr->rowptr[i]);
     }
 
@@ -374,10 +371,9 @@ spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
     sparray->colind = calloc(nnz, sizeof(int));
-    sparray->rowptr = calloc(nnz + 1, sizeof(int));
+    sparray->rowptr = calloc(n, sizeof(int));
     sparray->lastindex = 0;
     sparray->lastRowPtr = 0;
-    sparray->rowptr[nnz] = nnz;
     sparray->rowptr[0] = 0;
     sparray->nnz = nnz;
     sp = malloc(sizeof(spmat));
