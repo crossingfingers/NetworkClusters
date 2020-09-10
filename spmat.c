@@ -172,7 +172,7 @@ typedef struct _array {
 //TODO remove values array, no need....
 void add_row_array(struct _spmat *A, int *row, int i, int k) {
     array *sparray = (array *) A->private;
-    int *rowInput=row;
+    int *rowInput = row;
     int ci;
     A->M += k;
     A->k[i] = k;
@@ -186,7 +186,6 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
     }
 }
 
-//TODO get second while loop even faster, less mem access when push val
 void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
                 int groupSize, const int *verticeToGroup) {
 
@@ -197,136 +196,19 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, const
     int colStart;
     int colEnd;
     double res;
-    int groupID = verticeToGroup[group[0]];
     for (i = 0; i < groupSize; ++i) {
         res = 0;
-        colStart = *(rowPtr + group[i]);
+        colStart = *(rowPtr + i);
         cols = sparray->colind + colStart;
-        colEnd = *(rowPtr + group[i] + 1);
+        colEnd = *(rowPtr + i + 1);
         while (colStart < colEnd) {
-            if (verticeToGroup[*(cols)] == groupID) {
-                res += vec[*(cols)];
-            }
+            res += vec[*(cols)];
             colStart++;
             if (colStart < colEnd) { cols++; }
         }
         result[group[i]] = res;
     }
 }
-/*void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
-                int groupSize, const int *verticeToGroup) {
-
-    array *sparray = (array *) A->private;
-    int *rowPtr = sparray->rowptr;
-    int *cols = sparray->colind;
-    int i;
-    int colStart;
-    int colEnd;
-    int currVertex=0;
-    double res;
-    for (i = 0; i < groupSize; ++i) {
-        res = 0;
-        currVertex=0;
-        colStart = *(rowPtr + group[i]);
-        cols=sparray->colind+colStart;
-        colEnd = *(rowPtr + group[i] + 1);
-        while ((colStart < colEnd)&&(currVertex<groupSize)) {
-            if (*(cols) == group[currVertex]) {
-                res += vec[*(cols)];
-                colStart++;
-                currVertex++;
-                if(colStart<colEnd){cols++;}
-            }
-            else
-            {
-                if(*(cols)>group[currVertex]){
-                    currVertex++;
-                }
-                else
-                {   colStart++;
-                    if(colStart<colEnd){cols++;}
-                }
-            }
-        }
-        result[group[i]]=res;
-    }
-}*/
-//        while ((colStart < colEnd) && (currVertex < groupSize)) {
-//            if (*(cols + colStart) == group[currVertex]) {
-//                result[group[i]] += vec[*(cols + colStart)];
-//                colStart++;
-//                currVertex++;
-//            } else {
-//                if (*(cols + colStart) > group[currVertex]) { currVertex++; }
-//                else { colStart++; }
-//            }
-//        }
-//    }
-
-
-//
-//    while (curr < nnz) {
-//        rowIdx = *(rows + curr);
-//        res = 0;
-//        while ((rowIdx == *(rows + curr)) && (curr < nnz)) {
-//            if ((*(groupToVertice + (*(cols + curr))) == groupID) &&
-//                (*(groupToVertice + (*(rows + curr))) == groupID)) {
-//                res += *(vec + (*(cols + curr)));
-//            }
-//            curr++;
-//        }
-//        *(result + rowIdx) = res;
-//    }
-//}
-
-//       for (i = 0; i < A->n; i++) { result[i] = 0; }
-//        for (curr = 0; curr < nnz; curr++) {
-//            if ((groupToVertice[sparray->colind[curr]] == groupID) &&
-//                (groupToVertice[sparray->rowptr[curr]] == groupID)) {
-//                result[sparray->rowptr[curr]] += vec[sparray->colind[curr]];
-//            }
-//        }
-//}
-/* for (curr = 0; i < sparray->nnz; i++) {
-     res = 0;
-     rowIdx = sparray->rowptr[curr];
-     while (rowIdx == sparray->rowptr[curr]) {
-         if (groupToVertice[sparray->colind[curr]] == groupID)
-             res += sparray->values[curr] * vec[sparray->colind[curr]];
-         curr++;
-     }
-     result[rowIdx] = res;
- }*/
-
-//    array *sparray = (array *) A->private;
-//
-//    int i;
-//    int row = 0;
-//    int col = 0;
-//    int nnz = sparray->nnz;
-//    int currRow;
-//    printf("\nprinting vec:\n");
-//    for(i=0;i<groupSize;i++)
-//    {printf("%f ",vec[group[i]]);}
-//    printf("\n");
-//
-//    for (i = 0; i < nnz; i++) {
-//        if (sparray->rowptr[i] == group[row]) {
-//            currRow = sparray->rowptr[i];
-//            while (currRow == sparray->rowptr[i]) {
-//                if (sparray->colind[i] == group[col]) {
-//                    result[sparray->rowptr[i]] += vec[sparray->colind[i]];
-//                    i++;
-//                }
-//                col++;
-//            }
-//            col=0;
-//            row++;
-//        }
-//    }    printf("\nprinting vec:\n");
-//    for(i=0;i<groupSize;i++)
-//    {printf("%f ",result[group[i]]);}
-//}
 
 void free_array(struct _spmat *A) {
     array *sparray = (array *) A->private;
@@ -395,14 +277,9 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
         vertice1 = group[i];
         ki = A->k[vertice1];
         Fi = (double) F[vertice1];
-        colStart = *(rowPtr + vertice1);
+        colStart = *(rowPtr);
         cols = sparray->colind + colStart;
-        colEnd = *(rowPtr + vertice1 + 1);
-
-        while ((vertexToGroup[*(cols)] != groupIdx) && (colStart < colEnd)) {
-            colStart++;
-            if (colStart < colEnd) { cols++; }
-        }
+        colEnd = *(rowPtr + 1);
 
         for (j = 0; j < groupSize; ++j) {
             kj = A->k[group[j]];
@@ -410,11 +287,6 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
                 val = 1;
                 colStart++;
                 if (colStart < colEnd) { cols++; }
-                while ((vertexToGroup[*(cols)] != groupIdx) && (colStart < colEnd)) {
-                    colStart++;
-                    if (colStart < colEnd) { cols++; }
-                }
-
             } else {
                 val = 0;
             }
@@ -430,65 +302,90 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
     return max;
 }
 
-void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1 ,int *g2, int g1Size, int g2Size){
-    //TODO implement this method. graphs->A[groupIdx] should be A[g1] and graphs->A[newGroupIdx] should be A[g2].
-    //TODO free the old A sparse matrix after finish making the new two A's
 
-    if(g2Size==0){return;}
-    array *arrAg=graphs->A[groupIdx]->private;
-    spmat  *Ag1;
+
+int getNNZforGroup(array *arrAg,int *g1, int gSize)
+{int i;
+int j;
+int colIDX=0;
+int currG=0;
+int numOfVals;
+int NNZ=0;
+    for (i = 0; i < gSize; i++) {
+        colIDX = arrAg->rowptr[g1[i]];
+        numOfVals = (arrAg->rowptr[g1[i] + 1] - colIDX);
+        j = 0;
+        currG = 0;
+        while ((j < numOfVals) && (currG < gSize)) {
+            if (g1[currG] == arrAg->colind[colIDX + j]) {
+                NNZ++;
+                j++;
+                currG++;
+            } else {
+                if (g1[currG] < arrAg->colind[colIDX + j]) { currG++; }
+                else { j++; }
+            }
+        }
+    }
+    return NNZ;
+}
+
+void insertValsToArr(array *arrAg, array *arrAg1,int *g1,int g1Size){
+    int i;
+    int j;
+    int numOfVals;
+    int colIDX;
+    int currG1;
+    int currG=0;
+    for (i = 0; i < g1Size; i++) {
+        numOfVals = arrAg->rowptr[g1[i] + 1] - arrAg->rowptr[g1[i]];
+        arrAg1->rowptr[i + 1] = arrAg1->rowptr[i];
+        colIDX = arrAg->rowptr[g1[i]];
+        j = 0;
+        currG1 = 0;
+
+        while ((currG1 < g1Size) && (j < numOfVals)) {
+            if (arrAg->colind[colIDX + j] == g1[currG1]) {
+                arrAg1->colind[currG] = arrAg->colind[colIDX + j];
+                currG++;
+                currG1++;
+                j++;
+                arrAg1->rowptr[i + 1]++;
+            } else {
+                if (g1[currG1] < arrAg->colind[colIDX + j]) { currG1++; }
+                else { j++; }
+            }
+        }
+    }
+
+
+}
+
+void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1, int *g2, int g1Size, int g2Size) {
+    if (g2Size == 0) { return; }
+    array *arrAg = graphs->A[groupIdx]->private;
+    spmat *Ag1;
     spmat *Ag2;
-    int g1NNZ=0;
-    int g2NNZ=0;
-    int numOfVals=0;
-    int i,j;
-    int colIDX=0;
-    int curr=0;
-
-    for(i=0;i<g1Size;i++)
-    {
-        g1NNZ+=(arrAg->rowptr[g1[i]+1]-arrAg->rowptr[g1[i]]);
-    }
-    for(i=0;i<g2Size;i++)
-    {
-        g2NNZ+=(arrAg->rowptr[g2[i]+1]-arrAg->rowptr[g2[i]]);
-    }
-    Ag1=spmat_allocate_array(g1Size,g1NNZ);
-    Ag2=spmat_allocate_array(g2Size,g2NNZ);
-    array *arrAg1=Ag1->private;
-    array *arrAg2=Ag2->private;
-    arrAg1->rowptr[0]=0;
-    arrAg2->rowptr[0]=0;
-
-    for(i=0;i<g1Size;i++){
-        numOfVals = arrAg->rowptr[g1[i]+1]-arrAg->rowptr[g1[i]];
-        arrAg1->rowptr[i+1]=arrAg1->rowptr[i]+numOfVals;
-        colIDX=arrAg->rowptr[g1[i]];
-        for(j=0;j<numOfVals;j++){
-          arrAg1->colind[curr]=arrAg->colind[colIDX+j];
-          curr++;
-        }
-    }
-    curr=0;
-    for(i=0;i<g2Size;i++){
-        numOfVals = arrAg->rowptr[g2[i]+1]-arrAg->rowptr[g2[i]];
-        arrAg2->rowptr[i+1]=arrAg2->rowptr[i]+numOfVals;
-        colIDX=arrAg->rowptr[g2[i]];
-        for(j=0;j<numOfVals;j++){
-            arrAg2->colind[curr]=arrAg->colind[colIDX+j];
-            curr++;
-        }
-    }
+    int g1NNZ;
+    int g2NNZ;
+    g1NNZ=getNNZforGroup(arrAg,g1,g1Size);
+    g2NNZ=getNNZforGroup(arrAg,g2,g2Size);
+    Ag1 = spmat_allocate_array(g1Size, g1NNZ);
+    Ag2 = spmat_allocate_array(g2Size, g2NNZ);
+    array *arrAg1 = Ag1->private;
+    array *arrAg2 = Ag2->private;
+    insertValsToArr(arrAg,arrAg1,g1,g1Size);
+    insertValsToArr(arrAg,arrAg2,g2,g2Size);
     free(graphs->A[groupIdx]);
-    graphs->A[groupIdx]=Ag1;
-    graphs->A[newGroupIdx]=Ag2;
+    graphs->A[groupIdx] = Ag1;
+    graphs->A[newGroupIdx] = Ag2;
 }
 
 spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
     sparray->colind = calloc(nnz, sizeof(int));
-    sparray->rowptr = calloc(n+1, sizeof(int));
+    sparray->rowptr = calloc(n + 1, sizeof(int));
     sparray->lastindex = 0;
     sparray->lastRowPtr = 0;
     sparray->rowptr[0] = 0;
@@ -502,7 +399,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->printSprase = print_array;
     sp->splitGraph = splitGraphArray;
     sp->M = 0;
-    sp->k=malloc(sizeof(int) * n);
+    sp->k = malloc(sizeof(int) * n);
     initk(sp);
     sp->matShifting = arrayShifting;
     return sp;
@@ -521,27 +418,27 @@ int find_nnz(FILE *input) {
     return res / 4;
 }
 
-void freeNetworks(networks *graphs, int numOfGroups){
+void freeNetworks(networks *graphs, int numOfGroups) {
     int i;
-    spmat *sp, **mats=graphs->A;
+    spmat *sp, **mats = graphs->A;
     free(graphs->k);
     //TODO change 1 to numOfGroups!!
-    for(i=0; i< 1; ++i){
+    for (i = 0; i < 1; ++i) {
         sp = *mats++;
         sp->free(sp);
         free(sp);
     }
 }
 
-networks *allocateNetworks(int n){
+networks *allocateNetworks(int n) {
     networks *graphs = malloc(sizeof(networks));
-    if(graphs == NULL){
+    if (graphs == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
     graphs->n = n;
     graphs->A = malloc(sizeof(spmat *) * n);
-    if(graphs->A == NULL){
+    if (graphs->A == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
