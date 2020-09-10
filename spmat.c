@@ -429,6 +429,11 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
     return max;
 }
 
+void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1 ,int *g2, int g1Size, int g2Size){
+    //TODO implement this method. graphs->A[groupIdx] should be A[g1] and graphs->A[newGroupIdx] should be A[g2].
+    //TODO free the old A sparse matrix after finish making the new two A's
+}
+
 spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
@@ -445,6 +450,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->mult = mult_array;
     sp->private = sparray;
     sp->printSprase = print_array;
+    sp->splitGraph = splitGraphArray;
     sp->M = 0;
     sp->k=malloc(sizeof(int) * n);
     initk(sp);
