@@ -4,7 +4,6 @@
 
 #ifndef CPROJECT_UTILS_H
 #define CPROJECT_UTILS_H
-//#include "spmat.h"
 
 #include "spmat.h"
 
@@ -28,16 +27,20 @@ void randomizeVec(int size, double *vec);
 
 //void copyDoubleVec(const double *src, double *dst, const int *group, int n);
 
-void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug,const int *groupToVertice);
+void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug,const int *verticeToGroup);
 
 void initOneValVec(double *unitVec, int n, const int *group, int val);
 
-void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF,const int *vertexToGroup);
+void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF,const int *verticeToGroup);
 
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *vecF, double *result,const int *vertexToGroup);
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF,const int *verticeToGroup);
 
-double eigenValue(spmat *sp, double *vec, const int *group, int groupSize,const int *vertexToGroup);
+double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF,const int *verticeToGroup);
 
-double modularityCalc(spmat *sp, double *vec, int *group, int groupSize,const int *vertexToGroup);
+double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF,const int *verticeToGroup);
+
+void printVector(double *vec, int n, const int *group);
+
+void printIntVector(int *vec, int n);
 
 #endif //CPROJECT_UTILS_H
