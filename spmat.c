@@ -332,7 +332,6 @@ void free_array(struct _spmat *A) {
     array *sparray = (array *) A->private;
     free(sparray->rowptr);
     free(sparray->colind);
-    free(A->k);
     free(A->private);
 }
 
@@ -371,6 +370,8 @@ void print_array(struct _spmat *A) {
     printMatrix(A);
     printf("\n");
 }
+
+spmat *spmat_allocate_array(int n, int nnz);
 
 double arrayShifting(spmat *A, const int *group, int groupSize, const int *vertexToGroup, int groupIdx, double *F) {
     double max = 0;
@@ -432,6 +433,55 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
 void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1 ,int *g2, int g1Size, int g2Size){
     //TODO implement this method. graphs->A[groupIdx] should be A[g1] and graphs->A[newGroupIdx] should be A[g2].
     //TODO free the old A sparse matrix after finish making the new two A's
+
+    if(g2Size==0){return;}
+    array *arrAg=graphs->A[groupIdx]->private;
+    spmat  *Ag1;
+    spmat *Ag2;
+    int g1NNZ=0;
+    int g2NNZ=0;
+    int numOfVals=0;
+    int i,j;
+    int colIDX=0;
+    int curr=0;
+
+    for(i=0;i<g1Size;i++)
+    {
+        g1NNZ+=(arrAg->rowptr[g1[i]+1]-arrAg->rowptr[g1[i]]);
+    }
+    for(i=0;i<g2Size;i++)
+    {
+        g2NNZ+=(arrAg->rowptr[g2[i]+1]-arrAg->rowptr[g2[i]]);
+    }
+    Ag1=spmat_allocate_array(g1Size,g1NNZ);
+    Ag2=spmat_allocate_array(g2Size,g2NNZ);
+    array *arrAg1=Ag1->private;
+    array *arrAg2=Ag2->private;
+    arrAg1->rowptr[0]=0;
+    arrAg2->rowptr[0]=0;
+
+    for(i=0;i<g1Size;i++){
+        numOfVals = arrAg->rowptr[g1[i]+1]-arrAg->rowptr[g1[i]];
+        arrAg1->rowptr[i+1]=arrAg1->rowptr[i]+numOfVals;
+        colIDX=arrAg->rowptr[g1[i]];
+        for(j=0;j<numOfVals;j++){
+          arrAg1->colind[curr]=arrAg->colind[colIDX+j];
+          curr++;
+        }
+    }
+    curr=0;
+    for(i=0;i<g2Size;i++){
+        numOfVals = arrAg->rowptr[g2[i]+1]-arrAg->rowptr[g2[i]];
+        arrAg2->rowptr[i+1]=arrAg2->rowptr[i]+numOfVals;
+        colIDX=arrAg->rowptr[g2[i]];
+        for(j=0;j<numOfVals;j++){
+            arrAg2->colind[curr]=arrAg->colind[colIDX+j];
+            curr++;
+        }
+    }
+    free(graphs->A[groupIdx]);
+    graphs->A[groupIdx]=Ag1;
+    graphs->A[newGroupIdx]=Ag2;
 }
 
 spmat *spmat_allocate_array(int n, int nnz) {

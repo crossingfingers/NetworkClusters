@@ -37,12 +37,21 @@ int main(int argc, char **argv) {
 
 //    graph->printSprase(graph);
     div = allocateDivision(graphs->n);
+    spmat **A=graphs->A;
+    A[0]->printSprase(A[0]);
+    int g1[]={0,1,2,3,4};
+    int g2[]={5,6,7,8};
+    A[0]->splitGraph(graphs,0,1,g1,g2,5,4);
+    A[0]->printSprase(A[0]);
+    A[1]->printSprase(A[1]);
+
+
     //TODO change the graphs->A[0] to graphs. after implement the creation of A[group]
-    div->findGroups(div, graphs->A[0]);
-    div->writeDivision(div, output);
-    graphs->free(graphs, div->numOfGroups);
-    div->free(div);
-    end = clock();
+//    div->findGroups(div, graphs->A[0]);
+//    div->writeDivision(div, output);
+//    graphs->free(graphs, div->numOfGroups);
+//    div->free(div);
+//    end = clock();
     printf("took %f seconds\n", ((double)(end-start)/ CLOCKS_PER_SEC));
     free(graphs);
     free(div);
