@@ -163,6 +163,7 @@ spmat *spmat_allocate_list(int n) {
 typedef struct _array {
     int *colind;
     int *rowptr;
+    int *k;
     int lastindex;
     int lastRowPtr;
     int nnz;
@@ -329,13 +330,10 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, const
 
 void free_array(struct _spmat *A) {
     array *sparray = (array *) A->private;
-    free(A->k);
-    printf("free array \n");
-    printf("%d\n", *sparray->rowptr);
     free(sparray->rowptr);
     free(sparray->colind);
+    free(A->k);
     free(A->private);
-
 }
 
 void printMatrix(spmat *A) {
@@ -435,7 +433,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
     sparray->colind = calloc(nnz, sizeof(int));
-    sparray->rowptr = calloc(n, sizeof(int));
+    sparray->rowptr = calloc(n+1, sizeof(int));
     sparray->lastindex = 0;
     sparray->lastRowPtr = 0;
     sparray->rowptr[0] = 0;
@@ -448,7 +446,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->private = sparray;
     sp->printSprase = print_array;
     sp->M = 0;
-    sp->k = malloc(sizeof(int) * n);
+    sp->k=malloc(sizeof(int) * n);
     initk(sp);
     sp->matShifting = arrayShifting;
     return sp;
@@ -473,14 +471,14 @@ spmat *readArray(FILE *input) {
     unsigned int n;
     int nnz;
     nnz = find_nnz(input);
-    printf("nnz is %d\n", nnz);
+//    printf("nnz is %d\n", nnz);
     n = fread(&elem, sizeof(int), 1, input);
     if (n != 1) {
         printf("ERROR - mismatch reading value");
         exit(EXIT_FAILURE);
     }
     size = elem;
-    printf("n: %d, nnz: %d\n", elem, nnz);
+//    printf("n: %d, nnz: %d\n", elem, nnz);
     graph = spmat_allocate_array(size, nnz);
     row = malloc(sizeof(int) * size);
     if (row == NULL) {
@@ -542,7 +540,7 @@ spmat *readList(FILE *input) {
 }
 
 spmat *readGraph(FILE *input, int type) {
-    if (type == 1) {
+    if (type == 2) {
         return readArray(input);
     } else
         return readList(input);

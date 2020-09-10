@@ -321,7 +321,7 @@ division *allocateDivision(int n) {
     d->writeDivision = writeDivision;
     d->findGroups = findGroups;
     d->Q = 0;
-    d->groups[0] = malloc(sizeof(int) * n);printf("12");
+    d->groups[0] = malloc(sizeof(int) * n);
     if (d->groups == NULL || d->nodesforGroup == NULL || d->groups[0] == NULL || d->vertexToGroup == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);

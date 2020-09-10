@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
     printf("\n");*/
 
 //    graph->printSprase(graph);
+
     div = allocateDivision(graph->n);
     div->findGroups(div, graph);
     div->writeDivision(div, output);

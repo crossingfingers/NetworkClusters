@@ -6,39 +6,21 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/divin/CLionProjects/findbug/divider.c
+C:/Users/divin/CLionProjects/findbug/spmat.h
 stdio.h
 -
-stdlib.h
--
-spmat.h
-C:/Users/divin/CLionProjects/findbug/spmat.h
-divider.h
-C:/Users/divin/CLionProjects/findbug/divider.h
-float.h
--
+
+C:/Users/divin/CLionProjects/findbug/utils.c
 utils.h
 C:/Users/divin/CLionProjects/findbug/utils.h
-
-C:/Users/divin/CLionProjects/findbug/divider.h
-spmat.h
-C:/Users/divin/CLionProjects/findbug/spmat.h
-
-C:/Users/divin/CLionProjects/findbug/main.c
 stdio.h
 -
 stdlib.h
 -
+math.h
+-
 spmat.h
 C:/Users/divin/CLionProjects/findbug/spmat.h
-divider.h
-C:/Users/divin/CLionProjects/findbug/divider.h
-time.h
--
-
-C:/Users/divin/CLionProjects/findbug/spmat.h
-stdio.h
--
 
 C:/Users/divin/CLionProjects/findbug/utils.h
 spmat.h
