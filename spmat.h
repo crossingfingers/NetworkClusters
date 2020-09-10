@@ -1,6 +1,7 @@
 #ifndef _SPMAT_H
 #define _SPMAT_H
 #include <stdio.h>
+struct _networks;
 typedef struct _spmat {
     /* Matrix size (n*n) */
     int n;
@@ -15,7 +16,7 @@ typedef struct _spmat {
     void (*free)(struct _spmat *A);
 
     /* Multiplies matrix A by vector v, into result (result is pre-allocated) */
-    void (*mult)(const struct _spmat *A, const double *v, double *result, const int *group, int groupSize);
+    void (*mult)(const struct _spmat *A, const double *v, double *result, const int *group, int groupSize,const int *groupToVertice);
 
     void (*printSprase)(struct _spmat *A);
 
@@ -26,6 +27,15 @@ typedef struct _spmat {
     void *private;
 } spmat;
 
-spmat *readGraph(FILE *input);
+typedef struct _networks{
+    spmat **A;
+    int M;
+    int *k;
+    int n;
+    void (*free)(struct _networks *graphs, int numOfGroups);
+}networks;
+
+
+networks *readGraph(FILE *input, int type);
 
 #endif
