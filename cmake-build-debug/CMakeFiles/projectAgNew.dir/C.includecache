@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/gal21/CLionProjects/projectAgNew/spmat.c
+stdlib.h
+-
+stdio.h
+-
+spmat.h
+C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
+math.h
+-
+
+C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
+stdio.h
+-
+

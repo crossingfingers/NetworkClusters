@@ -47,10 +47,10 @@ RM = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\gal21\CLionProjects\projectApproach
+CMAKE_SOURCE_DIR = C:\Users\gal21\CLionProjects\projectAgNew
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug\CMakeFiles C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug\CMakeFiles C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -110,17 +110,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named cProject
+# Target rules for targets named projectAgNew
 
 # Build rule for target.
-cProject: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 cProject
-.PHONY : cProject
+projectAgNew: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 projectAgNew
+.PHONY : projectAgNew
 
 # fast build rule for target.
-cProject/fast:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/build
-.PHONY : cProject/fast
+projectAgNew/fast:
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/build
+.PHONY : projectAgNew/fast
 
 divider.obj: divider.c.obj
 
@@ -128,7 +128,7 @@ divider.obj: divider.c.obj
 
 # target to build an object file
 divider.c.obj:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/divider.c.obj
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/divider.c.obj
 .PHONY : divider.c.obj
 
 divider.i: divider.c.i
@@ -137,7 +137,7 @@ divider.i: divider.c.i
 
 # target to preprocess a source file
 divider.c.i:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/divider.c.i
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/divider.c.i
 .PHONY : divider.c.i
 
 divider.s: divider.c.s
@@ -146,7 +146,7 @@ divider.s: divider.c.s
 
 # target to generate assembly for a file
 divider.c.s:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/divider.c.s
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/divider.c.s
 .PHONY : divider.c.s
 
 main.obj: main.c.obj
@@ -155,7 +155,7 @@ main.obj: main.c.obj
 
 # target to build an object file
 main.c.obj:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/main.c.obj
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/main.c.obj
 .PHONY : main.c.obj
 
 main.i: main.c.i
@@ -164,7 +164,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/main.c.i
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -173,7 +173,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/main.c.s
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/main.c.s
 .PHONY : main.c.s
 
 spmat.obj: spmat.c.obj
@@ -182,7 +182,7 @@ spmat.obj: spmat.c.obj
 
 # target to build an object file
 spmat.c.obj:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/spmat.c.obj
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/spmat.c.obj
 .PHONY : spmat.c.obj
 
 spmat.i: spmat.c.i
@@ -191,7 +191,7 @@ spmat.i: spmat.c.i
 
 # target to preprocess a source file
 spmat.c.i:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/spmat.c.i
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/spmat.c.i
 .PHONY : spmat.c.i
 
 spmat.s: spmat.c.s
@@ -200,35 +200,8 @@ spmat.s: spmat.c.s
 
 # target to generate assembly for a file
 spmat.c.s:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/spmat.c.s
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/spmat.c.s
 .PHONY : spmat.c.s
-
-stack.obj: stack.c.obj
-
-.PHONY : stack.obj
-
-# target to build an object file
-stack.c.obj:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/stack.c.obj
-.PHONY : stack.c.obj
-
-stack.i: stack.c.i
-
-.PHONY : stack.i
-
-# target to preprocess a source file
-stack.c.i:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/stack.c.i
-.PHONY : stack.c.i
-
-stack.s: stack.c.s
-
-.PHONY : stack.s
-
-# target to generate assembly for a file
-stack.c.s:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/stack.c.s
-.PHONY : stack.c.s
 
 utils.obj: utils.c.obj
 
@@ -236,7 +209,7 @@ utils.obj: utils.c.obj
 
 # target to build an object file
 utils.c.obj:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/utils.c.obj
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/utils.c.obj
 .PHONY : utils.c.obj
 
 utils.i: utils.c.i
@@ -245,7 +218,7 @@ utils.i: utils.c.i
 
 # target to preprocess a source file
 utils.c.i:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/utils.c.i
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/utils.c.i
 .PHONY : utils.c.i
 
 utils.s: utils.c.s
@@ -254,7 +227,7 @@ utils.s: utils.c.s
 
 # target to generate assembly for a file
 utils.c.s:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/utils.c.s
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/utils.c.s
 .PHONY : utils.c.s
 
 # Help Target
@@ -263,8 +236,8 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... cProject
 	@echo ... edit_cache
+	@echo ... projectAgNew
 	@echo ... rebuild_cache
 	@echo ... divider.obj
 	@echo ... divider.i
@@ -275,9 +248,6 @@ help:
 	@echo ... spmat.obj
 	@echo ... spmat.i
 	@echo ... spmat.s
-	@echo ... stack.obj
-	@echo ... stack.i
-	@echo ... stack.s
 	@echo ... utils.obj
 	@echo ... utils.i
 	@echo ... utils.s

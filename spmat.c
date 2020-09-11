@@ -277,10 +277,9 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
         vertice1 = group[i];
         ki = A->k[vertice1];
         Fi = (double) F[vertice1];
-        colStart = *(rowPtr);
+        colStart = *(rowPtr+i);
         cols = sparray->colind + colStart;
-        colEnd = *(rowPtr + 1);
-
+        colEnd = *(rowPtr+i + 1);
         for (j = 0; j < groupSize; ++j) {
             kj = A->k[group[j]];
             if ((*(cols) == group[j]) && (colStart < colEnd)) {
@@ -301,8 +300,6 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
     }
     return max;
 }
-
-
 
 int getNNZforGroup(array *arrAg,int *g1, int gSize)
 {int i;

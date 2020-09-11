@@ -43,21 +43,21 @@ RM = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\gal21\CLionProjects\projectApproach
+CMAKE_SOURCE_DIR = C:\Users\gal21\CLionProjects\projectAgNew
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/cProject.dir/all
+all: CMakeFiles/projectAgNew.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
-clean: CMakeFiles/cProject.dir/clean
+clean: CMakeFiles/projectAgNew.dir/clean
 
 .PHONY : clean
 
@@ -67,31 +67,31 @@ preinstall:
 .PHONY : preinstall
 
 #=============================================================================
-# Target rules for target CMakeFiles/cProject.dir
+# Target rules for target CMakeFiles/projectAgNew.dir
 
 # All Build rule for target.
-CMakeFiles/cProject.dir/all:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/depend
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6 "Built target cProject"
-.PHONY : CMakeFiles/cProject.dir/all
+CMakeFiles/projectAgNew.dir/all:
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/depend
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target projectAgNew"
+.PHONY : CMakeFiles/projectAgNew.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/cProject.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug\CMakeFiles 6
-	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/cProject.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectApproach\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/cProject.dir/rule
+CMakeFiles/projectAgNew.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug\CMakeFiles 5
+	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/projectAgNew.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gal21\CLionProjects\projectAgNew\cmake-build-debug\CMakeFiles 0
+.PHONY : CMakeFiles/projectAgNew.dir/rule
 
 # Convenience name for target.
-cProject: CMakeFiles/cProject.dir/rule
+projectAgNew: CMakeFiles/projectAgNew.dir/rule
 
-.PHONY : cProject
+.PHONY : projectAgNew
 
 # clean rule for target.
-CMakeFiles/cProject.dir/clean:
-	$(MAKE) -f CMakeFiles\cProject.dir\build.make CMakeFiles/cProject.dir/clean
-.PHONY : CMakeFiles/cProject.dir/clean
+CMakeFiles/projectAgNew.dir/clean:
+	$(MAKE) -f CMakeFiles\projectAgNew.dir\build.make CMakeFiles/projectAgNew.dir/clean
+.PHONY : CMakeFiles/projectAgNew.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

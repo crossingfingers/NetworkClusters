@@ -265,8 +265,8 @@ int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double
 //    printVector(unitVec, size);
 
 //    printf("vec f is: ");
-//    printVector(vecF, size);
-//    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
+//    printVector(vecF, size, group);
+    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
     powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, res,
               vecF, div->vertexToGroup);
 //    printf("HERE11\n");
@@ -324,6 +324,7 @@ void writeDivision(struct _division *div, FILE *output) {
 
 
 void findGroups(division *div, networks *graphs) {
+    printf("HELLO\n");
     double delta;
     int size = graphs->n;
     spmat **mats = graphs->A;
