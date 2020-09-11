@@ -1,0 +1,3 @@
+C:/Users/gal21/CLionProjects/projectAgNew/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/gal21/CLionProjects/projectAgNew/cmake-build-debug/CMakeFiles/projectAgNew.dir
+C:/Users/gal21/CLionProjects/projectAgNew/cmake-build-debug/CMakeFiles/rebuild_cache.dir

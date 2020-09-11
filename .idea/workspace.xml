@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="projectAgNew" targetName="projectAgNew" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1hLsrF6PgkV3BRxsANpWsdRhP5Y" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ofek" />
+  </component>
+  <component name="RunManager">
+    <configuration name="projectAgNew" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="C:\Users\gal21\CLionProjects\ofek\tester_binary.input C:\Users\gal21\CLionProjects\projectApproach\out.out" PASS_PARENT_ENVS_2="true" PROJECT_NAME="projectAgNew" TARGET_NAME="projectAgNew" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="projectAgNew" RUN_TARGET_NAME="projectAgNew">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="" />
+      <created>1599801903622</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599801903622</updated>
+      <workItem from="1599801905485" duration="2888000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599806005170">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
+    <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1599802282496">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1599802282496" />
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1599806025267">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
+    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1599806025266">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
+    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1599806025266">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
+    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1599806025267">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1599802233970">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
+    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1599802233970">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
+    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1599802233969">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1599802233969" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1599802233970">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
+  </component>
+</project>
