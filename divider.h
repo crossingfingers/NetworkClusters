@@ -23,7 +23,7 @@ typedef struct _division {
 
     void (*writeDivision)(struct _division *div, FILE *output);
 
-    void (*findGroups)(struct _division *div, spmat *sp);
+    void (*findGroups)(struct _division *div, networks *graphs);
 
 } division;
 

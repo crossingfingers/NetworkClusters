@@ -8,102 +8,100 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug"/>
+				<Option working_dir="C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="cProject">
-				<Option output="C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/cProject.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug"/>
+				<Option output="C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/cProject.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include"/>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../include"/>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include-fixed"/>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 cProject"/>
-					<CompileFile command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 cProject"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="cProject/fast">
-				<Option output="C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/cProject.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug"/>
+				<Option output="C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/cProject.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include"/>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../include"/>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include-fixed"/>
-					<Add directory="C:/Program Files (x86)/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 cProject/fast"/>
-					<CompileFile command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 cProject/fast"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug"/>
+				<Option working_dir="C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug"/>
+				<Option working_dir="C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/TDM-GC~1/bin/mingw32-make.exe -f &quot;C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;C:/Users/gal21/CLionProjects/projectApproach/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/divider.c">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/divider.c">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/divider.h">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/divider.h">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/main.c">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/main.c">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/spmat.c">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/spmat.c">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/spmat.h">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/spmat.h">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/stack.c">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/stack.c">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/stack.h">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/stack.h">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/utils.c">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/utils.c">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/utils.h">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/utils.h">
 			<Option target="cProject"/>
 		</Unit>
-		<Unit filename="C:/Users/divin/CLionProjects/Ver2/cproject/CMakeLists.txt">
+		<Unit filename="C:/Users/gal21/CLionProjects/projectApproach/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

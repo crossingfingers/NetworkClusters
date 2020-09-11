@@ -376,6 +376,13 @@ void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1, i
     array *arrAg2 = Ag2->private;
     insertValsToArr(arrAg,arrAg1,g1,g1Size);
     insertValsToArr(arrAg,arrAg2,g2,g2Size);
+    //TODO change the method of spmat_allocate to work without malloc of k. should be outside, they all use the same k, M too.
+    free(Ag1->k);
+    free(Ag2->k);
+    Ag1->k = graphs->k;
+    Ag2->k = graphs->k;
+    Ag1->M = graphs->M;
+    Ag2->M = graphs->M;
     free(graphs->A[groupIdx]);
     graphs->A[groupIdx] = Ag1;
     graphs->A[newGroupIdx] = Ag2;

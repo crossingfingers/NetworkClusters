@@ -23,9 +23,9 @@ int main(int argc, char **argv) {
     output = fopen(argv[2], "wb");
     start = clock();
     graphs = readGraph(input,2);
-
+    div = allocateDivision(graphs->n);
 //    TODO change the graphs->A[0] to graphs. after implement the creation of A[group]
-    div->findGroups(div, graphs->A[0]);
+    div->findGroups(div, graphs);
     div->writeDivision(div, output);
     graphs->free(graphs, div->numOfGroups);
     div->free(div);

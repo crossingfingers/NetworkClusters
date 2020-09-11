@@ -190,7 +190,7 @@ int getNewGroupSize(const double *s, const int *group, int groupSize) {
 }
 
 /* make the leading eigen-vector a +-1 vector*/
-int createSVector(double *vec, int *g, int groupSize) {
+void createSVector(double *vec, int *g, int groupSize) {
     int i, flag = -1;
     for (i = 0; i < groupSize; ++i) {
         if (flag == -1)
@@ -203,7 +203,7 @@ int createSVector(double *vec, int *g, int groupSize) {
     }
 }
 
-double split(struct _division *d, spmat *sp, double *vec, int groupIdx, double *vecF) {
+double split(struct _division *d, spmat *sp, networks *graphs,double *vec, int groupIdx, double *vecF) {
     double delta;
     int newGroupIdx = -1;
     int i;
@@ -246,10 +246,11 @@ double split(struct _division *d, spmat *sp, double *vec, int groupIdx, double *
     free(g);
     d->groups[groupIdx] = tempGroup;
     d->nodesforGroup[groupIdx] = size - counter;
+    sp->splitGraph(graphs, groupIdx, newGroupIdx, groups[groupIdx], groups[newGroupIdx], size-counter, counter);
     return delta;
 }
 
-int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0, double *vecF) {
+int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double *res, double *b0, double *vecF) {
 //    printf("working on group %d\n", groupIdx);
 //TODO make vecF only calculated here and send it to all functions !!!!
     int size = sp->n;
@@ -276,7 +277,7 @@ int divideToTwo(division *div, spmat *sp, int groupIdx, double *res, double *b0,
 //        free(unitVec);
         return 0;
     }
-    delta = split(div, sp, res, groupIdx, vecF);
+    delta = split(div, sp, graphs,res, groupIdx, vecF);
     if (delta == 0) {
 //        free(vecF);
 //        free(unitVec);
@@ -322,9 +323,11 @@ void writeDivision(struct _division *div, FILE *output) {
 }
 
 
-void findGroups(division *div, spmat *sp) {
+void findGroups(division *div, networks *graphs) {
     double delta;
-    int size = sp->n;
+    int size = graphs->n;
+    spmat **mats = graphs->A;
+    spmat *sp = *mats;
     int groupIdx = 0, *nodesForGroup = div->nodesforGroup, **groups = div->groups;
     double *b0 = malloc(sizeof(double) * size);
     double *res = malloc(sizeof(double) * size);
@@ -339,11 +342,12 @@ void findGroups(division *div, spmat *sp) {
         delta = 1;
         while (delta == 1) {
             multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0, div->vertexToGroup);
-            delta = divideToTwo(div, sp, groupIdx, res, b0, vecF);
+            delta = divideToTwo(div, sp, graphs->A,groupIdx, res, b0, vecF);
         }
         groupIdx++;
         groups++;
         nodesForGroup++;
+        sp = *++mats;
     }
     printf("modularity is %f\n", div->Q);
     free(b0);
