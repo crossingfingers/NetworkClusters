@@ -344,13 +344,14 @@ void findGroups(division *div, networks *graphs) {
         while (delta == 1) {
             sp = *mats;
             printf("counter is %d\n", counter++);
-            multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0, div->vertexToGroup);
+            multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 1, div->vertexToGroup);
+            //TODO its not passing the multbv on the second iteration ^
             delta = divideToTwo(div, sp, graphs,groupIdx, res, b0, vecF);
         }
         groupIdx++;
         groups++;
         nodesForGroup++;
-        sp = *++mats;
+        mats++;
     }
     printf("modularity is %f\n", div->Q);
     free(b0);
