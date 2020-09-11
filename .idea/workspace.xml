@@ -32,6 +32,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../ofek" />
@@ -65,6 +66,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
+    <state x="201" y="0" key="CommitChangelistDialog2" timestamp="1599806661511">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
     <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1599802282496">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -101,5 +106,17 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
+    <state x="354" y="57" key="MultipleFileMergeDialog" timestamp="1599806741889">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="354" y="57" key="MultipleFileMergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806741889" />
+    <state x="234" y="74" key="Vcs.Push.Dialog.v2" timestamp="1599806702623">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="234" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1599806702623" />
+    <state x="448" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599806666651">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="448" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1599806666651" />
   </component>
 </project>

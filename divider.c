@@ -324,7 +324,6 @@ void writeDivision(struct _division *div, FILE *output) {
 
 
 void findGroups(division *div, networks *graphs) {
-    printf("HELLO\n");
     double delta;
     int size = graphs->n;
     spmat **mats = graphs->A;
@@ -334,6 +333,7 @@ void findGroups(division *div, networks *graphs) {
     double *res = malloc(sizeof(double) * size);
     double *unitVec = malloc(size * sizeof(double));
     double *vecF = malloc(size * sizeof(double));
+    int counter =0;
     if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
@@ -342,8 +342,10 @@ void findGroups(division *div, networks *graphs) {
     while (groupIdx < div->numOfGroups) {
         delta = 1;
         while (delta == 1) {
+            sp = *mats;
+            printf("counter is %d\n", counter++);
             multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0, div->vertexToGroup);
-            delta = divideToTwo(div, sp, graphs->A,groupIdx, res, b0, vecF);
+            delta = divideToTwo(div, sp, graphs,groupIdx, res, b0, vecF);
         }
         groupIdx++;
         groups++;

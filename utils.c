@@ -72,16 +72,16 @@ void vecSum(double *vec, const double *b0, double shifting, const int *group, in
 /*decrease vec1 by vec2*/
 void vecDec(double *vec1, const double *vec2, const int *group, int n) {
     int i, idx, delta, prev = *group;
-    vec1 += prev;
-    vec2 += prev;
+//    vec1 += prev;
+//    vec2 += prev;
     for (i = 0; i < n; ++i) {
-//        idx = group[i];
-//        vec1[idx] -= vec2[idx];
-        *vec1 -= *vec2;
-        delta = *++group - prev;
-        prev = *group;
-        vec1 += delta;
-        vec2 += delta;
+        idx = group[i];
+        vec1[idx] -= vec2[idx];
+//        *vec1 -= *vec2;
+//        delta = *++group - prev;
+//        prev = *group;
+//        vec1 += delta;
+//        vec2 += delta;
     }
 }
 
@@ -179,6 +179,10 @@ void multBv(spmat *sp ,double *vec, const int *group, double *res, int groupSize
     int size = sp->n;
     int *k = sp->k, M = sp->M;
     double *res1 = malloc(size * sizeof(double));
+    if (res1 == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     dot = dotProd(k, vec, group, groupSize);
 //    if (debug == 1){
 //        printf("dot is %f\n", dot);

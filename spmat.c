@@ -163,7 +163,6 @@ spmat *spmat_allocate_list(int n) {
 typedef struct _array {
     int *colind;
     int *rowptr;
-    int *k;
     int lastindex;
     int lastRowPtr;
     int nnz;
@@ -215,6 +214,7 @@ void free_array(struct _spmat *A) {
     free(sparray->rowptr);
     free(sparray->colind);
     free(A->private);
+//    free(A->k);
 }
 
 void printMatrix(spmat *A) {
@@ -360,7 +360,9 @@ void insertValsToArr(array *arrAg, array *arrAg1,int *g1,int g1Size){
 
 void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1, int *g2, int g1Size, int g2Size) {
     if (g2Size == 0) { return; }
-    array *arrAg = graphs->A[groupIdx]->private;
+    spmat **Amats = graphs->A;
+    spmat *currSP = Amats[groupIdx];
+    array *arrAg = (array*)currSP->private;
     spmat *Ag1;
     spmat *Ag2;
     int g1NNZ;
@@ -380,9 +382,10 @@ void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1, i
     Ag2->k = graphs->k;
     Ag1->M = graphs->M;
     Ag2->M = graphs->M;
-    free(graphs->A[groupIdx]);
-    graphs->A[groupIdx] = Ag1;
-    graphs->A[newGroupIdx] = Ag2;
+    currSP->free(currSP);
+    free(currSP);
+    Amats[groupIdx] = Ag1;
+    Amats[newGroupIdx] = Ag2;
 }
 
 spmat *spmat_allocate_array(int n, int nnz) {
