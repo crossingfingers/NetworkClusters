@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/gal21/CLionProjects/projectAgNew/divider.c" "C:/Users/gal21/CLionProjects/projectAgNew/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj"
-  "C:/Users/gal21/CLionProjects/projectAgNew/main.c" "C:/Users/gal21/CLionProjects/projectAgNew/cmake-build-debug/CMakeFiles/projectAgNew.dir/main.c.obj"
-  "C:/Users/gal21/CLionProjects/projectAgNew/spmat.c" "C:/Users/gal21/CLionProjects/projectAgNew/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj"
-  "C:/Users/gal21/CLionProjects/projectAgNew/utils.c" "C:/Users/gal21/CLionProjects/projectAgNew/cmake-build-debug/CMakeFiles/projectAgNew.dir/utils.c.obj"
+  "C:/Users/divin/CLionProjects/Ver2/cproject/divider.c" "C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj"
+  "C:/Users/divin/CLionProjects/Ver2/cproject/main.c" "C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/CMakeFiles/projectAgNew.dir/main.c.obj"
+  "C:/Users/divin/CLionProjects/Ver2/cproject/spmat.c" "C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj"
+  "C:/Users/divin/CLionProjects/Ver2/cproject/utils.c" "C:/Users/divin/CLionProjects/Ver2/cproject/cmake-build-debug/CMakeFiles/projectAgNew.dir/utils.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

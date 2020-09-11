@@ -243,10 +243,10 @@ double split(struct _division *d, spmat *sp, networks *graphs,double *vec, int g
         }
     }
     d->nodesforGroup[newGroupIdx] = counter;
-    free(g);
     d->groups[groupIdx] = tempGroup;
     d->nodesforGroup[groupIdx] = size - counter;
-    sp->splitGraph(graphs, groupIdx, newGroupIdx, groups[groupIdx], groups[newGroupIdx], size-counter, counter);
+    sp->splitGraph(graphs, groupIdx, newGroupIdx,g, groups[groupIdx], groups[newGroupIdx], size-counter, counter);
+    free(g);
     return delta;
 }
 
@@ -266,12 +266,12 @@ int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double
 
 //    printf("vec f is: ");
 //    printVector(vecF, size, group);
-    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
+    //printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
     powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, res,
               vecF, div->vertexToGroup);
 //    printf("HERE11\n");
     double eigen = eigenValue(sp, res, group, groupSize, vecF, div->vertexToGroup);
-    printf("eigen value is %f\n", eigen);
+//    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen)) {
 //        free(vecF);
 //        free(unitVec);
@@ -333,7 +333,7 @@ void findGroups(division *div, networks *graphs) {
     double *res = malloc(sizeof(double) * size);
     double *unitVec = malloc(size * sizeof(double));
     double *vecF = malloc(size * sizeof(double));
-    int counter =0;
+    //int counter =0;
     if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
@@ -343,7 +343,7 @@ void findGroups(division *div, networks *graphs) {
         delta = 1;
         while (delta == 1) {
             sp = *mats;
-            printf("counter is %d\n", counter++);
+            //printf("counter is %d\n", counter++);
             multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0, div->vertexToGroup);
             //TODO its not passing the multbv on the second iteration ^
             delta = divideToTwo(div, sp, graphs,groupIdx, res, b0, vecF);

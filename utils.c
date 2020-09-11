@@ -29,8 +29,8 @@ void printIntVector(int *vec, int n) {
 void randomizeVec(int size, double *vec) {
     int i;
     for (i = 0; i < size; i++) {
-//        vec[i] = rand();
-        vec[i] = i;
+        vec[i] = rand();
+//        vec[i] = i;
 
     }
 }

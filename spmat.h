@@ -23,7 +23,7 @@ typedef struct _spmat {
 
     double (*matShifting)(struct _spmat *A, const int *group, int groupSize, const int *vertexToGroup, int groupIdx, double *vecF);
 
-    void (*splitGraph)(struct  _networks *graphs, int groupIdx, int newGroupIdx, int *g1 ,int *g2, int g1Size, int g2Size);
+    void (*splitGraph)(struct  _networks *graphs, int groupIdx, int newGroupIdx,int *g, int *g1 ,int *g2, int g1Size, int g2Size);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */
