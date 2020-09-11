@@ -369,8 +369,8 @@ void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, int *g1, i
     int g2NNZ;
     g1NNZ=getNNZforGroup(arrAg,g1,g1Size);
     g2NNZ=getNNZforGroup(arrAg,g2,g2Size);
-    Ag1 = spmat_allocate_array(g1Size, g1NNZ);
-    Ag2 = spmat_allocate_array(g2Size, g2NNZ);
+    Ag1 = spmat_allocate_array(graphs->n, g1NNZ);
+    Ag2 = spmat_allocate_array(graphs->n, g2NNZ);
     array *arrAg1 = Ag1->private;
     array *arrAg2 = Ag2->private;
     insertValsToArr(arrAg,arrAg1,g1,g1Size);
