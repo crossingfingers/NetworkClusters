@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "spmat.h"
 #include <math.h>
+#include <time.h>
 
 typedef struct _node {
     struct _node *next;
@@ -185,101 +186,78 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
     }
 }
 
-//TODO get second while loop even faster, less mem access when push val
-//void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
-//                int groupSize, const int *verticeToGroup) {
-//
-//    array *sparray = (array *) A->private;
-//    int *rowPtr = sparray->rowptr;
-//    int *cols;
-//    int i;
-//    int colStart;
-//    int colEnd;
-//    double res;
-//    int groupID = verticeToGroup[group[0]];
-//    for (i = 0; i < groupSize; ++i) {
-//        res = 0;
-//        colStart = *(rowPtr + group[i]);
-//        cols = sparray->colind + colStart;
-//        colEnd = *(rowPtr + group[i] + 1);
-//        while (colStart < colEnd) {
-//            if (verticeToGroup[*(cols)] == groupID) {
-//                res += vec[*(cols)];
-//            }
-//            colStart++;
-//            if (colStart < colEnd) { cols++; }
-//        }
-//        result[i] = res;
-//    }
-//}
-void mult_array(const struct _spmat *A, const double *vec, double *result, int *group,
+void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
                 int groupSize, const int *verticeToGroup) {
 
     array *sparray = (array *) A->private;
     int *rowPtr = sparray->rowptr;
     int *cols;
-    int i, t;
+    int i;
     int colStart;
-    int colEnd, valsForRow, j, *groupCopy;
+    int colEnd;
     double res;
+    int size = 0;
     for (i = 0; i < groupSize; ++i) {
         res = 0;
         colStart = *(rowPtr + i);
         cols = sparray->colind + colStart;
         colEnd = *(rowPtr + i + 1);
-        valsForRow = colEnd - colStart;
-        j = 0;
-        t = 0;
-        groupCopy = group;
-        while (j < valsForRow && t < groupSize) {
-            if (*groupCopy == *cols) {
-                res += vec[t];
-                cols++;
-                groupCopy++;
-                t++;
-                j++;
-//                colStart++;
-            } else if (*cols < *groupCopy) {
-                cols++;
-                j++;
-            } else {
-                t++;
-                groupCopy++;
-            }
+        size = colEnd - colStart;
+        while (colStart < colEnd) {
+            res += vec[*(cols)];
+            colStart++;
+            if (colStart < colEnd) { cols++; }
         }
         result[i] = res;
     }
 }
 
-void mult_array2(const struct _spmat *A, const double *vec, double *result, int *group,
-                 int groupSize, const int *verticeToGroup) {
+//TODO get second while loop even faster, less mem access when push val
 
-    array *sparray = (array *) A->private;
-    int *rowPtr = sparray->rowptr;
-    int *cols;
-    int i;
-    int j = 0;
-    int colS;
-    int colE;
-    int dif;
-    double *res = result;
-    for (i = 0; i < groupSize; i++) {
-        *res = 0;
-        colS = *rowPtr;
-        colE = *(rowPtr + 1);
-        dif = colE - colS;
-        cols = sparray->colind;
-        cols += colS;
-        for (j = 0; j < dif; j++) {
-            (*res) += vec[*(cols)];
-            cols++;
-        }
-        res++;
-        rowPtr++;
-    }
+//void mult_array(const struct _spmat *A, const double *vec, double *result, int *group,
+//                int groupSize, const int *verticeToGroup) {
+//    array *sparray = (array *) A->private;
+//    int *rowPtr = sparray->rowptr;
+//    int *cols;
+//    int i,t;
+//    double start, end;
+//    int colStart;
+//    int colEnd, valsForRow, j, *groupCopy;
+//    double res;
+//    start = clock();
+//    for (i = 0; i < groupSize; ++i) {
+//        res = 0;
+//        colStart = *(rowPtr + i);
+//        cols = sparray->colind + colStart;
+//        colEnd = *(rowPtr + i + 1);
+//        valsForRow = colEnd - colStart;
+//        j = 0;
+//        t = 0;
+//        groupCopy = group;
+//        while(j < valsForRow && t < groupSize) {
+//            if(*groupCopy == *cols){
+//                res += vec[t];
+//                cols++;
+//                groupCopy++;
+//                t++;
+//                j++;
+////                colStart++;
+//            }
+//            else if(*cols < *groupCopy){
+//                cols ++;
+//                j ++;
+//            }
+//            else{
+//                t ++;
+//                groupCopy++;
+//            }
+//        }
+//        result[i] = res;
+//    }
+//    end = clock();
+////    printf("mult took %f seconds\n", ((double)(end-start)/ CLOCKS_PER_SEC));
+//}
 
-
-}
 /*void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
                 int groupSize, const int *verticeToGroup) {
 
@@ -528,7 +506,7 @@ void freeNetworks(networks *graphs, int numOfGroups) {
     int i;
     spmat *sp, **mats = graphs->A;
     //TODO change 1 to numOfGroups!!
-    for (i = 0; i < 1; ++i) {
+    for (i = 0; i < numOfGroups; ++i) {
         sp = *mats++;
         sp->free(sp);
         free(sp);
@@ -658,7 +636,7 @@ void getNewNnz(spmat *sp, double *s, int *group, int groupSize, int *newNnz) {
         groupCopy = group;
         t = 0;
         while (j < valsInRow && t < groupSize) {
-            if (*colIdx == *groupCopy) {
+            if (*colIdx == t) {
                 if (s[t] == flag) {
                     (*counter)++;
                 }
@@ -666,7 +644,7 @@ void getNewNnz(spmat *sp, double *s, int *group, int groupSize, int *newNnz) {
                 t++;
                 groupCopy++;
                 colIdx++;
-            } else if (*colIdx < *groupCopy) {
+            } else if (*colIdx < t) {
                 j++;
                 colIdx++;
             } else {
@@ -684,7 +662,7 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
     int *groupCopy;
     array *currSpArray = (array *) currSp->private, *g1SpArray = (array *) g1Sp->private, *g2SpArray = (array *) g2Sp->private;
     array *currArray;
-    int *rowPtr = currSpArray->rowptr, curr, valsInRow, *oldColIdx, *currColIdx;
+    int *rowPtr = currSpArray->rowptr, curr, valsInRow, *oldColIdx, *currColIdx, currGroupCounter;
     int *g1K = g1Sp->k, *g2K = g2Sp->k;
     double *sI = s, *sT;
     *(g1SpArray->rowptr) = 0;
@@ -712,23 +690,28 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
         groupCopy = group;
         currColIdx = currArray->colind + currArray->lastindex;
         valsCounter = 0;
+        currGroupCounter = 0;
         sT = s;
         while (j < valsInRow && t < groupSize) {
-            if (*oldColIdx == *groupCopy) {
+            if (*oldColIdx == t) {
                 if (*sT == flag) {
-                    *currColIdx = *groupCopy;
+//                    *currColIdx = *groupCopy;
+                    *currColIdx = currGroupCounter;
                     currColIdx++;
                     valsCounter++;
+                    currGroupCounter++;
                 }
                 j++;
                 t++;
                 sT++;
                 groupCopy++;
                 oldColIdx++;
-            } else if (*oldColIdx < *groupCopy) {
+            } else if (*oldColIdx < t) {
                 j++;
                 oldColIdx++;
             } else {
+                if (*sT == flag)
+                    currGroupCounter++;
                 t++;
                 sT++;
                 groupCopy++;
@@ -760,6 +743,7 @@ splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int 
     array *currArray = (array *) currSp->private;
     g1Sp->M = currSp->M;
     g2Sp->M = currSp->M;
+//    currSp->free(currSp);
     int *k = currSp->k;
     free(currSp->k);
     free(currArray->rowptr);

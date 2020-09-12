@@ -5,7 +5,6 @@
 #include <float.h>
 #include "utils.h"
 
-
 void resetUnmoved(int *unmoved, int groupSize) {
     int i;
     for (i = 0; i < groupSize; ++i) {
@@ -169,6 +168,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize, int *verticeToGro
     } while (IS_POSITIVE(delta));
 }
 
+
 int getNewGroupSize(const double *s, const int *group, int groupSize) {
     int i, counter = 0;
     for (i = 0; i < groupSize; ++i) {
@@ -241,7 +241,7 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
     return delta;
 }
 
-int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double *res, double *b0, double *vecF) {
+int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double *res, double *b0, double *vecF, double shifting) {
 //    printf("working on group %d\n", groupIdx);
 //TODO make vecF only calculated here and send it to all functions !!!!
     int size = sp->n;
@@ -258,7 +258,8 @@ int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double
 //    printVector(vecF, size);
 //    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
     powerIter(sp, b0, sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx, vecF), group, groupSize, res,
-              vecF, div->vertexToGroup, 1);
+              vecF, div->vertexToGroup, 0);
+//    powerIter(sp, b0,shifting, group, groupSize, res,vecF, div->vertexToGroup, 1);
 //    printf("HERE11\n");
 //    printVector(res, groupSize, group);
     double eigen = eigenValue(sp, res, group, groupSize, vecF, div->vertexToGroup);
@@ -319,11 +320,13 @@ void findGroups(division *div, networks *graphs) {
     int size = graphs->n;
     spmat **mats = graphs->A;
     spmat *sp = *mats;
+    double shifting = -1;
     int groupIdx = 0, *nodesForGroup = div->nodesforGroup, **groups = div->groups;
     double *b0 = malloc(sizeof(double) * size);
     double *res = malloc(sizeof(double) * size);
     double *unitVec = malloc(size * sizeof(double));
     double *vecF = malloc(size * sizeof(double));
+    int counter=0;
     if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
@@ -334,8 +337,12 @@ void findGroups(division *div, networks *graphs) {
         while (delta == 1) {
             sp = *mats;
 //            printVector(vecF, *nodesForGroup, *groups);
+//            printf("counter %d\n", counter++);
             multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0, div->vertexToGroup);
-            delta = divideToTwo(div, sp, graphs, groupIdx, res, b0, vecF);
+            if(shifting == -1){
+               shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], div->vertexToGroup, groupIdx, vecF);
+            }
+            delta = divideToTwo(div, sp, graphs, groupIdx, res, b0, vecF, shifting);
         }
         groupIdx++;
         groups++;

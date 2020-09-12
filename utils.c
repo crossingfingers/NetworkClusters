@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "spmat.h"
+#include <time.h>
 
 void printVector(double *vec, int n, const int *group) {
     int i, idx;
@@ -31,6 +32,7 @@ void randomizeVec(int size, double *vec, int groupSize, int *group) {
     for (i = 0; i < groupSize; i++) {
 //        vec[i] = rand();
         vec[i] = group[i];
+//        vec[i] = i;
     }
 //    for (; i < size; ++i) {
 //        vec[i] = 0;
@@ -190,10 +192,11 @@ void normalize(int size, double *vec, const int *group, int groupSize) {
 
 
 /*the calculation of Bv by split B to A, and KiKj matrix*/
-void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug, int *verticeToGroup) {
+double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug, int *verticeToGroup) {
     double dot;
     int size = sp->n;
     double *res1 = malloc(size * sizeof(double));
+    double start, end;
     dot = dotProd(sp->k, vec, group, groupSize);
 //    if (debug == 1){
 //        printf("dot is %f\n", dot);
@@ -208,7 +211,9 @@ void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize
 //        printf("res1 is : ");
 //        printVector(res1, size);
 //    }
+    start = clock();
     sp->mult(sp, vec, res, group, groupSize, verticeToGroup);
+    end = clock();
 //    if (debug == 2) {
 //        printf("dot is %f\n", dot);
 //        printf("res after mult A is : ");
@@ -220,6 +225,7 @@ void multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize
 //    }
     vecDec(res, res1, group, groupSize);
     free(res1);
+    return ((double)(end-start)/ CLOCKS_PER_SEC);
 }
 
 /*get a vector and initialize it values to 1*/
@@ -240,30 +246,34 @@ void initOneValVec(double *unitVec, int n, const int *group, int val) {
 
 
 /* calculate the vector B^*v to res, by split the B^ into B and F vector as values of diag matrix*/
-void multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int *verticeToGroup,
+double multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int *verticeToGroup,
                int debug) {
     int size = sp->n;
 //    double *unitVec = malloc(size * sizeof(double));
     double *vecFCopy = malloc(size * sizeof(double));
+    double total, start, end;
     if (vecFCopy == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
+    start = clock();
 //    initOneValVec(unitVec, groupSize, group, 1);
 //    multBv(sp, unitVec, group, vecF, groupSize, 0);
     copyDoubleVec(vecF, vecFCopy, group, groupSize);
     vecMult(vecFCopy, vec, group, groupSize);
-
-    multBv(sp, vec, group, res, groupSize, debug, verticeToGroup);
+    total = multBv(sp, vec, group, res, groupSize, debug, verticeToGroup);
 //    if (debug == 1) {
 //        printVector(vec, size, group);
 //            printVector(result, size, group);
-
+//        printf("PI multBv total time took %f\n", total);
 //    }
     vecDec(res, vecFCopy, group, groupSize);
     free(vecFCopy);
     debug = 0;
 //    free(unitVec);
+    end = clock();
+//    return ((double)(end-start)/ CLOCKS_PER_SEC);
+    return total;
 }
 
 
@@ -273,9 +283,10 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
     int flag = 1, i, idx;
     int size = sp->n;
     int counter = 0;
+    double total = 0;
     while (flag == 1 && counter < 10000) {
         flag = 0;
-        multBRoof(sp, b0, group, groupSize, result, vecF, verticeToGroup, debug);
+        total +=multBRoof(sp, b0, group, groupSize, result, vecF, verticeToGroup, debug);
         vecSum(result, b0, shifting, group, groupSize);
         normalize(size, result, group, groupSize);
         for (i = 0; i < groupSize; i++) {
@@ -288,6 +299,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
         debug = 0;
     }
 //    printf("took %d iterations\n", counter);
+//    printf("mult A in PI took %f\n", total);
 }
 
 /*calculate the eigenvalue of the leading eigenVector found*/
