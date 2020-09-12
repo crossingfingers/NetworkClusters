@@ -2,7 +2,8 @@
 #define _SPMAT_H
 #include <stdio.h>
 
-struct _networks;
+
+struct  _networks;
 typedef struct _spmat {
     /* Matrix size (n*n) */
     int n;
@@ -23,7 +24,8 @@ typedef struct _spmat {
 
     double (*matShifting)(struct _spmat *A, const int *group, int groupSize, const int *vertexToGroup, int groupIdx, double *vecF);
 
-    void (*splitGraph)(struct  _networks *graphs, int groupIdx, int newGroupIdx,int *g, int *g1 ,int *g2, int g1Size, int g2Size);
+    void (*splitGraph)(struct _networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
+                       int g2Size);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */
@@ -32,12 +34,9 @@ typedef struct _spmat {
 
 typedef struct _networks{
     spmat **A;
-    int M;
-    int *k;
     int n;
     void (*free)(struct _networks *graphs, int numOfGroups);
 }networks;
-
 
 networks *readGraph(FILE *input, int type);
 

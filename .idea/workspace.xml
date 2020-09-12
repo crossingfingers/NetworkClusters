@@ -11,49 +11,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+    <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="new weird error....">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/a.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/C.includecache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/DependInfo.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/build.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/cmake_clean.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/depend.internal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/divider.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/flags.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/link.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/linklibs.rsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/main.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/objects.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/objects1.rsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/progress.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/spmat.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/stack.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/utils.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/build.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/linklibs.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/linklibs.rsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" afterDir="false" />
@@ -63,9 +33,14 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/divider.c" beforeDir="false" afterPath="$PROJECT_DIR$/divider.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/divider.h" beforeDir="false" afterPath="$PROJECT_DIR$/divider.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spmat.c" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spmat.h" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils - Copy.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils - Copy.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,11 +62,18 @@
   </component>
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="cf.first.check.clang-format" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../findbug" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -102,12 +84,8 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -125,69 +103,75 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="new weird error...." />
+    <option name="LAST_COMMIT_MESSAGE" value="new weird error...." />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="15" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599817751140">
+    <state x="15" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599896480249">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
-    <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599817751140" />
-    <state x="201" y="0" key="CommitChangelistDialog2" timestamp="1599806661511">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599896480249" />
+    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1599834933859">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
-    <state x="633" y="148" key="FileChooserDialogImpl" timestamp="1599834690110">
+    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1599834933859" />
+    <state x="633" y="148" key="FileChooserDialogImpl" timestamp="1599899356102">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1599802282496" />
-    <state x="633" y="148" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1599834690110" />
-    <state width="1877" height="338" key="GridCell.Tab.0.bottom" timestamp="1599834651872">
+    <state x="633" y="148" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1599899356102" />
+    <state width="916" height="442" key="GridCell.Tab.0.bottom" timestamp="1599914826013">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
-    <state width="1877" height="338" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.0.center" timestamp="1599834651872">
+    <state width="916" height="442" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599914826013" />
+    <state width="916" height="442" key="GridCell.Tab.0.center" timestamp="1599914826013">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
-    <state width="1877" height="338" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.0.left" timestamp="1599834651872">
+    <state width="916" height="442" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599914826013" />
+    <state width="916" height="442" key="GridCell.Tab.0.left" timestamp="1599914826013">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
-    <state width="1877" height="338" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.0.right" timestamp="1599834651872">
+    <state width="916" height="442" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599914826013" />
+    <state width="916" height="442" key="GridCell.Tab.0.right" timestamp="1599914826013">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
-    <state width="1877" height="338" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.1.bottom" timestamp="1599834651794">
+    <state width="916" height="442" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599914826013" />
+    <state width="1877" height="225" key="GridCell.Tab.1.bottom" timestamp="1599910738278">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
-    <state width="1877" height="338" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
-    <state width="1877" height="338" key="GridCell.Tab.1.center" timestamp="1599834651794">
+    <state width="1877" height="225" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599910738278" />
+    <state width="1877" height="225" key="GridCell.Tab.1.center" timestamp="1599910738278">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
-    <state width="1877" height="338" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
-    <state width="1877" height="338" key="GridCell.Tab.1.left" timestamp="1599834651794">
+    <state width="1877" height="225" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599910738278" />
+    <state width="1877" height="225" key="GridCell.Tab.1.left" timestamp="1599910738278">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1599802233969" />
-    <state width="1877" height="338" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
-    <state width="1877" height="338" key="GridCell.Tab.1.right" timestamp="1599834651794">
+    <state width="1877" height="225" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599910738278" />
+    <state width="1877" height="225" key="GridCell.Tab.1.right" timestamp="1599910738278">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
-    <state width="1877" height="338" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
+    <state width="1877" height="225" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599910738278" />
     <state x="354" y="57" key="MultipleFileMergeDialog" timestamp="1599806741889">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="354" y="57" key="MultipleFileMergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806741889" />
-    <state x="234" y="74" key="Vcs.Push.Dialog.v2" timestamp="1599806702623">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1599834928676">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="234" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1599806702623" />
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1599834928676" />
     <state x="448" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599806666651">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

@@ -62,10 +62,10 @@ RM = "C:\Program Files\JetBrains\CLion 2019.3.5\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\divin\CLionProjects\Ver2\cproject
+CMAKE_SOURCE_DIR = "C:\Users\divin\CLionProjects\Ver2\gal update 2"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug
+CMAKE_BINARY_DIR = "C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/projectAgNew.dir/depend.make
@@ -78,55 +78,55 @@ include CMakeFiles/projectAgNew.dir/flags.make
 
 CMakeFiles/projectAgNew.dir/main.c.obj: CMakeFiles/projectAgNew.dir/flags.make
 CMakeFiles/projectAgNew.dir/main.c.obj: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/projectAgNew.dir/main.c.obj"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\main.c.obj   -c C:\Users\divin\CLionProjects\Ver2\cproject\main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/projectAgNew.dir/main.c.obj"
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\main.c.obj   -c "C:\Users\divin\CLionProjects\Ver2\gal update 2\main.c"
 
 CMakeFiles/projectAgNew.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projectAgNew.dir/main.c.i"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\divin\CLionProjects\Ver2\cproject\main.c > CMakeFiles\projectAgNew.dir\main.c.i
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Users\divin\CLionProjects\Ver2\gal update 2\main.c" > CMakeFiles\projectAgNew.dir\main.c.i
 
 CMakeFiles/projectAgNew.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projectAgNew.dir/main.c.s"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\divin\CLionProjects\Ver2\cproject\main.c -o CMakeFiles\projectAgNew.dir\main.c.s
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Users\divin\CLionProjects\Ver2\gal update 2\main.c" -o CMakeFiles\projectAgNew.dir\main.c.s
 
 CMakeFiles/projectAgNew.dir/utils.c.obj: CMakeFiles/projectAgNew.dir/flags.make
 CMakeFiles/projectAgNew.dir/utils.c.obj: ../utils.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/projectAgNew.dir/utils.c.obj"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\utils.c.obj   -c C:\Users\divin\CLionProjects\Ver2\cproject\utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/projectAgNew.dir/utils.c.obj"
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\utils.c.obj   -c "C:\Users\divin\CLionProjects\Ver2\gal update 2\utils.c"
 
 CMakeFiles/projectAgNew.dir/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projectAgNew.dir/utils.c.i"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\divin\CLionProjects\Ver2\cproject\utils.c > CMakeFiles\projectAgNew.dir\utils.c.i
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Users\divin\CLionProjects\Ver2\gal update 2\utils.c" > CMakeFiles\projectAgNew.dir\utils.c.i
 
 CMakeFiles/projectAgNew.dir/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projectAgNew.dir/utils.c.s"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\divin\CLionProjects\Ver2\cproject\utils.c -o CMakeFiles\projectAgNew.dir\utils.c.s
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Users\divin\CLionProjects\Ver2\gal update 2\utils.c" -o CMakeFiles\projectAgNew.dir\utils.c.s
 
 CMakeFiles/projectAgNew.dir/spmat.c.obj: CMakeFiles/projectAgNew.dir/flags.make
 CMakeFiles/projectAgNew.dir/spmat.c.obj: ../spmat.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/projectAgNew.dir/spmat.c.obj"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\spmat.c.obj   -c C:\Users\divin\CLionProjects\Ver2\cproject\spmat.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/projectAgNew.dir/spmat.c.obj"
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\spmat.c.obj   -c "C:\Users\divin\CLionProjects\Ver2\gal update 2\spmat.c"
 
 CMakeFiles/projectAgNew.dir/spmat.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projectAgNew.dir/spmat.c.i"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\divin\CLionProjects\Ver2\cproject\spmat.c > CMakeFiles\projectAgNew.dir\spmat.c.i
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Users\divin\CLionProjects\Ver2\gal update 2\spmat.c" > CMakeFiles\projectAgNew.dir\spmat.c.i
 
 CMakeFiles/projectAgNew.dir/spmat.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projectAgNew.dir/spmat.c.s"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\divin\CLionProjects\Ver2\cproject\spmat.c -o CMakeFiles\projectAgNew.dir\spmat.c.s
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Users\divin\CLionProjects\Ver2\gal update 2\spmat.c" -o CMakeFiles\projectAgNew.dir\spmat.c.s
 
 CMakeFiles/projectAgNew.dir/divider.c.obj: CMakeFiles/projectAgNew.dir/flags.make
 CMakeFiles/projectAgNew.dir/divider.c.obj: ../divider.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/projectAgNew.dir/divider.c.obj"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\divider.c.obj   -c C:\Users\divin\CLionProjects\Ver2\cproject\divider.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/projectAgNew.dir/divider.c.obj"
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\projectAgNew.dir\divider.c.obj   -c "C:\Users\divin\CLionProjects\Ver2\gal update 2\divider.c"
 
 CMakeFiles/projectAgNew.dir/divider.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projectAgNew.dir/divider.c.i"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\divin\CLionProjects\Ver2\cproject\divider.c > CMakeFiles\projectAgNew.dir\divider.c.i
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Users\divin\CLionProjects\Ver2\gal update 2\divider.c" > CMakeFiles\projectAgNew.dir\divider.c.i
 
 CMakeFiles/projectAgNew.dir/divider.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projectAgNew.dir/divider.c.s"
-	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\divin\CLionProjects\Ver2\cproject\divider.c -o CMakeFiles\projectAgNew.dir\divider.c.s
+	C:\PROGRA~2\TDM-GC~1\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Users\divin\CLionProjects\Ver2\gal update 2\divider.c" -o CMakeFiles\projectAgNew.dir\divider.c.s
 
 # Object files for target projectAgNew
 projectAgNew_OBJECTS = \
@@ -146,7 +146,7 @@ projectAgNew.exe: CMakeFiles/projectAgNew.dir/build.make
 projectAgNew.exe: CMakeFiles/projectAgNew.dir/linklibs.rsp
 projectAgNew.exe: CMakeFiles/projectAgNew.dir/objects1.rsp
 projectAgNew.exe: CMakeFiles/projectAgNew.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable projectAgNew.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable projectAgNew.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\projectAgNew.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -159,6 +159,6 @@ CMakeFiles/projectAgNew.dir/clean:
 .PHONY : CMakeFiles/projectAgNew.dir/clean
 
 CMakeFiles/projectAgNew.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\divin\CLionProjects\Ver2\cproject C:\Users\divin\CLionProjects\Ver2\cproject C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug C:\Users\divin\CLionProjects\Ver2\cproject\cmake-build-debug\CMakeFiles\projectAgNew.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" "C:\Users\divin\CLionProjects\Ver2\gal update 2" "C:\Users\divin\CLionProjects\Ver2\gal update 2" "C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug" "C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug" "C:\Users\divin\CLionProjects\Ver2\gal update 2\cmake-build-debug\CMakeFiles\projectAgNew.dir\DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/projectAgNew.dir/depend
 
