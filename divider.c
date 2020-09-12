@@ -15,29 +15,29 @@ void resetUnmoved(int *unmoved, int groupSize) {
     }
 }
 
-
 void updateScore(spmat *sp, double *s, double *score, const int *group, int groupSize, const int *unmoved, int k,
                  double *zeroVec, double *res, int *verticeToGroup) {
     int i;
     zeroVec[k] = 1;
-    double *sCopy = s;
+    double sk = s[k];
     multBv(sp, zeroVec, group, res, groupSize, 0, verticeToGroup);
     for (i = 0; i < groupSize; ++i) {
         if (*unmoved++ == 0) {
             score++;
-            sCopy++;
+            s++;
             res++;
             continue;
         }
         if (k == i)
-            *score = -(*score);
+            *score = -*score;
         else {
-            *score -= (4 * (*sCopy) * s[k] * (*res));
+            *score -= (4 * *s * sk * *res);
         }
         score++;
-        sCopy++;
+        s++;
         res++;
     }
+
     zeroVec[k] = 0;
 }
 
@@ -83,9 +83,9 @@ double findMaxImprove(double *s, double *improve, int *indices, const int *group
 
     int i, maxIdx = -1, j;
     double delta, max;
-    double *improveCopy=improve;
-    int *indicesCopy=indices;
-    int groupSizeMinusOne=groupSize-1;
+    double *improveCopy = improve;
+    int *indicesCopy = indices;
+    int groupSizeMinusOne = groupSize - 1;
     for (i = 0; i < groupSize; ++i) {
         if (maxIdx == -1) {
             max = *improveCopy;
@@ -97,13 +97,13 @@ double findMaxImprove(double *s, double *improve, int *indices, const int *group
         }
         improveCopy++;
     }
-    indicesCopy+=groupSizeMinusOne;
-    for (i = groupSizeMinusOne; i > maxIdx; --i) {
-        j = *indicesCopy;
+//    printf("max index is %d\n",maxIdx);
+    for (i = groupSize - 1; i > maxIdx; --i) {
+        j = indices[i];
         s[j] = -s[j];
-        indicesCopy--;
     }
-    if (maxIdx == groupSizeMinusOne)
+//    printf("max index is :%d, improve is: %f\n",maxIdx,improve[maxIdx]);
+    if (maxIdx == groupSize - 1)
         delta = 0;
     else
         delta = improve[maxIdx];
@@ -112,11 +112,9 @@ double findMaxImprove(double *s, double *improve, int *indices, const int *group
 
 void optimize(spmat *sp, double *s, int *group, int groupSize, int *verticeToGroup) {
     int size = sp->n;
-    int i;
+    int i, *k = sp->k, *kCopy;
     int maxIdx;
-    double delta;
-    int *indicesCopy, *kCopy;
-    double *scoreCopy, *improveCopy, *resCopy, *sCopy;
+    double delta, *sCopy, *resCopy, *scoreCopy, *improveCopy;
     int *unmoved = malloc(sizeof(int) * groupSize);
     int *indices = malloc(sizeof(int) * groupSize);
     double *score = malloc(sizeof(double) * groupSize);
@@ -127,44 +125,47 @@ void optimize(spmat *sp, double *s, int *group, int groupSize, int *verticeToGro
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
+
     initOneValVec(zeroVec, groupSize, group, 0);
+    int square, M = sp->M;
     do {
         resetUnmoved(unmoved, groupSize);
-        indicesCopy = indices;
-        kCopy = sp->k;
-        scoreCopy = score;
-        improveCopy = improve;
-        indicesCopy = indices;
-        resCopy = res;
-        sCopy = s;
-        int square, M = sp->M;
 
         multBv(sp, s, group, res, groupSize, 0, verticeToGroup);
-
-
+        sCopy = s;
+        resCopy = res;
+        scoreCopy = score;
+        kCopy = k;
         for (i = 0; i < groupSize; ++i) {
-            square = (*kCopy) * (*kCopy);
-            *scoreCopy = -2 * (((*sCopy) * (*resCopy)) + ((double) square / M));
-            kCopy++;
+            square = *kCopy * *kCopy;
+            *scoreCopy = -2 * ((*sCopy * *resCopy) + ((double) square) / M);
             scoreCopy++;
-            sCopy++;
+            kCopy++;
             resCopy++;
+            sCopy++;
         }
         for (i = 0; i < groupSize; ++i) {
             maxIdx = findMaxIdx(score, groupSize, unmoved);
-            s[maxIdx] = -s[maxIdx];
-            *indicesCopy = maxIdx;
+//            printf("max index chosen is: %d, score : %f\n",maxIdx,score[maxIdx]);
+            sCopy = s + maxIdx;
+            *sCopy = -*sCopy;
+            *indices = maxIdx;
             if (i == 0)
-                *improveCopy = score[maxIdx];
+                *improve = score[maxIdx];
             else
-                *improveCopy = *(improveCopy - 1) + score[maxIdx];
+                *improve = *(improve - 1) + score[maxIdx];
+//            printf("improve is :%f\n",*improve);
+
             updateScore(sp, s, score, group, groupSize, unmoved, maxIdx, zeroVec, res, verticeToGroup);
             unmoved[maxIdx] = 0;
-            indicesCopy++;
-            improveCopy++;
+            indices++;
+            improve++;
         }
+
+        indices -= i;
+        improve -= i;
         delta = findMaxImprove(s, improve, indices, group, groupSize);
-        printf("delta is: %f\n",delta);
+//        printf("delta is: %f\n",delta);
     } while (IS_POSITIVE(delta));
 }
 
