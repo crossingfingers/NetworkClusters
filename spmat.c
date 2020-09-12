@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "spmat.h"
 #include <math.h>
+#include <time.h>
 
 typedef struct _node {
     struct _node *next;
@@ -166,7 +167,6 @@ typedef struct _array {
     int lastindex;
     int lastRowPtr;
     int nnz;
-    int groupSize;
 } array;
 
 //TODO remove values array, no need....
@@ -186,8 +186,28 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
     }
 }
 
-void mult_array(const struct _spmat *A, const double *vec, double *result, const int *group,
-                int groupSize, const int *verticeToGroup) {
+int findAijArray(spmat *sp, int i, int j) {
+    array *sparray = (array *) sp->private;
+    int *rowPtr = sparray->rowptr;
+    int *cols;
+    int colStart;
+    int size, counter = 0;
+    int colEnd;
+    colStart = *(rowPtr + i);
+    cols = sparray->colind + colStart;
+    colEnd = *(rowPtr + i + 1);
+    size = colEnd - colStart;
+    while (counter < size && *cols <= j) {
+        if (*cols == j) {
+            return 1;
+        }
+        counter++;
+        cols++;
+    }
+    return 0;
+}
+
+void mult_array(const struct _spmat *A, const double *vec, double *result, int groupSize) {
 
     array *sparray = (array *) A->private;
     int *rowPtr = sparray->rowptr;
@@ -196,29 +216,71 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, const
     int colStart;
     int colEnd;
     double res;
-    int size=0;
     for (i = 0; i < groupSize; ++i) {
         res = 0;
         colStart = *(rowPtr + i);
-
         cols = sparray->colind + colStart;
         colEnd = *(rowPtr + i + 1);
-        size=colEnd-colStart;
         while (colStart < colEnd) {
             res += vec[*(cols)];
             colStart++;
             if (colStart < colEnd) { cols++; }
         }
-        result[group[i]] = res;
+        result[i] = res;
     }
 }
+
+//TODO get second while loop even faster, less mem access when push val
+
+//void mult_array(const struct _spmat *A, const double *vec, double *result, int *group,
+//                int groupSize, const int *verticeToGroup) {
+//    array *sparray = (array *) A->private;
+//    int *rowPtr = sparray->rowptr;
+//    int *cols;
+//    int i,t;
+//    double start, end;
+//    int colStart;
+//    int colEnd, valsForRow, j, *groupCopy;
+//    double res;
+//    start = clock();
+//    for (i = 0; i < groupSize; ++i) {
+//        res = 0;
+//        colStart = *(rowPtr + i);
+//        cols = sparray->colind + colStart;
+//        colEnd = *(rowPtr + i + 1);
+//        valsForRow = colEnd - colStart;
+//        j = 0;
+//        t = 0;
+//        groupCopy = group;
+//        while(j < valsForRow && t < groupSize) {
+//            if(*groupCopy == *cols){
+//                res += vec[t];
+//                cols++;
+//                groupCopy++;
+//                t++;
+//                j++;
+////                colStart++;
+//            }
+//            else if(*cols < *groupCopy){
+//                cols ++;
+//                j ++;
+//            }
+//            else{
+//                t ++;
+//                groupCopy++;
+//            }
+//        }
+//        result[i] = res;
+//    }
+//    end = clock();
+////    printf("mult took %f seconds\n", ((double)(end-start)/ CLOCKS_PER_SEC));
+//}
 
 void free_array(struct _spmat *A) {
     array *sparray = (array *) A->private;
     free(sparray->rowptr);
     free(sparray->colind);
     free(A->private);
-//    free(A->k);
 }
 
 void printMatrix(spmat *A) {
@@ -229,11 +291,11 @@ void printMatrix(spmat *A) {
 
     printf("\ncollarr:\n");
     for (i = 0; i < sparr->nnz; i++) {
-        printf("%d ", sparr->colind[i]);
+        printf("%d", sparr->colind[i]);
     }
     printf("\nrowptrarr:\n");
-    for (i = 0; i <= sparr->groupSize; i++) {
-        printf("%d ", sparr->rowptr[i]);
+    for (i = 0; i <= A->n; i++) {
+        printf("%d", sparr->rowptr[i]);
     }
 
 }
@@ -257,9 +319,7 @@ void print_array(struct _spmat *A) {
     printf("\n");
 }
 
-spmat *spmat_allocate_array(int n, int groupSize, int nnz);
-
-double arrayShifting(spmat *A, const int *group, int groupSize, const int *vertexToGroup, int groupIdx, double *F) {
+double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
     double max = 0;
     double sum;
     int val;
@@ -279,13 +339,13 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
     for (i = 0; i < groupSize; ++i) {
         sum = 0;
         vertice1 = group[i];
-        ki = A->k[vertice1];
-        Fi = (double) F[vertice1];
+        ki = A->k[i];
+        Fi = (double) F[i];
         colStart = *(rowPtr + i);
         cols = sparray->colind + colStart;
         colEnd = *(rowPtr + i + 1);
         for (j = 0; j < groupSize; ++j) {
-            kj = A->k[group[j]];
+            kj = A->k[j];
             if ((*(cols) == group[j]) && (colStart < colEnd)) {
                 val = 1;
                 colStart++;
@@ -305,219 +365,18 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const int *verte
     return max;
 }
 
-//g1(2,6,8)
-//2: 0, 4:6, 6:4,7,8, 7:6,8, 8:6,7
-int getNNZforGroup(array *arrAg, int *g1, int gSize) {
-    int i;
-    int j;
-    int colIDX = 0;
-    int currG = 0;
-    int numOfVals;
-    int NNZ = 0;
-    for (i = 0; i < gSize; i++) {
-        colIDX = arrAg->rowptr[i];
-        numOfVals = (arrAg->rowptr[i + 1] - colIDX);
-        j = 0;
-        currG = 0;
-        printf("vertex %d\n:", g1[i]);
-        while ((j < numOfVals)) {
-            printf(" %d ", arrAg->colind[colIDX + j]);
-            if (g1[currG] == arrAg->colind[colIDX + j]) {
-                NNZ++;
-                j++;
-                if ((currG < gSize))
-                    currG++;
-                printf("+1");
-            } else {
-                if ((currG < gSize) && (g1[currG] < arrAg->colind[colIDX + j])) { currG++; }
-                else { j++; }
-            }
-        }
-        printf("\n");
-    }
-    return NNZ;
-}
+void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
+                     int g2Size);
 
-void getNNZ(int *nnz1, int *nnz2, array *arrAg, int *g,int *g1, int *g2, int gSize, int g1Size, int g2Size) {
-    int i, j;
-    int *row = arrAg->rowptr;
-    int *cols = arrAg->colind;
-    int NNZ1 = 0;
-    int NNZ2 = 0;
-    int currG1 = 0;
-    int currCol = 0;
-    int currG2 = 0;
-    int numOfVals = 0;
-    int colIdx = 0;
-
-    for (i = 0; i < gSize; i++) {
-        j = 0;
-        colIdx = row[i];
-        numOfVals = row[i + 1] - colIdx;
-        currCol = 0;
-        if (g[i] == g1[currG1]) {
-            while (j < numOfVals) {
-                //if col[row[i]] is from group then add NNZ
-                if (g1[currCol] == cols[colIdx + j]) {
-                    NNZ1++;
-                    j++;
-                    if ((currCol < g1Size))
-                        currCol++;
-                } else {
-                    if ((currCol < gSize) && (g1[currCol] < arrAg->colind[colIdx + j])) { currCol++; }
-                    else { j++; }
-                }
-            }
-            currG1++;
-        } else {
-            while (j < numOfVals) {
-                //if col[row[i]] is from group then add NNZ
-                if (g2[currCol] == cols[colIdx + j]) {
-                    NNZ2++;
-                    j++;
-                    if ((currCol < g2Size))
-                        currCol++;
-                } else {
-                    if ((currCol < gSize) && (g2[currCol] < arrAg->colind[colIdx + j])) { currCol++; }
-                    else { j++; }
-                }
-            }
-            currG2++;
-        }
-
-    }
-    *nnz1 = NNZ1;
-    *nnz2 = NNZ2;
-}
-void insertVals( array *arrAg,array *arrAg1, array *arrAg2, int *g,int *g1, int *g2, int gSize, int g1Size, int g2Size){
-    int i, j;
-    int *row = arrAg->rowptr;
-    int *cols = arrAg->colind;
-    int currG1row = 0;
-    int currG1col=0;
-    int currCol = 0;
-    int currG2row = 0;
-    int currG2col=0;
-
-    int numOfVals = 0;
-    int colIdx = 0;
-    int numOfNewVal=0;
-    for (i = 0; i < gSize; i++) {
-        j = 0;
-        numOfNewVal=0;
-        colIdx = row[i];
-        numOfVals = row[i + 1] - colIdx;
-        currCol = 0;
-        if (g[i] == g1[currG1row]) {
-            while (j < numOfVals) {
-                if (g1[currCol] == cols[colIdx + j]) {
-                    arrAg1->colind[currG1col] = arrAg->colind[colIdx + j];
-                    j++;
-                    numOfNewVal++;
-                    currG1col++;
-                    if ((currCol < g1Size))
-                        currCol++;
-                } else {
-                    if ((currCol < gSize) && (g1[currCol] < arrAg->colind[colIdx + j])) { currCol++; }
-                    else { j++; }
-                }
-            }
-            arrAg1->rowptr[currG1row + 1] = arrAg1->rowptr[currG1row] +numOfNewVal;
-            currG1row++;
-        }
-        else {
-            while (j < numOfVals) {
-                if (g2[currCol] == cols[colIdx + j]) {
-                    arrAg2->colind[currG2col] = arrAg->colind[colIdx + j];
-                    j++;
-                    numOfNewVal++;
-                    currG2col++;
-                    if ((currCol < g2Size))
-                        currCol++;
-                } else {
-                    if ((currCol < g2Size) && (g2[currCol] < arrAg->colind[colIdx + j])) { currCol++; }
-                    else { j++; }
-                }
-            }
-            currG2row++;
-            arrAg2->rowptr[currG2row + 1] = arrAg2->rowptr[currG2row] +numOfNewVal;
-
-        }
-    }
-}
-void insertValsToArr(array *arrAg, array *arrAg1, int *g1, int g1Size) {
-    int i;
-    int j;
-    int numOfVals;
-    int colIDX;
-    int currG1;
-    int currG = 0;
-    for (i = 0; i < g1Size; i++) {
-        numOfVals = arrAg->rowptr[g1[i] + 1] - arrAg->rowptr[g1[i]];
-        arrAg1->rowptr[i + 1] = arrAg1->rowptr[i] +numOfVals;
-        colIDX = arrAg->rowptr[g1[i]];
-        j = 0;
-        currG1 = 0;
-
-        while (j < numOfVals) {
-            if (arrAg->colind[colIDX + j] == g1[currG1]) {
-                arrAg1->colind[currG] = arrAg->colind[colIDX + j];
-                currG++;
-                j++;
-                arrAg1->rowptr[i + 1]++;
-                if (currG1 < g1Size) { currG1++; }
-            } else {
-                if ((currG1 < g1Size) && (g1[currG1] < arrAg->colind[colIDX + j])) { currG1++; }
-                else { j++; }
-            }
-        }
-    }
-
-
-}
-
-void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx,int *g, int *g1, int *g2, int g1Size, int g2Size) {
-    if (g2Size == 0) { return; }
-    spmat **Amats = graphs->A;
-    int n = Amats[0]->n;
-    spmat *currSP = Amats[groupIdx];
-    array *arrAg = (array *) currSP->private;
-    spmat *Ag1;
-    spmat *Ag2;
-    int *g1NNZ=malloc(sizeof(int));
-    int *g2NNZ=malloc(sizeof(int));
-    getNNZ(g1NNZ,g2NNZ,arrAg,g,g1,g2,g1Size+g2Size,g1Size,g2Size);
-    Ag1 = spmat_allocate_array(graphs->n, g1Size, *g1NNZ);
-    Ag2 = spmat_allocate_array(graphs->n, g2Size, *g2NNZ);
-    array *arrAg1 = Ag1->private;
-    array *arrAg2 = Ag2->private;
-    insertVals(arrAg,arrAg1,arrAg2,g,g1,g2,g1Size+g2Size,g1Size,g2Size);
-
-    //TODO change the method of spmat_allocate to work without malloc of k. should be outside, they all use the same k, M too.
-    free(Ag1->k);
-    free(Ag2->k);
-    Ag1->k = graphs->k;
-    Ag2->k = graphs->k;
-    Ag1->M = graphs->M;
-    Ag2->M = graphs->M;
-    currSP->free(currSP);
-    free(g1NNZ);
-    free(g2NNZ);
-    free(currSP);
-    Amats[groupIdx] = Ag1;
-    Amats[newGroupIdx] = Ag2;
-}
-
-spmat *spmat_allocate_array(int n, int groupSize, int nnz) {
+spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
     sparray->colind = calloc(nnz, sizeof(int));
-    sparray->rowptr = calloc(groupSize + 1, sizeof(int));
+    sparray->rowptr = calloc(n + 1, sizeof(int));
     sparray->lastindex = 0;
     sparray->lastRowPtr = 0;
     sparray->rowptr[0] = 0;
     sparray->nnz = nnz;
-    sparray->groupSize = groupSize;
     sp = malloc(sizeof(spmat));
     sp->n = n;
     sp->add_row = add_row_array;
@@ -527,6 +386,7 @@ spmat *spmat_allocate_array(int n, int groupSize, int nnz) {
     sp->printSprase = print_array;
     sp->splitGraph = splitGraphArray;
     sp->M = 0;
+    sp->findAij = findAijArray;
     sp->k = malloc(sizeof(int) * n);
     initk(sp);
     sp->matShifting = arrayShifting;
@@ -549,9 +409,8 @@ int find_nnz(FILE *input) {
 void freeNetworks(networks *graphs, int numOfGroups) {
     int i;
     spmat *sp, **mats = graphs->A;
-    free(graphs->k);
     //TODO change 1 to numOfGroups!!
-    for (i = 0; i < 1; ++i) {
+    for (i = 0; i < numOfGroups; ++i) {
         sp = *mats++;
         sp->free(sp);
         free(sp);
@@ -576,8 +435,8 @@ networks *allocateNetworks(int n) {
 
 networks *readArray(FILE *input) {
     spmat *graph;
-    networks *graphs;
     int i, size, elem, *row, j;
+    networks *graphs;
     unsigned int n;
     int nnz;
     nnz = find_nnz(input);
@@ -589,7 +448,7 @@ networks *readArray(FILE *input) {
     }
     size = elem;
 //    printf("n: %d, nnz: %d\n", elem, nnz);
-    graph = spmat_allocate_array(size, size, nnz);
+    graph = spmat_allocate_array(size, nnz);
     graphs = allocateNetworks(size);
     row = malloc(sizeof(int) * size);
     if (row == NULL) {
@@ -610,17 +469,15 @@ networks *readArray(FILE *input) {
         graph->add_row(graph, row, i, elem);
     }
     free(row);
-//    graph->printSprase(graph);
-    graphs->M = graph->M;
-    graphs->k = graph->k;
     graphs->A[0] = graph;
+//    graph->printSprase(graph);
     return graphs;
 }
 
 networks *readList(FILE *input) {
     spmat *graph;
-    networks *graphs;
     int i, size, elem, *row, j;
+    networks *graphs;
     unsigned int n;
     n = fread(&elem, sizeof(int), 1, input);
     if (n != 1) {
@@ -650,10 +507,8 @@ networks *readList(FILE *input) {
         graph->add_row(graph, row, i, elem);
     }
     free(row);
-//    graph->printSprase(graph);
-    graphs->M = graph->M;
-    graphs->k = graph->k;
     graphs->A[0] = graph;
+//    graph->printSprase(graph);
     return graphs;
 }
 
@@ -663,3 +518,145 @@ networks *readGraph(FILE *input, int type) {
     } else
         return readList(input);
 }
+
+
+void getNewNnz(spmat *sp, double *s, int *group, int groupSize, int *newNnz) {
+    int *g2Nnz = &newNnz[1], i, counterNnz1 = 0, counterNnz2 = 0, t, *groupCopy = group;
+    array *spArray = (array *) sp->private;
+    int *rowPtr = spArray->rowptr, curr, j, valsInRow, idx, *colIdx, flag, *counter;
+    for (i = 0; i < groupSize; ++i) {
+        idx = group[i];
+        if (s[i] == 1) {
+            flag = 1;
+            counter = &counterNnz1;
+        } else {
+            flag = -1;
+            counter = &counterNnz2;
+        }
+        curr = *(rowPtr + i);
+        valsInRow = *(rowPtr + i + 1) - curr;
+        colIdx = spArray->colind + curr;
+        j = 0;
+        groupCopy = group;
+        t = 0;
+        while (j < valsInRow && t < groupSize) {
+            if (*colIdx == t) {
+                if (s[t] == flag) {
+                    (*counter)++;
+                }
+                j++;
+                t++;
+                groupCopy++;
+                colIdx++;
+            } else if (*colIdx < t) {
+                j++;
+                colIdx++;
+            } else {
+                t++;
+                groupCopy++;
+            }
+        }
+    }
+    *newNnz = counterNnz1;
+    *g2Nnz = counterNnz2;
+}
+
+void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, int groupSize) {
+    int i, j, t, valsCounter, idxI, flag;
+    int *groupCopy;
+    array *currSpArray = (array *) currSp->private, *g1SpArray = (array *) g1Sp->private, *g2SpArray = (array *) g2Sp->private;
+    array *currArray;
+    int *rowPtr = currSpArray->rowptr, curr, valsInRow, *oldColIdx, *currColIdx, currGroupCounter;
+    int *g1K = g1Sp->k, *g2K = g2Sp->k;
+    double *sI = s, *sT;
+    *(g1SpArray->rowptr) = 0;
+    *(g2SpArray->rowptr) = 0;
+    g1SpArray->lastindex = 0;
+    g2SpArray->lastindex = 0;
+    for (i = 0; i < groupSize; ++i) {
+        idxI = group[i];
+        if (*sI++ == 1) {
+            currArray = g1SpArray;
+            flag = 1;
+            *g1K = currSp->k[i];
+            g1K++;
+        } else {
+            currArray = g2SpArray;
+            flag = -1;
+            *g2K = currSp->k[i];
+            g2K++;
+        }
+        curr = *(rowPtr + i);
+        valsInRow = *(rowPtr + i + 1) - curr;
+        j = 0;
+        t = 0;
+        oldColIdx = currSpArray->colind + curr;
+        groupCopy = group;
+        currColIdx = currArray->colind + currArray->lastindex;
+        valsCounter = 0;
+        currGroupCounter = 0;
+        sT = s;
+        while (j < valsInRow && t < groupSize) {
+            if (*oldColIdx == t) {
+                if (*sT == flag) {
+//                    *currColIdx = *groupCopy;
+                    *currColIdx = currGroupCounter;
+                    currColIdx++;
+                    valsCounter++;
+                    currGroupCounter++;
+                }
+                j++;
+                t++;
+                sT++;
+                groupCopy++;
+                oldColIdx++;
+            } else if (*oldColIdx < t) {
+                j++;
+                oldColIdx++;
+            } else {
+                if (*sT == flag)
+                    currGroupCounter++;
+                t++;
+                sT++;
+                groupCopy++;
+            }
+        }
+        int test = *(currArray->rowptr + currArray->lastRowPtr);
+        *(currArray->rowptr + currArray->lastRowPtr + 1) = *(currArray->rowptr + currArray->lastRowPtr) + valsCounter;
+        currArray->lastindex += valsCounter;
+        currArray->lastRowPtr++;
+    }
+}
+
+void
+splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
+                int g2Size) {
+    spmat **Amats = graphs->A;
+    spmat *currSp = Amats[groupIdx], *g1Sp, *g2Sp;
+    int *newNnz = malloc(sizeof(int) * 2), size = graphs->n;
+    if (newNnz == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
+    getNewNnz(currSp, s, group, groupSize, newNnz);
+    g1Sp = spmat_allocate_array(g1Size, newNnz[0]);
+    g2Sp = spmat_allocate_array(g2Size, newNnz[1]);
+    array *g1SpArray = (array *) g1Sp->private;
+    array *g2SpArray = (array *) g2Sp->private;
+    splitArray(currSp, g1Sp, g2Sp, s, group, groupSize);
+    array *currArray = (array *) currSp->private;
+    g1Sp->M = currSp->M;
+    g2Sp->M = currSp->M;
+//    currSp->free(currSp);
+    int *k = currSp->k;
+    free(currSp->k);
+    free(currArray->rowptr);
+    free(currArray->colind);
+    free(currArray);
+    free(currSp);
+    free(newNnz);
+    graphs->A[groupIdx] = g1Sp;
+    graphs->A[newGroupIdx] = g2Sp;
+}
+
+

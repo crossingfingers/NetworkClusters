@@ -9,7 +9,7 @@
 
 #define IS_POSITIVE(X) ((X) > 0.00001)
 
-void randomizeVec(int size, double *vec);
+void randomizeVec(int size, double *vec, int groupSize, int *group);
 
 //void vecMult(double *vec1, const double *vec2, const int *group, int size);
 
@@ -27,13 +27,13 @@ void randomizeVec(int size, double *vec);
 
 //void copyDoubleVec(const double *src, double *dst, const int *group, int n);
 
-void multBv(spmat *sp,double *vec, const int *group, double *res, int groupSize, int debug,int *verticeToGroup);
+double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug,int *verticeToGroup);
 
 void initOneValVec(double *unitVec, int n, const int *group, int val);
 
-void multBRoof(spmat *sp,double *vec, const int *group, int groupSize, double *res, double *vecF,int *verticeToGroup);
+double multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF,int *verticeToGroup, int debug);
 
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF,int *verticeToGroup);
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF,int *verticeToGroup, int debug);
 
 double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF,int *verticeToGroup);
 

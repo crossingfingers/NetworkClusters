@@ -12,42 +12,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/projectAgNew.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projectAgNew.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/projectApproach.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projectApproach.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/a.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/C.includecache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/DependInfo.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/build.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/cmake_clean.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/depend.internal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/divider.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/flags.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/link.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/linklibs.rsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/main.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/objects.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/objects1.rsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/progress.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/spmat.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/stack.c.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cProject.dir/utils.c.obj" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/cmake_clean.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" afterDir="false" />
@@ -56,16 +45,62 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/linklibs.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/linklibs.rsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/progress.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/utils.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/utils.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cProject.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cProject.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectApproach.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectApproach.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectApproach.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/divider.c" beforeDir="false" afterPath="$PROJECT_DIR$/divider.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/.idea/graph_generator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/.idea/graph_generator.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CMakeCCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CMakeRCCompiler.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CMakeSystem.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/3.15.3/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/linklibs.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/linklibs.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/graph_generator.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/cmake-build-debug/graph_generator.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/cmake-build-debug/graph_generator.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph_generator/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/graph_generator/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spmat.c" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spmat.h" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stack.c" beforeDir="false" afterPath="$PROJECT_DIR$/stack.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stack.h" beforeDir="false" afterPath="$PROJECT_DIR$/stack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils - Copy.c" beforeDir="false" afterPath="$PROJECT_DIR$/utils - Copy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils - Copy.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils - Copy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,28 +118,19 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../findbug" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ofek" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="projectAgNew" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="C:\Users\gal21\CLionProjects\ofek\tester_binary.input C:\Users\gal21\CLionProjects\projectApproach\out.out" PASS_PARENT_ENVS_2="true" PROJECT_NAME="projectAgNew" TARGET_NAME="projectAgNew" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="projectAgNew" RUN_TARGET_NAME="projectAgNew">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="projectAgNew" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="&quot;C:\\Users\\divin\\desktop\\input.arr&quot; &quot;C:\\Users\\divin\\dekstop\\output.arr&quot;" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="projectAgNew" TARGET_NAME="projectAgNew" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="projectAgNew" RUN_TARGET_NAME="projectAgNew">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -119,6 +145,10 @@
       <option name="presentableId" value="Default" />
       <updated>1599801903622</updated>
       <workItem from="1599801905485" duration="3506000" />
+      <workItem from="1599881896762" duration="4265000" />
+      <workItem from="1599904952984" duration="598000" />
+      <workItem from="1599912408318" duration="639000" />
+      <workItem from="1599919360485" duration="1852000" />
     </task>
     <servers />
   </component>
@@ -126,60 +156,50 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="15" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599817751140">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599806005170">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
-    <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599817751140" />
     <state x="201" y="0" key="CommitChangelistDialog2" timestamp="1599806661511">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
-    <state x="633" y="148" key="FileChooserDialogImpl" timestamp="1599834690110">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1599802282496">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1599802282496" />
-    <state x="633" y="148" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1599834690110" />
-    <state width="1877" height="338" key="GridCell.Tab.0.bottom" timestamp="1599834651872">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1599847199166">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
-    <state width="1877" height="338" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.0.center" timestamp="1599834651872">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1599847199166">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
-    <state width="1877" height="338" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.0.left" timestamp="1599834651872">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1599847199166">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
-    <state width="1877" height="338" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.0.right" timestamp="1599834651872">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1599847199166">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
-    <state width="1877" height="338" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651872" />
-    <state width="1877" height="338" key="GridCell.Tab.1.bottom" timestamp="1599834651794">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1599847084182">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
-    <state width="1877" height="338" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
-    <state width="1877" height="338" key="GridCell.Tab.1.center" timestamp="1599834651794">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
+    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1599847084182">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
-    <state width="1877" height="338" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
-    <state width="1877" height="338" key="GridCell.Tab.1.left" timestamp="1599834651794">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
+    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1599847084182">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1599802233969" />
-    <state width="1877" height="338" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
-    <state width="1877" height="338" key="GridCell.Tab.1.right" timestamp="1599834651794">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1599847084182">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599802233970" />
-    <state width="1877" height="338" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599834651794" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
     <state x="354" y="57" key="MultipleFileMergeDialog" timestamp="1599806741889">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -188,9 +208,48 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="234" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1599806702623" />
+    <state x="338" y="165" key="com.intellij.ide.util.TipDialog" timestamp="1599912413715">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="338" y="165" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1599912413715" />
     <state x="448" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599806666651">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="448" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1599806666651" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1599836906117">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1599836906117" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/spmat.c</url>
+          <line>467</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/spmat.c</url>
+          <line>468</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/spmat.c</url>
+          <line>471</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/spmat.c</url>
+          <line>415</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/spmat.c</url>
+          <line>453</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

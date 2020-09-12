@@ -6,23 +6,17 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/divin/CLionProjects/Ver2/cproject/spmat.h
-stdio.h
--
-
-C:/Users/divin/CLionProjects/Ver2/cproject/utils.c
-utils.h
-C:/Users/divin/CLionProjects/Ver2/cproject/utils.h
-stdio.h
--
+C:/Users/gal21/CLionProjects/projectAgNew/spmat.c
 stdlib.h
 -
-math.h
+stdio.h
 -
 spmat.h
-C:/Users/divin/CLionProjects/Ver2/cproject/spmat.h
+C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
+math.h
+-
 
-C:/Users/divin/CLionProjects/Ver2/cproject/utils.h
-spmat.h
-C:/Users/divin/CLionProjects/Ver2/cproject/spmat.h
+C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
+stdio.h
+-
 

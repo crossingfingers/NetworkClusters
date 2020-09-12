@@ -2,7 +2,8 @@
 #define _SPMAT_H
 #include <stdio.h>
 
-struct _networks;
+
+struct  _networks;
 typedef struct _spmat {
     /* Matrix size (n*n) */
     int n;
@@ -17,13 +18,16 @@ typedef struct _spmat {
     void (*free)(struct _spmat *A);
 
     /* Multiplies matrix A by vector v, into result (result is pre-allocated) */
-    void (*mult)(const struct _spmat *A, const double *v, double *result, const int *group, int groupSize,const int *groupToVertice);
+    void (*mult)(const struct _spmat *A, const double *vec, double *result, int groupSize);
 
     void (*printSprase)(struct _spmat *A);
 
-    double (*matShifting)(struct _spmat *A, const int *group, int groupSize, const int *vertexToGroup, int groupIdx, double *vecF);
+    double (*matShifting)(struct _spmat *A, const int *group, int groupSize, const double *F);
 
-    void (*splitGraph)(struct  _networks *graphs, int groupIdx, int newGroupIdx,int *g, int *g1 ,int *g2, int g1Size, int g2Size);
+    void (*splitGraph)(struct _networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
+                       int g2Size);
+
+    int (*findAij)(struct _spmat *sp, int i, int j);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */
@@ -32,12 +36,9 @@ typedef struct _spmat {
 
 typedef struct _networks{
     spmat **A;
-    int M;
-    int *k;
     int n;
     void (*free)(struct _networks *graphs, int numOfGroups);
 }networks;
-
 
 networks *readGraph(FILE *input, int type);
 
