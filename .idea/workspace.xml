@@ -11,13 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/divider.c" beforeDir="false" afterPath="$PROJECT_DIR$/divider.c" afterDir="false" />
-    </list>
+    <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,36 +89,36 @@
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
     <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599896480249" />
-    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1599924384386">
+    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1599931596901">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
-    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1599924384386" />
-    <state x="633" y="148" key="FileChooserDialogImpl" timestamp="1599924594965">
+    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1599931596901" />
+    <state x="633" y="148" key="FileChooserDialogImpl" timestamp="1599931612019">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1599802282496" />
-    <state x="633" y="148" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1599924594965" />
-    <state width="916" height="198" key="GridCell.Tab.0.bottom" timestamp="1599930819147">
+    <state x="633" y="148" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1599931612019" />
+    <state width="916" height="921" key="GridCell.Tab.0.bottom" timestamp="1599931690188">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
-    <state width="916" height="198" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599930819147" />
-    <state width="916" height="198" key="GridCell.Tab.0.center" timestamp="1599930819147">
+    <state width="916" height="921" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599931690188" />
+    <state width="916" height="921" key="GridCell.Tab.0.center" timestamp="1599931690187">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
-    <state width="916" height="198" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599930819147" />
-    <state width="916" height="198" key="GridCell.Tab.0.left" timestamp="1599930819146">
+    <state width="916" height="921" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599931690187" />
+    <state width="916" height="921" key="GridCell.Tab.0.left" timestamp="1599931690187">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599806025266" />
-    <state width="916" height="198" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599930819146" />
-    <state width="916" height="198" key="GridCell.Tab.0.right" timestamp="1599930819147">
+    <state width="916" height="921" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599931690187" />
+    <state width="916" height="921" key="GridCell.Tab.0.right" timestamp="1599931690187">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599806025267" />
-    <state width="916" height="198" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599930819147" />
+    <state width="916" height="921" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599931690187" />
     <state width="916" height="93" key="GridCell.Tab.1.bottom" timestamp="1599930446626">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -149,11 +143,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="354" y="57" key="MultipleFileMergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806741889" />
-    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1599924388892">
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1599931602442">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="234" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1599806702623" />
-    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1599924388892" />
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1599931602442" />
     <state x="448" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1599806666651">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
