@@ -51,7 +51,7 @@ void updateScore(spmat *sp, double *s, double *score, int groupSize, const int *
  * @param *unmoved : an array that keeps track which vertice hasn't been moved
  * @return maxIdx : the index with the maximum modularity score
  * */
-int findMaxIdx(const double *score, int groupSize, const int *unmoved,int movedFlag) {
+int findMaxIdx(const double *score, int groupSize, const int *unmoved, int movedFlag) {
     register double max = -DBL_MAX;
     register int maxIdx = -1, i, flag = 0;
     for (i = 0; i < groupSize; ++i) {
@@ -105,7 +105,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
     int size = sp->n;
     register int i, *k = sp->k;
     int maxIdx;
-    int movedFlag=1;
+    int movedFlag = 1;
     register double delta;
     register int *unmoved = malloc(sizeof(int) * groupSize);
     register int *indices = malloc(sizeof(int) * groupSize);
@@ -124,7 +124,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
 
     /*runs until modularity improvement is not positive*/
     do {
-        movedFlag=-movedFlag;
+        movedFlag = -movedFlag;
         maxScore = -DBL_MAX;
         maxIdx = -1;
         maxImp = -DBL_MAX;
@@ -151,9 +151,10 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
 
         /*runs until all vertices have been moved once (unmoved array is empty)*/
         for (i = 0; i < groupSize; ++i) {
+
+            /* finds vertice with max modularity score for first vertice move*/
             if (maxIdx == -1)
-                /* finds vertice with max modularity score*/
-                maxIdx = findMaxIdx(score, groupSize, unmoved,movedFlag);
+                maxIdx = findMaxIdx(score, groupSize, unmoved, movedFlag);
 
             /*moves the vertice*/
             sMaxIdx = s + maxIdx;
@@ -173,7 +174,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
             }
 
             /*updates for all vertices modularity score after vertice movement*/
-            updateScore(sp, s, score, groupSize, unmoved, maxIdx,movedFlag);
+            updateScore(sp, s, score, groupSize, unmoved, maxIdx, movedFlag);
 
             unmoved[maxIdx] = movedFlag;
             indices++;
@@ -343,6 +344,7 @@ int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double
 //    free(unitVec);
     return 1;
 }
+
 /** prints all subgroups of the graph
  * @param d : the division to be printed
  */

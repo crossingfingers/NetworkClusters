@@ -202,7 +202,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->free = free_array;
     sp->mult = mult_array;
     sp->private = sparray;
-    sp->printSprase = print_array;
+    sp->printSparse = print_array;
     sp->splitGraph = splitGraphArray;
     sp->M = 0;
     sp->findAij = findAijArray;
