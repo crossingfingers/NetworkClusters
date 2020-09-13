@@ -13,9 +13,17 @@
   <component name="ChangeListManager">
     <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/divider.c" beforeDir="false" afterPath="$PROJECT_DIR$/divider.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/divider.h" beforeDir="false" afterPath="$PROJECT_DIR$/divider.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spmat.c" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spmat.h" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +102,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added register keywords" />
     <MESSAGE value="small fix for memory free" />
-    <option name="LAST_COMMIT_MESSAGE" value="small fix for memory free" />
+    <MESSAGE value="MEMORY OK-&gt; passes VALGRIND" />
+    <option name="LAST_COMMIT_MESSAGE" value="MEMORY OK-&gt; passes VALGRIND" />
   </component>
   <component name="WindowStateProjectService">
     <state x="15" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600003883494">
@@ -102,35 +111,35 @@
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
     <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1600003883494" />
-    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1599990710713">
+    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1600004788158">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
-    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1599990710713" />
+    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1600004788158" />
     <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1599802282496">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1599802282496" />
-    <state width="1877" height="124" key="GridCell.Tab.0.bottom" timestamp="1599990069315">
+    <state width="1877" height="414" key="GridCell.Tab.0.bottom" timestamp="1600004874795">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
-    <state width="1877" height="124" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
-    <state width="1877" height="124" key="GridCell.Tab.0.center" timestamp="1599990069315">
+    <state width="1877" height="414" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
+    <state width="1877" height="414" key="GridCell.Tab.0.center" timestamp="1600004874795">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
-    <state width="1877" height="124" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
-    <state width="1877" height="124" key="GridCell.Tab.0.left" timestamp="1599990069315">
+    <state width="1877" height="414" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
+    <state width="1877" height="414" key="GridCell.Tab.0.left" timestamp="1600004874795">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
-    <state width="1877" height="124" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
-    <state width="1877" height="124" key="GridCell.Tab.0.right" timestamp="1599990069315">
+    <state width="1877" height="414" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
+    <state width="1877" height="414" key="GridCell.Tab.0.right" timestamp="1600004874795">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
-    <state width="1877" height="124" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
+    <state width="1877" height="414" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
     <state width="1877" height="124" key="GridCell.Tab.1.bottom" timestamp="1599990069315">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -163,11 +172,15 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1599984017126" />
-    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1599990725756">
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1600004795209">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="234" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1599806702623" />
-    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1599990725756" />
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1600004795209" />
+    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600005119296">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1600005119296" />
     <state x="338" y="165" key="com.intellij.ide.util.TipDialog" timestamp="1599912413715">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

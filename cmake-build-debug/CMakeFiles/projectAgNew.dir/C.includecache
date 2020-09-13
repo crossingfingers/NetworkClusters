@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.h
+spmat.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
+
+C:/Users/divin/CLionProjects/splitUpdate/cProject/main.c
+stdio.h
+-
+stdlib.h
+-
+spmat.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
+divider.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.h
+time.h
+-
+
 C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.c
 stdlib.h
 -
@@ -21,4 +37,22 @@ time.h
 C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 stdio.h
 -
+
+C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.c
+utils.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.h
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+spmat.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
+time.h
+-
+
+C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.h
+spmat.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 
