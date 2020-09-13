@@ -3,15 +3,31 @@
 #include "spmat.h"
 #include <math.h>
 #include <time.h>
+/**
+@file spmat.c
+**Author:** Ofek Bransky & Gal Cohen
+**Date:**  18.9.2020
+## This is the Sparse matrix C file, maintains the sparse matrix and networks structures with methods
+*/
 
-
+/**
+ * initializes the rank to vertice array to zero values
+ * @param A : the sparse matrix
+ */
 void initk(spmat *A) {
     int i;
     for (i = 0; i < A->n; ++i) {
         A->k[i] = 0;
     }
 }
-
+/**
+ * definition of CSR array to maintain the sparse matrices
+ * @param *colind : pointer to column indexes of non zero values in sparse matrix
+ * @param *rowptr : pointer to row pointers in sparse matrix
+ * @param lastindex : used to add values to array when reading graph from input
+ * @param lastRowPtr : used to add values to array when reading graph from input
+ * @param nnz : the number of non zero values in the sparse matrix
+ */
 typedef struct _array {
     int *colind;
     int *rowptr;
@@ -202,7 +218,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->free = free_array;
     sp->mult = mult_array;
     sp->private = sparray;
-    sp->printSprase = print_array;
+    sp->printSparse = print_array;
     sp->splitGraph = splitGraphArray;
     sp->M = 0;
     sp->findAij = findAijArray;
