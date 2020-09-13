@@ -67,7 +67,7 @@ double findMaxImprove(double *s, double *improve, int *indices, int groupSize, i
     return delta;
 }
 
-void optimize(spmat *sp, double *s, int *group, int groupSize, int *verticeToGroup) {
+void optimize(spmat *sp, double *s, int *group, int groupSize) {
     int size = sp->n;
     register int i, *k = sp->k, *kCopy;
     int maxIdx;
@@ -94,7 +94,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize, int *verticeToGro
         resetUnmoved(unmoved, groupSize);
         maxImp = -DBL_MAX;
         maxImpIdx = -1;
-        multBv(sp, s, group, res, groupSize, 0, verticeToGroup);
+        multBv(sp, s, group, res, groupSize, 0);
         sCopy = s;
         resCopy = res;
         scoreCopy = score;
@@ -169,9 +169,9 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
     int *g1Ptr, *g2Ptr;
     int counter = 0;
     createSVector(vec, size);
-    optimize(sp, vec, g, size, d->vertexToGroup);
+    optimize(sp, vec, g, size);
     counter = getNewGroupSize(vec, size);
-    delta = modularityCalc(sp, vec, g, size, vecF, d->vertexToGroup);
+    delta = modularityCalc(sp, vec, g, size, vecF);
     if (!IS_POSITIVE(delta))
         return 0;
     d->Q += delta;
@@ -191,7 +191,6 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
         for (i = 0; i < size; ++i) {
             if (vec[i] == -1) {
                 *g2Ptr = g[i];
-                d->vertexToGroup[g[i]] = newGroupIdx;
                 g2Ptr++;
 
             } else {
@@ -225,11 +224,11 @@ int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double
 //    printVector(vecF, size);
 //    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
     powerIter(sp, b0, sp->matShifting(sp, group, groupSize, vecF), group, groupSize, res,
-              vecF, div->vertexToGroup, 1);
+              vecF, 1);
 //    powerIter(sp, b0,shifting, group, groupSize, res,vecF, div->vertexToGroup, 1);
 //    printf("HERE11\n");
 //    printVector(res, groupSize, group);
-    double eigen = eigenValue(sp, res, group, groupSize, vecF, div->vertexToGroup);
+    double eigen = eigenValue(sp, res, group, groupSize, vecF);
 //    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen)) {
 //        free(vecF);
@@ -293,7 +292,6 @@ void findGroups(division *div, networks *graphs) {
     double *res = malloc(sizeof(double) * size);
     double *unitVec = malloc(size * sizeof(double));
     double *vecF = malloc(size * sizeof(double));
-    int counter = 0;
     if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
@@ -305,7 +303,7 @@ void findGroups(division *div, networks *graphs) {
             sp = *mats;
 //            printVector(vecF, *nodesForGroup, *groups);
 //            printf("counter %d\n", counter++);
-            multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0, div->vertexToGroup);
+            multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0);
             if (shifting == -1) {
                 shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
             }
@@ -335,19 +333,17 @@ division *allocateDivision(int n) {
     d->free = freeDivision;
     d->groups = malloc(sizeof(int *) * n);
     d->nodesforGroup = malloc(sizeof(int) * n);
-    d->vertexToGroup = malloc(sizeof(int) * n);
     d->writeDivision = writeDivision;
     d->findGroups = findGroups;
     d->Q = 0;
     d->groups[0] = malloc(sizeof(int) * n);
-    if (d->groups == NULL || d->nodesforGroup == NULL || d->groups[0] == NULL || d->vertexToGroup == NULL) {
+    if (d->groups == NULL || d->nodesforGroup == NULL || d->groups[0] == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
     d->numOfGroups = 1;
     ptr = d->groups[0];
     for (i = 0; i < n; ++i) {
-        d->vertexToGroup[i] = 0;
         *ptr = i;
         ptr++;
     }

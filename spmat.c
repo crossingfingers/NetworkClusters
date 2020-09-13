@@ -86,6 +86,7 @@ void free_array(struct _spmat *A) {
     array *sparray = (array *) A->private;
     free(sparray->rowptr);
     free(sparray->colind);
+    free(A->k);
     free(A->private);
 }
 
@@ -423,18 +424,10 @@ splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int 
     getNewNnz(currSp, s, group, groupSize, newNnz);
     g1Sp = spmat_allocate_array(g1Size, newNnz[0]);
     g2Sp = spmat_allocate_array(g2Size, newNnz[1]);
-    array *g1SpArray = (array *) g1Sp->private;
-    array *g2SpArray = (array *) g2Sp->private;
     splitArray(currSp, g1Sp, g2Sp, s, group, groupSize);
-    array *currArray = (array *) currSp->private;
     g1Sp->M = currSp->M;
     g2Sp->M = currSp->M;
-//    currSp->free(currSp);
-    int *k = currSp->k;
-    free(currSp->k);
-    free(currArray->rowptr);
-    free(currArray->colind);
-    free(currArray);
+    currSp->free(currSp);
     free(currSp);
     free(newNnz);
     graphs->A[groupIdx] = g1Sp;

@@ -12,7 +12,6 @@ typedef struct _division {
     int **groups;
     int numOfGroups;
     int *nodesforGroup;
-    int *vertexToGroup;
     double Q;
 
 

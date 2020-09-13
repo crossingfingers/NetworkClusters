@@ -29,8 +29,8 @@ void printIntVector(int *vec, int n) {
 void randomizeVec(int size, double *vec, int groupSize, int *group) {
     int i;
     for (i = 0; i < groupSize; i++) {
-//        vec[i] = rand();
-        vec[i] = group[i];
+        vec[i] = rand();
+//        vec[i] = group[i];
 //        vec[i] = i;
     }
 //    for (; i < size; ++i) {
@@ -79,7 +79,7 @@ void scalarMult(double *vec, double x, const int *group, int n) {
 
 /*this is a dot product of int vector with double vector*/
 double dotProd(const int *vec1, const double *vec2, const int *group, int n) {
-   register double res = 0;
+    register double res = 0;
     int i;
     for (i = 0; i < n; ++i) {
         res += *vec1++ * *vec2++;
@@ -124,7 +124,7 @@ void normalize(int size, double *vec, const int *group, int groupSize) {
 
 //TODO remove debug
 /*the calculation of Bv by split B to A, and KiKj matrix*/
-double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug, int *verticeToGroup) {
+double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug) {
     double dot;
     int size = sp->n;
     double *res1 = malloc(size * sizeof(double));
@@ -177,8 +177,7 @@ void initOneValVec(double *unitVec, int n, const int *group, int val) {
 /* calculate the vector B^*v to res, by split the B^ into B and F vector as values of diag matrix*/
 //TODO remove debug
 double
-multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int *verticeToGroup,
-          int debug) {
+multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int debug) {
     int size = sp->n;
 //    double *unitVec = malloc(size * sizeof(double));
     double *vecFCopy = malloc(size * sizeof(double));
@@ -192,7 +191,7 @@ multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, 
 //    multBv(sp, unitVec, group, vecF, groupSize, 0);
     copyDoubleVec(vecF, vecFCopy, group, groupSize);
     vecMult(vecFCopy, vec, group, groupSize);
-    total = multBv(sp, vec, group, res, groupSize, debug, verticeToGroup);
+    total = multBv(sp, vec, group, res, groupSize, debug);
 //    if (debug == 1) {
 //        printVector(vec, size, group);
 //            printVector(result, size, group);
@@ -209,15 +208,15 @@ multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, 
 
 
 /*power iteration on B^ to calculate the leading eigenvalue, using matrix shifting*/
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF,
-               int *verticeToGroup, int debug) {
+void
+powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF, int debug) {
     int flag = 1, i, idx;
     int size = sp->n;
     int counter = 0;
     double total = 0;
     while (flag == 1 && counter < 10000) {
         flag = 0;
-        total += multBRoof(sp, b0, group, groupSize, result, vecF, verticeToGroup, debug);
+        total += multBRoof(sp, b0, group, groupSize, result, vecF, debug);
         vecSum(result, b0, shifting, group, groupSize);
         normalize(size, result, group, groupSize);
         for (i = 0; i < groupSize; i++) {
@@ -234,15 +233,15 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
 }
 
 /*calculate the eigenvalue of the leading eigenVector found*/
-double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF, int *verticeToGroup) {
+double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF) {
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
-    if (tmp==NULL) {
+    if (tmp == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
     double res;
-    multBRoof(sp, vec, group, groupSize, tmp, vecF, verticeToGroup, 0);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF, 0);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
     //   printf("eigen value is %f\n", res);
@@ -250,7 +249,7 @@ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, doubl
 }
 
 /*modularity calculation by multiply +-1 vector with B^*/
-double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF, int *verticeToGroup) {
+double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF) {
     double res = 0;
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
@@ -258,7 +257,7 @@ double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double 
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
-    multBRoof(sp, vec, group, groupSize, tmp, vecF, verticeToGroup, 0);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF, 0);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
     return res / 2;
