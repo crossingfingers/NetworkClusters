@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/C.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/divider.c.obj" afterDir="false" />
@@ -20,6 +21,9 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/spmat.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/utils.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projectAgNew.dir/utils.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+>>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,22 +41,43 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ofek" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="dynamic.analysis.tools.valgrind" />
   </component>
-  <component name="RunManager">
-    <configuration name="projectAgNew" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="C:\Users\gal21\CLionProjects\ofek\tester_binary.input C:\Users\gal21\CLionProjects\projectApproach\out.out" PASS_PARENT_ENVS_2="true" PROJECT_NAME="projectAgNew" TARGET_NAME="projectAgNew" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="projectAgNew" RUN_TARGET_NAME="projectAgNew">
+  <component name="RunManager" selected="CMake Application.projectAgNew (1)">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="projectAgNew (1)" type="CMakeRunConfiguration" factoryName="Application" temporary="true" PROGRAM_PARAMS="C:\Users\divin\desktop\input.arr C:\Users\divin\desktop\output.arr" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="projectAgNew" TARGET_NAME="projectAgNew" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="projectAgNew" RUN_TARGET_NAME="projectAgNew">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="projectAgNew" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="C:\Users\divin\desktop\input.arr C:\Users\divin\desktop\output.arr" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.projectAgNew" />
+      <item itemvalue="CMake Application.projectAgNew (1)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="CMake Application.projectAgNew (1)" />
+      </list>
+    </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -75,19 +100,28 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added register keywords" />
+    <MESSAGE value="small fix for memory free" />
+    <MESSAGE value="MEMORY OK-&gt; passes VALGRIND" />
+    <option name="LAST_COMMIT_MESSAGE" value="MEMORY OK-&gt; passes VALGRIND" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599806005170">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="15" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600003883494">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
-    <state x="201" y="0" key="CommitChangelistDialog2" timestamp="1599806661511">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1600003883494" />
+    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1600008761112">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
+    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1600008761112" />
     <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1599802282496">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1599802282496" />
+<<<<<<< HEAD
     <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1599941304569">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -106,29 +140,74 @@
     <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599941304569" />
     <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1599847084182">
       <screen x="0" y="0" width="1280" height="680" />
+=======
+    <state width="1877" height="414" key="GridCell.Tab.0.bottom" timestamp="1600004874795">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1877" height="414" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
+    <state width="1877" height="414" key="GridCell.Tab.0.center" timestamp="1600004874795">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1877" height="414" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
+    <state width="1877" height="414" key="GridCell.Tab.0.left" timestamp="1600004874795">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1877" height="414" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
+    <state width="1877" height="414" key="GridCell.Tab.0.right" timestamp="1600004874795">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1599847199166" />
+    <state width="1877" height="414" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1600004874795" />
+    <state width="1877" height="124" key="GridCell.Tab.1.bottom" timestamp="1599990069315">
+      <screen x="0" y="0" width="1920" height="1050" />
+>>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
-    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1599847084182">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1877" height="124" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
+    <state width="1877" height="124" key="GridCell.Tab.1.center" timestamp="1599990069315">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
-    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1599847084182">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1877" height="124" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
+    <state width="1877" height="124" key="GridCell.Tab.1.left" timestamp="1599990069315">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
-    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1599847084182">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1877" height="124" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
+    <state width="1877" height="124" key="GridCell.Tab.1.right" timestamp="1599990069315">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1599847084182" />
+    <state width="1877" height="124" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1599990069315" />
     <state x="354" y="57" key="MultipleFileMergeDialog" timestamp="1599806741889">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="354" y="57" key="MultipleFileMergeDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806741889" />
-    <state x="234" y="74" key="Vcs.Push.Dialog.v2" timestamp="1599806702623">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="743" y="245" key="RollbackChangesDialog" timestamp="1599987670408">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="743" y="245" key="RollbackChangesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599987670408" />
+    <state x="461" y="170" key="SettingsEditor" timestamp="1599984017126">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1599984017126" />
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1600008774852">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="234" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1599806702623" />
+<<<<<<< HEAD
     <state x="338" y="165" key="com.intellij.ide.util.TipDialog" timestamp="1599985544180">
+=======
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1600008774852" />
+    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600005119296">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="92" y="92" width="1736" height="866" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1600005119296" />
+    <state x="338" y="165" key="com.intellij.ide.util.TipDialog" timestamp="1599912413715">
+>>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="338" y="165" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1599985544180" />
@@ -136,10 +215,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="448" y="258" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1599806666651" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1599836906117">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="455" y="2" width="1008" height="1047" key="search.everywhere.popup" timestamp="1599977069731">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1599836906117" />
+<<<<<<< HEAD
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -151,5 +231,8 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+=======
+    <state x="455" y="2" width="1008" height="1047" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1599977069731" />
+>>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
   </component>
 </project>
