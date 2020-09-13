@@ -6,7 +6,7 @@
 @file spmat.h
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
-## This is the Sparse matrix H file, maintains the sparse matrix structure
+## This is the Sparse matrix H file, maintains the sparse matrix structure and networks structure
 */
 
 

@@ -12,8 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/divider.c" beforeDir="false" afterPath="$PROJECT_DIR$/divider.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spmat.c" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spmat.h" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.h" afterDir="false" />
     </list>
@@ -105,11 +103,11 @@
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
     <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1600003883494" />
-    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1600012664066">
+    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1600013620987">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
-    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1600012664066" />
+    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1600013620987" />
     <state x="92" y="92" width="1736" height="866" key="DiffContextDialog" timestamp="1600012472100">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
