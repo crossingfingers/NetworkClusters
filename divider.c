@@ -9,16 +9,18 @@
 void resetUnmoved(int *unmoved, int groupSize) {
     int i;
     for (i = 0; i < groupSize; ++i) {
-//        unmoved[i] = 1;
         *unmoved = 1;
         unmoved++;
     }
 }
 
 
-void updateScore(spmat *sp, double *s, double *score,int groupSize, const int *unmoved, int k) {
-    int i, M= sp->M;
-    double sk = s[k];
+void updateScore(spmat *sp, double *s, double *score, int groupSize, const int *unmoved, int k) {
+    register int i, M = sp->M;
+    register double sk = s[k];
+    register int *row;
+    int rowSize= sp->findAij(sp,i,k,row);
+
 //    multBv(sp, zeroVec, group, res, groupSize, 0, verticeToGroup);
     for (i = 0; i < groupSize; ++i) {
         if (*unmoved++ == 0) {
@@ -30,7 +32,7 @@ void updateScore(spmat *sp, double *s, double *score,int groupSize, const int *u
             *score = -*score;
         else {
 //            *score -= (4 * *s * sk * *res);
-            *score -= (4 * *s * sk * (sp->findAij(sp, i,k) - (double)(sp->k[i]*sp->k[k])/M));
+            *score -= (4 * *s * sk * (sp->findAij(sp, i, k) - (double) (sp->k[i] * sp->k[k]) / M));
         }
         score++;
         s++;
@@ -39,8 +41,8 @@ void updateScore(spmat *sp, double *s, double *score,int groupSize, const int *u
 }
 
 int findMaxIdx(const double *score, int groupSize, const int *unmoved) {
-    double max = -DBL_MAX;
-    int maxIdx = -1, i, flag = 0;
+    register double max = -DBL_MAX;
+    register int maxIdx = -1, i, flag = 0;
     for (i = 0; i < groupSize; ++i) {
         if (*unmoved == 0) {
             unmoved++;
@@ -59,44 +61,9 @@ int findMaxIdx(const double *score, int groupSize, const int *unmoved) {
     return maxIdx;
 }
 
-/*int findMaxIdx(spmat *sp, double *s, double *score, int group, const int *groupid, const int *unmoved) {
-    double q0 = modularityCalc(sp, s, group, groupid), max = -1;
-    int i, size = sp->n, maxIdx = -1;
-    for (i = 0; i < size; ++i) {
-        if (group != groupid[i] || unmoved[i] == 0)
-            continue;
-        s[i] = -s[i];
-        score[i] = modularityCalc(sp, s, group, groupid) - q0;
-        s[i] = -s[i];
-        if (max < score[i]) {
-            max = score[i];
-            maxIdx = i;
-        }
-    }
-    return maxIdx;
-}*/
-
 double findMaxImprove(double *s, double *improve, int *indices, int groupSize, int maxIdx) {
-
-//    int i, maxIdx = -1, j;
-    int i, j;
-    double delta, max;
-    double *improveCopy = improve;
-    int *indicesCopy = indices;
-    int groupSizeMinusOne = groupSize - 1;
-//    maxIdx = -1;
-//    for (i = 0; i < groupSize; ++i) {
-//        if (maxIdx == -1) {
-//            max = *improveCopy;
-//            maxIdx = i;
-//        }
-//        if (*improveCopy > max) {
-//            maxIdx = i;
-//            max = *improveCopy;
-//        }
-//        improveCopy++;
-//    }
-//    printf("max index is %d\n",maxIdx);
+    register int i, j;
+    double delta;
     for (i = groupSize - 1; i > maxIdx; --i) {
         j = indices[i];
         s[j] = -s[j];
@@ -155,7 +122,7 @@ void optimize(spmat *sp, double *s, int *group, int groupSize, int *verticeToGro
             else
                 *improve = *(prevImp) + score[maxIdx];
 //            printf("improve is :%f\n",*improve);
-            if(*improve > maxImp){
+            if (*improve > maxImp) {
                 maxImp = *improve;
                 maxImpIdx = i;
             }
@@ -245,7 +212,8 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
     return delta;
 }
 
-int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double *res, double *b0, double *vecF, double shifting) {
+int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double *res, double *b0, double *vecF,
+                double shifting) {
 //    printf("working on group %d\n", groupIdx);
 //TODO make vecF only calculated here and send it to all functions !!!!
     int size = sp->n;
@@ -330,7 +298,7 @@ void findGroups(division *div, networks *graphs) {
     double *res = malloc(sizeof(double) * size);
     double *unitVec = malloc(size * sizeof(double));
     double *vecF = malloc(size * sizeof(double));
-    int counter=0;
+    int counter = 0;
     if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
@@ -343,8 +311,8 @@ void findGroups(division *div, networks *graphs) {
 //            printVector(vecF, *nodesForGroup, *groups);
 //            printf("counter %d\n", counter++);
             multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0, div->vertexToGroup);
-            if(shifting == -1){
-               shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
+            if (shifting == -1) {
+                shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
             }
             delta = divideToTwo(div, sp, graphs, groupIdx, res, b0, vecF, shifting);
         }

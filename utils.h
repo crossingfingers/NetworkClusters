@@ -11,22 +11,6 @@
 
 void randomizeVec(int size, double *vec, int groupSize, int *group);
 
-//void vecMult(double *vec1, const double *vec2, const int *group, int size);
-
-//void vecSum(double *vec, const double *b0, double shifting, const int *group, int n);
-
-//void vecDec(double *vec1, const double *vec2, const int *group, int n);
-
-//void scalarMult(double *vec, double x, const int *group, int n);
-
-//double dotProd(const int *vec1, const double *vec2, const int *group, int n);
-
-//double dotDoubleProd(const double *vec1, const double *vec2, const int *group, int n);
-
-//void copyVec(const int *src, double *dst, const int *group, int n);
-
-//void copyDoubleVec(const double *src, double *dst, const int *group, int n);
-
 double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug,int *verticeToGroup);
 
 void initOneValVec(double *unitVec, int n, const int *group, int val);

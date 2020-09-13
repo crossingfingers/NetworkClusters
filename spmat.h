@@ -27,7 +27,7 @@ typedef struct _spmat {
     void (*splitGraph)(struct _networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
                        int g2Size);
 
-    int (*findAij)(struct _spmat *sp, int i, int j);
+    int (*findAij)(struct _spmat *sp, int i, int j,int *row);
 
     /* Private field for inner implementation.
      * Should not be read or modified externally */
@@ -40,6 +40,6 @@ typedef struct _networks{
     void (*free)(struct _networks *graphs, int numOfGroups);
 }networks;
 
-networks *readGraph(FILE *input, int type);
+networks *readGraph(FILE *input);
 
 #endif

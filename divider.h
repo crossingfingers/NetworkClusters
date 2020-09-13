@@ -29,16 +29,5 @@ typedef struct _division {
 
 division *allocateDivision(int n);
 
-//void powerIter(spmat *A, double *b0, double shifting, int group, const int *groupid ,double *result);
-
-//void randomizeVec(int size, double *vec);
-
-//double modularityCalc(spmat *A, double *vec, int group, const int *groupid);
-
-//double eigenValue(spmat *A, double *vec, int group, const int* groupid);
-
-//int divideToTwo(division *div, spmat *sp, int group);
-
-
 
 #endif //CPROJECT_DIVIDER_H

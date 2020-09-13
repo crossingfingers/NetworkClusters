@@ -6,17 +6,29 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.c
+C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.c
+stdio.h
+-
 stdlib.h
 -
-stdio.h
--
 spmat.h
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
-math.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
+divider.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.h
+float.h
+-
+utils.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.h
+
+C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.h
+spmat.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
+
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
+stdio.h
 -
 
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
-stdio.h
--
+C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.h
+spmat.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 
