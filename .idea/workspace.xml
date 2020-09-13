@@ -11,7 +11,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="" />
+    <list default="true" id="b2634df7-460a-46f2-bf17-db147c63f156" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projectAgNew.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spmat.c" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +44,11 @@
     <property name="settings.editor.selected.configurable" value="dynamic.analysis.tools.valgrind" />
   </component>
   <component name="RunManager" selected="CMake Application.projectAgNew (1)">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="projectAgNew (1)" type="CMakeRunConfiguration" factoryName="Application" temporary="true" PROGRAM_PARAMS="C:\Users\divin\desktop\input.arr C:\Users\divin\desktop\output.arr" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="projectAgNew" TARGET_NAME="projectAgNew" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="projectAgNew" RUN_TARGET_NAME="projectAgNew">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -49,14 +59,9 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="CMake Application.projectAgNew (1)" />
       <item itemvalue="CMake Application.projectAgNew" />
+      <item itemvalue="CMake Application.projectAgNew (1)" />
     </list>
     <recent_temporary>
       <list>
@@ -92,16 +97,16 @@
     <option name="LAST_COMMIT_MESSAGE" value="small fix for memory free" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="15" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599977026336">
+    <state x="15" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600003883494">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="10" y="0" width="1270" height="680" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1599806005170" />
-    <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1599977026336" />
-    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1599990054391">
+    <state x="15" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1600003883494" />
+    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1599990710713">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="201" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1599806661511" />
-    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1599990054391" />
+    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1599990710713" />
     <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1599802282496">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -158,11 +163,11 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="461" y="170" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1599984017126" />
-    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1599990060842">
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2" timestamp="1599990725756">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="234" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1599806702623" />
-    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1599990060842" />
+    <state x="351" y="114" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1599990725756" />
     <state x="338" y="165" key="com.intellij.ide.util.TipDialog" timestamp="1599912413715">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

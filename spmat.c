@@ -238,6 +238,7 @@ void freeNetworks(networks *graphs, int numOfGroups) {
         sp->free(sp);
         free(sp);
     }
+    free(graphs->A);
 }
 
 networks *allocateNetworks(int n) {

@@ -13,6 +13,7 @@ int main(int argc, char **argv) {
     double start;
     double end;
 
+    /*Checks if program input arguments are valid*/
     srand(time(NULL));
     if (argc != 3) {
         printf("ERROR - there is not 2 arguments");
