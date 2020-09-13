@@ -29,8 +29,8 @@ void printIntVector(int *vec, int n) {
 void randomizeVec(int size, double *vec, int groupSize, int *group) {
     int i;
     for (i = 0; i < groupSize; i++) {
-        vec[i] = rand();
-//        vec[i] = group[i];
+//        vec[i] = rand();
+        vec[i] = group[i];
 //        vec[i] = i;
     }
 //    for (; i < size; ++i) {
@@ -128,6 +128,10 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
     double dot;
     int size = sp->n;
     double *res1 = malloc(size * sizeof(double));
+    if (res1 == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     double start, end;
     dot = dotProd(sp->k, vec, group, groupSize);
 //    if (debug == 1){
@@ -233,6 +237,10 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
 double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF, int *verticeToGroup) {
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
+    if (tmp==NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     double res;
     multBRoof(sp, vec, group, groupSize, tmp, vecF, verticeToGroup, 0);
     res = dotDoubleProd(tmp, vec, group, groupSize);

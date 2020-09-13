@@ -177,13 +177,25 @@ void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s,
 spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
-    sparray->colind = calloc(nnz, sizeof(int));
-    sparray->rowptr = calloc(n + 1, sizeof(int));
+    if (sparray == NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
+    sparray->colind = malloc(nnz*sizeof(int));
+    sparray->rowptr = malloc((n + 1)* sizeof(int));
+    if ((sparray->rowptr==NULL)||(sparray->colind == NULL)) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     sparray->lastindex = 0;
     sparray->lastRowPtr = 0;
     sparray->rowptr[0] = 0;
     sparray->nnz = nnz;
     sp = malloc(sizeof(spmat));
+    if (sp==NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     sp->n = n;
     sp->add_row = add_row_array;
     sp->free = free_array;
@@ -194,6 +206,10 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->M = 0;
     sp->findAij = findAijArray;
     sp->k = malloc(sizeof(int) * n);
+    if (sp->k==NULL) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     initk(sp);
     sp->matShifting = arrayShifting;
     return sp;

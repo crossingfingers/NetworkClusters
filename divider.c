@@ -14,11 +14,9 @@ void resetUnmoved(int *unmoved, int groupSize) {
     }
 }
 
-
 void updateScore(spmat *sp, double *s, double *score, int groupSize, const int *unmoved, int k) {
     register int i, M = sp->M;
     register double sk = s[k];
-//    multBv(sp, zeroVec, group, res, groupSize, 0, verticeToGroup);
     for (i = 0; i < groupSize; ++i) {
         if (*unmoved++ == 0) {
             score++;
@@ -28,13 +26,11 @@ void updateScore(spmat *sp, double *s, double *score, int groupSize, const int *
         if (k == i)
             *score = -*score;
         else {
-//            *score -= (4 * *s * sk * *res);
             *score -= (4 * *s * sk * (sp->findAij(sp, i, k) - (double) (sp->k[i] * sp->k[k]) / M));
         }
         score++;
         s++;
     }
-
 }
 
 int findMaxIdx(const double *score, int groupSize, const int *unmoved) {
@@ -54,7 +50,6 @@ int findMaxIdx(const double *score, int groupSize, const int *unmoved) {
         score++;
         unmoved++;
     }
-//    printf("maxidx is %d\n", maxIdx);
     return maxIdx;
 }
 
@@ -65,7 +60,6 @@ double findMaxImprove(double *s, double *improve, int *indices, int groupSize, i
         j = indices[i];
         s[j] = -s[j];
     }
-//    printf("max index is :%d, improve is: %f\n",maxIdx,improve[maxIdx]);
     if (maxIdx == groupSize - 1)
         delta = 0;
     else
@@ -83,6 +77,11 @@ void optimize(spmat *sp, double *s, int *group, int groupSize, int *verticeToGro
     register double *score = malloc(sizeof(double) * groupSize);
     register double *improve = malloc(sizeof(double) * groupSize);
     register double *res = malloc(sizeof(double) * size);
+
+    if ((unmoved==NULL)||(indices==NULL)||(score==NULL)||(improve==NULL)||(res==NULL)) {
+        printf("ERROR - memory allocation unsuccessful");
+        exit(EXIT_FAILURE);
+    }
     register double maxImp, *prevImp = improve;
     register int maxImpIdx;
     if (unmoved == NULL || indices == NULL || score == NULL || improve == NULL || res == NULL) {
@@ -154,7 +153,6 @@ void createSVector(double *vec, int groupSize) {
             flag = IS_POSITIVE(vec[i]) ? 1 : 0;
         if (IS_POSITIVE(vec[i]) != flag) {
             vec[i] = -1;
-//            counter++;
         } else
             vec[i] = 1;
     }
