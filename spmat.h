@@ -40,6 +40,6 @@ typedef struct _networks{
     void (*free)(struct _networks *graphs, int numOfGroups);
 }networks;
 
-networks *readGraph(FILE *input, int type);
+networks *readGraph(FILE *input);
 
 #endif
