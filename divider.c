@@ -134,6 +134,11 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
         delta = findMaxImprove(s, improve, indices, groupSize, maxImpIdx);
 //        printf("delta is: %f\n",delta);
     } while (IS_POSITIVE(delta));
+    free(unmoved);
+    free(indices);
+    free(score);
+    free(improve);
+    free(res);
 }
 
 int getNewGroupSize(const double *s, int groupSize) {
