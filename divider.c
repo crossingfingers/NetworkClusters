@@ -18,9 +18,6 @@ void resetUnmoved(int *unmoved, int groupSize) {
 void updateScore(spmat *sp, double *s, double *score, int groupSize, const int *unmoved, int k) {
     register int i, M = sp->M;
     register double sk = s[k];
-    register int *row;
-    int rowSize= sp->findAij(sp,i,k,row);
-
 //    multBv(sp, zeroVec, group, res, groupSize, 0, verticeToGroup);
     for (i = 0; i < groupSize; ++i) {
         if (*unmoved++ == 0) {
