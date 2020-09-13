@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     graphs->free(graphs, div->numOfGroups);
     div->free(div);
     end = clock();
-    printf("took %f seconds\n", ((double) (end - start) / CLOCKS_PER_SEC));
+    printf("took %f seconds\n", ((double)(end-start)/ CLOCKS_PER_SEC));
     free(graphs);
     free(div);
     fclose(input);

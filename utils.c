@@ -38,16 +38,6 @@ void randomizeVec(int size, double *vec, int groupSize, int *group) {
 //    }
 }
 
-/* used for the F vector as a Matrix to multiply it by the v vector*/
-void vecMult(double *vec1, const double *vec2, const int *group, int size) {
-    int i;
-    for (i = 0; i < size; ++i) {
-        *vec1 = (*vec1) * (*vec2);
-        vec1++;
-        vec2++;
-
-    }
-}
 
 /* gets to vectors and return the sum of vec with b0*shifting (shifting is the value from matrix shifting*/
 void vecSum(double *vec, const double *b0, double shifting, const int *group, int n) {
@@ -59,15 +49,6 @@ void vecSum(double *vec, const double *b0, double shifting, const int *group, in
     }
 }
 
-/*decrease vec1 by vec2*/
-void vecDec(double *vec1, const double *vec2, const int *group, int n) {
-    int i;
-
-    for (i = 0; i < n; ++i) {
-        *vec1 -= *vec2++;
-        vec1++;
-    }
-}
 
 void scalarMult(double *vec, double x, const int *group, int n) {
     int i;
@@ -98,23 +79,6 @@ double dotDoubleProd(const double *vec1, const double *vec2, const int *group, i
     return res;
 }
 
-void copyDoubleVec(const double *src, double *dst, const int *group, int n) {
-    int i;
-    for (i = 0; i < n; ++i) {
-
-        *dst = *src++;
-        dst++;
-    }
-}
-
-void copyVec(const int *src, double *dst, const int *group, int n) {
-    int i;
-
-    for (i = 0; i < n; ++i) {
-        *dst = *src++;
-        dst++;
-    }
-}
 
 void normalize(int size, double *vec, const int *group, int groupSize) {
     double res = dotDoubleProd(vec, vec, group, groupSize);
@@ -124,14 +88,23 @@ void normalize(int size, double *vec, const int *group, int groupSize) {
 
 //TODO remove debug
 /*the calculation of Bv by split B to A, and KiKj matrix*/
+
+void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
+    int i, *k = sp->k;
+    for (i = 0; i < n; ++i) {
+        *vec1 -= *k++ * dotM;
+        vec1++;
+    }
+}
+
 double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug) {
     double dot;
     int size = sp->n;
-    double *res1 = malloc(size * sizeof(double));
-    if (res1 == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
+//    double *res1 = malloc(size * sizeof(double));
+//    if (res1 == NULL) {
+//        printf("ERROR - memory allocation unsuccessful");
+//        exit(EXIT_FAILURE);
+//    }
     double start, end;
     dot = dotProd(sp->k, vec, group, groupSize);
 //    if (debug == 1){
@@ -141,8 +114,8 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
         printf("ERROR - divide in zero");
         exit(EXIT_FAILURE);
     }
-    copyVec(sp->k, res1, group, groupSize);
-    scalarMult(res1, (double) dot / sp->M, group, groupSize);
+//    copyVec(sp->k, res1, group, groupSize);
+//    scalarMult(res1, (double) dot / sp->M, group, groupSize);
 //    if (debug == 1){
 //        printf("res1 is : ");
 //        printVector(res1, size);
@@ -159,8 +132,10 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
 //        printf("groupsize is %d\n and group is : ", groupSize);
 //        printIntVector(group, groupSize);
 //    }
-    vecDec(res, res1, group, groupSize);
-    free(res1);
+//    vecDec(res, res1, group, groupSize);
+//    free(res1);
+    vecDecK(res, sp, groupSize, (double) dot / sp->M);
+
     return ((double) (end - start) / CLOCKS_PER_SEC);
 }
 
@@ -174,31 +149,40 @@ void initOneValVec(double *unitVec, int n, const int *group, int val) {
 }
 
 
+void vecDecFv(double *res, double* vecF, double *v, int n){
+    int i;
+    for(i = 0; i < n; ++i){
+        *res -= *vecF++ * *v++;
+        res++;
+    }
+}
+
 /* calculate the vector B^*v to res, by split the B^ into B and F vector as values of diag matrix*/
 //TODO remove debug
 double
 multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int debug) {
     int size = sp->n;
 //    double *unitVec = malloc(size * sizeof(double));
-    double *vecFCopy = malloc(size * sizeof(double));
+//    double *vecFCopy = malloc(size * sizeof(double));
     double total, start, end;
-    if (vecFCopy == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
+//    if (vecFCopy == NULL) {
+//        printf("ERROR - memory allocation unsuccessful");
+//        exit(EXIT_FAILURE);
+//    }
     start = clock();
 //    initOneValVec(unitVec, groupSize, group, 1);
 //    multBv(sp, unitVec, group, vecF, groupSize, 0);
-    copyDoubleVec(vecF, vecFCopy, group, groupSize);
-    vecMult(vecFCopy, vec, group, groupSize);
+//    copyDoubleVec(vecF, vecFCopy, group, groupSize);
+//    vecMult(vecFCopy, vec, group, groupSize);
     total = multBv(sp, vec, group, res, groupSize, debug);
 //    if (debug == 1) {
 //        printVector(vec, size, group);
 //            printVector(result, size, group);
 //        printf("PI multBv total time took %f\n", total);
 //    }
-    vecDec(res, vecFCopy, group, groupSize);
-    free(vecFCopy);
+//    vecDec(res, vecFCopy, group, groupSize);
+//    free(vecFCopy);
+    vecDecFv(res, vecF, vec, size);
     debug = 0;
 //    free(unitVec);
     end = clock();
@@ -213,8 +197,9 @@ powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, dou
     int flag = 1, i, idx;
     int size = sp->n;
     int counter = 0;
+    double MAX_ITERS = 0.5 * (size * size) + 5000 * size + 10000;
     double total = 0;
-    while (flag == 1 && counter < 10000) {
+    while (flag == 1 && counter < MAX_ITERS) {
         flag = 0;
         total += multBRoof(sp, b0, group, groupSize, result, vecF, debug);
         vecSum(result, b0, shifting, group, groupSize);
@@ -227,6 +212,10 @@ powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, dou
         }
         counter++;
         debug = 0;
+    }
+    if (counter == 10000) {
+        printf("PI can't converge\n");
+        exit(EXIT_FAILURE);
     }
 //    printf("took %d iterations\n", counter);
 //    printf("mult A in PI took %f\n", total);
