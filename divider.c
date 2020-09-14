@@ -6,7 +6,7 @@
 #include "utils.h"
 
 /**
-@file divider.h
+@file divider.c
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
 ## This is the Divider C file, maintains all main methods to find the graph subgroups
@@ -64,31 +64,6 @@ updateScore(spmat *sp, double *s, double *score, int groupSize, const int *unmov
     *maxIdx = idx;
 }
 
-/**Finds the index of the vertice that if moved, will add maximum modularity
- * @param *score : an array keeping the score(modularity) of each vertice in the subgroup
- * @param *unmoved : an array that keeps track which vertice hasn't been moved
- * @return maxIdx : the index with the maximum modularity score
- * */
-int findMaxIdx(const double *score, int groupSize, const int *unmoved, int movedFlag) {
-    register double max = -DBL_MAX;
-    register int maxIdx = -1, i, flag = 0;
-    for (i = 0; i < groupSize; ++i) {
-        if (*unmoved == movedFlag) {
-            unmoved++;
-            score++;
-            continue;
-        }
-        if (flag == 0 || max < *score) {
-            flag = 1;
-            max = *score;
-            maxIdx = i;
-        }
-        score++;
-        unmoved++;
-    }
-    return maxIdx;
-}
-
 /**Reverts the group division to the optimal one, by moving back vertices that reduced the modularity
  * @param *improve : an array keeping the improvement in modularity after each vertice movement
  * @param *indices : keeps the order of vertices moved, during the optimization
@@ -129,11 +104,6 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
     register double *score = d->score;
     register double *improve = d->improve;
     register double *res = d->res;
-
-    if ((unmoved == NULL) || (indices == NULL) || (score == NULL) || (improve == NULL) || (res == NULL)) {
-        printf("ERROR - memory allocation unsuccessful");
-        exit(EXIT_FAILURE);
-    }
     register double maxImp, *prevImp = improve, maxScore, *sMaxIdx;
     register int maxImpIdx;
     register int square, M = sp->M;
@@ -144,11 +114,10 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
         movedFlag = -movedFlag;
         maxImp = -DBL_MAX;
         maxImpIdx = -1;
-
-
         maxScore = -DBL_MAX;
         maxIdx = -1;
         multBv(sp, s, group, res, groupSize, 0);
+
         /*calculates initial score for all vertices*/
         for (i = 0; i < groupSize; ++i) {
             square = *k * *k;
@@ -176,6 +145,7 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
 
             /*updates movement order in *indices array*/
             *indices = maxIdx;
+
             /*updates modularity improvement in *improve array*/
             if (i == 0)
                 *improve = score[maxIdx];
@@ -190,14 +160,13 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
             /*updates for all vertices modularity score after vertice movement*/
             updateScore(sp, s, score, groupSize, unmoved, maxIdx, movedFlag, &maxIdx);
             unmoved[maxIdx] = movedFlag;
-
             indices++;
             prevImp = improve;
             improve++;
         }
-
         indices -= i;
         improve -= i;
+
         /*reverts to division vector *s that gave max modularity improvement*/
         delta = findMaxImprove(s, improve, indices, groupSize, maxImpIdx);
 //        printf("delta is: %f\n",delta);
@@ -318,37 +287,19 @@ int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double
     int *group = *(div->groups + groupIdx);
     int groupSize = div->nodesforGroup[groupIdx];
     randomizeVec(size, b0, groupSize, group);
-//    printf("group is: ");
-//    printIntVector(group, groupSize);
-//    printf("onevec is: ");
-//    printVector(unitVec, size);
-
-//    printf("vec f is: ");
-//    printVector(vecF, size);
-//    printf("shifting value is %f\n", sp->matShifting(sp, group, groupSize, div->vertexToGroup, groupIdx,vecF));
-//    powerIter(sp, b0, sp->matShifting(sp, group, groupSize, vecF), group, groupSize, res,
-//              vecF, 1);
     powerIter(sp, b0, shifting, group, groupSize, res, vecF, 1);
-//    printf("HERE11\n");
-//    printVector(res, groupSize, group);
+
     /*calculates eigen value of the division vector found*/
     double eigen = eigenValue(sp, res, group, groupSize, vecF);
-//    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen)) {
-//        free(vecF);
-//        free(unitVec);
         return 0;
     }
+
     /*calls split function*/
     delta = split(div, sp, graphs, res, groupIdx, vecF);
     if (delta == 0) {
-//        free(vecF);
-//        free(unitVec);
         return 0;
     }
-//    div->printGroups(div);
-//    free(vecF);
-//    free(unitVec);
     return 1;
 }
 
@@ -430,8 +381,6 @@ void findGroups(division *div, networks *graphs) {
         delta = 1;
         while (delta == 1) {
             sp = *mats;
-//            printVector(vecF, *nodesForGroup, *groups);
-//            printf("counter %d\n", counter++);
             multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0);
             if (shifting == -1) {
                 shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);

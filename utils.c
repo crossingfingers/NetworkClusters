@@ -8,7 +8,7 @@
 #include "spmat.h"
 #include <time.h>
 
-void printVector(double *vec, int n, const int *group) {
+void printVector(double *vec, int n) {
     int i, idx;
     for (i = 0; i < n; ++i) {
         printf("%f\t", vec[i]);

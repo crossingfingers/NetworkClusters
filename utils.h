@@ -99,9 +99,18 @@ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, doubl
  * @return the modularity of the division
  */
 double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF);
+/**
+ * Prints the vector
+ * @param vec : the vector to be printed
+ * @param n : the size of the vector
+ */
+void printVector(double *vec, int n);
 
-void printVector(double *vec, int n, const int *group);
-
+/**
+ * Prints a integer vector
+ * @param vec : the vector to be printed
+ * @param n : the size of the vector
+ */
 void printIntVector(int *vec, int n);
 
 #endif //CPROJECT_UTILS_H

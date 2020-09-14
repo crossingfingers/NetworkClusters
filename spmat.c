@@ -20,6 +20,7 @@ void initk(spmat *A) {
         A->k[i] = 0;
     }
 }
+
 /**
  * definition of CSR array to maintain the sparse matrices
  * @param *colind : pointer to column indexes of non zero values in sparse matrix
@@ -36,6 +37,13 @@ typedef struct _array {
     int nnz;
 } array;
 
+/**
+ * Adds a row to the sparse matrix
+ * @param A : the sparse matrix
+ * @param row :the row to be added
+ * @param i : the index of the added row
+ * @param k : number of values in the row to be added
+ */
 void add_row_array(struct _spmat *A, int *row, int i, int k) {
     array *sparray = (array *) A->private;
     int *rowInput = row;
@@ -44,6 +52,7 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
     A->k[i] = k;
     sparray->rowptr[sparray->lastRowPtr + 1] = sparray->rowptr[sparray->lastRowPtr] + k;
     sparray->lastRowPtr++;
+
 /*updates values array*/
     for (ci = 0; ci < k; ci++) {
         sparray->colind[sparray->lastindex] = *rowInput;
@@ -52,6 +61,7 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
     }
 }
 
+//TODO - remove
 int findAijArray(spmat *sp, int i, int j) {
     array *sparray = (array *) sp->private;
     int *rowPtr = sparray->rowptr;
@@ -74,21 +84,40 @@ int findAijArray(spmat *sp, int i, int j) {
     return 0;
 }
 
-int hasNextARowArray(spmat *A, int i, int *ptr){
+/**
+ * Part of iterator, checks if theres a next value in a specific row
+ * @param A : The sparse matrix to iterate upon
+ * @param i : the row to check
+ * @param ptr : the pointer to the current column value
+ * @return : returns 1 if true, 0 if false
+ */
+int hasNextARowArray(spmat *A, int i, int *ptr) {
     array *spArray = (array *) A->private;
-    return ptr - (spArray->colind) < *(spArray->rowptr +i +1) - 1;
+    return ptr - (spArray->colind) < *(spArray->rowptr + i + 1) - 1;
 }
 
+/**
+ * returns an iterator to itererate upon a specific row
+ * @param A : the sparse matrix
+ * @param i : the row to iterate upon
+ * @return  : a pointer to the start of the row
+ */
 int *getARowIteratorArray(spmat *A, int i) {
     array *spArray = (array *) A->private;
-    if(*(spArray->rowptr+ i + 1) - *(spArray->rowptr + i) > 0){
+    if (*(spArray->rowptr + i + 1) - *(spArray->rowptr + i) > 0) {
         return spArray->colind + *(spArray->rowptr + i);
     }
     return NULL;
 }
 
+/**
+ * Multiplies a sparse matrix array (CSR) with a vector
+ * @param A : the sparse matrix, stored in CSR format
+ * @param vec : the vector to be multiplied
+ * @param result : the result of the multiplication
+ * @param groupSize : the size of the subgroup which is represented by the sparse matrix
+ */
 void mult_array(const struct _spmat *A, const double *vec, double *result, int groupSize) {
-
     array *sparray = (array *) A->private;
     int *rowPtr = sparray->rowptr;
     register int *cols;
@@ -110,6 +139,10 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, int g
     }
 }
 
+/**
+ * Frees the sparse matrix array
+ * @param A : the sparse matrix
+ */
 void free_array(struct _spmat *A) {
     array *sparray = (array *) A->private;
     free(sparray->rowptr);
@@ -118,12 +151,10 @@ void free_array(struct _spmat *A) {
     free(A->private);
 }
 
+/**prints the sparse matrix in a readable format*/
 void printMatrix(spmat *A) {
-
     int i;
     array *sparr = (array *) A->private;
-
-
     printf("\ncollarr:\n");
     for (i = 0; i < sparr->nnz; i++) {
         printf("%d", sparr->colind[i]);
@@ -135,6 +166,7 @@ void printMatrix(spmat *A) {
 
 }
 
+/**prints the sparse matrix in sparse format*/
 void print_array(struct _spmat *A) {
     int i;
     int j;
@@ -155,7 +187,11 @@ void print_array(struct _spmat *A) {
 }
 
 
-
+/**calculates matrix shifting value to get positive eigen values
+ * @param A : the sparse matrix of the current subgroup
+ * @param group : the current subgroup
+ * @return the shifting value
+ * */
 double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
     double max = 0;
     double sum;
@@ -202,9 +238,26 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const double *F)
     return max;
 }
 
+/**
+ * once a division is found, the function splits the sparse matrix into two sparse matrix, each representing a subgroup
+ * @param graphs : an array containing all the graph sparse matrices (of subgroups)
+ * @param groupIdx : the current group index
+ * @param newGroupIdx : the new sparse matrix, if a split is made into 2 subgroups
+ * @param s : the division vector
+ * @param group : the original vertex group
+ * @param groupSize : the original vertex group size
+ * @param g1Size : group 1's size
+ * @param g2Size : group 2's size
+ */
 void splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
                      int g2Size);
 
+/**
+ * Allocates a sparse matrix array in CSR format
+ * @param n : size of the graph (n x n vertices)
+ * @param nnz : the number of non zero values in the sparse matrix
+ * @return a pointer to the sparse matrix
+ */
 spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
@@ -212,9 +265,9 @@ spmat *spmat_allocate_array(int n, int nnz) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
-    sparray->colind = malloc(nnz*sizeof(int));
-    sparray->rowptr = malloc((n + 1)* sizeof(int));
-    if ((sparray->rowptr==NULL)||(sparray->colind == NULL)) {
+    sparray->colind = malloc(nnz * sizeof(int));
+    sparray->rowptr = malloc((n + 1) * sizeof(int));
+    if ((sparray->rowptr == NULL) || (sparray->colind == NULL)) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
@@ -223,7 +276,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sparray->rowptr[0] = 0;
     sparray->nnz = nnz;
     sp = malloc(sizeof(spmat));
-    if (sp==NULL) {
+    if (sp == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
@@ -239,7 +292,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->M = 0;
     sp->findAij = findAijArray;
     sp->k = malloc(sizeof(int) * n);
-    if (sp->k==NULL) {
+    if (sp->k == NULL) {
         printf("ERROR - memory allocation unsuccessful");
         exit(EXIT_FAILURE);
     }
@@ -248,6 +301,11 @@ spmat *spmat_allocate_array(int n, int nnz) {
     return sp;
 }
 
+/**
+ * Counts the number of non zero values in the initial graph (to allocate a correct size of sparse matrix)
+ * @param input : the input file
+ * @return : the number NNZ
+ */
 int find_nnz(FILE *input) {
     int res;
     int size;
@@ -261,6 +319,11 @@ int find_nnz(FILE *input) {
     return res / 4;
 }
 
+/**
+ * Frees the networks- a struct containing all the sparse matrices of all subgroups
+ * @param graphs : the array containing the sparse matrix pointers
+ * @param numOfGroups : the number of allocated groups (each has a sparse matrix)
+ */
 void freeNetworks(networks *graphs, int numOfGroups) {
     int i;
     spmat *sp, **mats = graphs->A;
@@ -273,6 +336,11 @@ void freeNetworks(networks *graphs, int numOfGroups) {
     free(graphs->A);
 }
 
+/**
+ * Allocates the networks struct
+ * @param n : size of the graph
+ * @return a pointer to the struct
+ */
 networks *allocateNetworks(int n) {
     networks *graphs = malloc(sizeof(networks));
     if (graphs == NULL) {
@@ -289,6 +357,11 @@ networks *allocateNetworks(int n) {
     return graphs;
 }
 
+/**
+ * Reads the initial graph from a file input
+ * @param input : the input file
+ * @return a pointer to the struct
+ */
 networks *readArray(FILE *input) {
     spmat *graph;
     int i, size, elem, *row, j;
@@ -330,12 +403,24 @@ networks *readArray(FILE *input) {
     return graphs;
 }
 
-
+/**
+ * A cointainer to call the type of sparse matrix to be used (List/ Array)
+ * @param input : the input file
+ * @return : a pointer to the networks struct
+ */
 networks *readGraph(FILE *input) {
     return readArray(input);
 }
 
-
+/**
+ * Once a division is found, this function is used to count the non zero values in the original sparse matrix, belonging to the divided subgroup
+ * this method is used when spliting a sparse matrix, then allocating a correct new sparse matrix with the found size
+ * @param sp : the original sparse matrix
+ * @param s  : the division vector
+ * @param group : the original group
+ * @param groupSize : the original group size
+ * @param newNnz : the new non zero value pointer to insert the found NNZ
+ */
 void getNewNnz(spmat *sp, double *s, int *group, int groupSize, int *newNnz) {
     int *g2Nnz = &newNnz[1], i, counterNnz1 = 0, counterNnz2 = 0, t, *groupCopy = group;
     array *spArray = (array *) sp->private;
@@ -377,6 +462,15 @@ void getNewNnz(spmat *sp, double *s, int *group, int groupSize, int *newNnz) {
     *g2Nnz = counterNnz2;
 }
 
+/**
+ * A method to copy values from a group into two subgroups, based on a division vector input
+ * @param currSp : the original Sparse matrix array
+ * @param g1Sp : the new sparse matrix for group 1
+ * @param g2Sp : the new sparse matrix for group 2
+ * @param s : the division vector
+ * @param group : the original group
+ * @param groupSize : the original group size
+ */
 void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, int groupSize) {
     int i, j, t, valsCounter, idxI, flag;
     int *groupCopy;
@@ -444,6 +538,18 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
     }
 }
 
+
+/**
+ * once a division is found, the function splits the sparse matrix into two sparse matrix, each representing a subgroup
+ * @param graphs : an array containing all the graph sparse matrices (of subgroups)
+ * @param groupIdx : the current group index
+ * @param newGroupIdx : the new sparse matrix, if a split is made into 2 subgroups
+ * @param s : the division vector
+ * @param group : the original vertex group
+ * @param groupSize : the original vertex group size
+ * @param g1Size : group 1's size
+ * @param g2Size : group 2's size
+ */
 void
 splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
                 int g2Size) {
