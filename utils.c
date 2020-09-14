@@ -7,7 +7,18 @@
 #include <math.h>
 #include "spmat.h"
 #include <time.h>
+/**
+@file utils.c
+**Author:** Ofek Bransky & Gal Cohen
+**Date:**  18.9.2020
+## This is the utility C file, contains various functions for different calculations in the program
+*/
 
+/**
+ * Prints the vector
+ * @param vec : the vector to be printed
+ * @param n : the size of the vector
+ */
 void printVector(double *vec, int n) {
     int i, idx;
     for (i = 0; i < n; ++i) {
@@ -16,6 +27,11 @@ void printVector(double *vec, int n) {
     printf("\n");
 }
 
+/**
+ * Prints a integer vector
+ * @param vec : the vector to be printed
+ * @param n : the size of the vector
+ */
 void printIntVector(int *vec, int n) {
     int i;
     for (i = 0; i < n; ++i) {
@@ -24,8 +40,13 @@ void printIntVector(int *vec, int n) {
     printf("\n");
 }
 
-
-//*get a vector and the size of it and init any value to a random value*/
+/**
+ * inserts random variables into an initialized vector
+ * @param size : the size of the vector
+ * @param vec : the initialized vector
+ * @param groupSize : the number of values inserted, inserted into the first indexes
+ * @param group : the subgroup array containing the vertices of the group
+ */
 void randomizeVec(int size, double *vec, int groupSize, int *group) {
     int i;
     for (i = 0; i < groupSize; i++) {
@@ -38,7 +59,7 @@ void randomizeVec(int size, double *vec, int groupSize, int *group) {
 //    }
 }
 
-/* gets to vectors and return the sum of vec with b0*shifting (shifting is the value from matrix shifting*/
+/** gets to vectors and returns the sum of the vector with b0*shifting (shifting is the value from matrix shifting)*/
 void vecSum(double *vec, const double *b0, double shifting, const int *group, int n) {
     int i;
     for (i = 0; i < n; ++i) {
@@ -48,6 +69,7 @@ void vecSum(double *vec, const double *b0, double shifting, const int *group, in
     }
 }
 
+/**multiplies a scalar value with a vector*/
 void scalarMult(double *vec, double x, const int *group, int n) {
     int i;
     for (i = 0; i < n; ++i) {
@@ -55,7 +77,7 @@ void scalarMult(double *vec, double x, const int *group, int n) {
     }
 }
 
-/*this is a dot product of int vector with double vector*/
+/**calculates the dot product of integer vector with double vector*/
 double dotProd(const int *vec1, const double *vec2, const int *group, int n) {
     register double res = 0;
     int i;
@@ -65,7 +87,7 @@ double dotProd(const int *vec1, const double *vec2, const int *group, int n) {
     return res;
 }
 
-/* dot product of two double vectors*/
+/**calculates the dot product of two double vectors*/
 double dotDoubleProd(const double *vec1, const double *vec2, const int *group, int n) {
     register double res = 0;
     int i;
@@ -76,6 +98,7 @@ double dotDoubleProd(const double *vec1, const double *vec2, const int *group, i
     return res;
 }
 
+/**normalizes a vector*/
 void normalize(int size, double *vec, const int *group, int groupSize) {
     double res = dotDoubleProd(vec, vec, group, groupSize);
     res = sqrt(res);
@@ -83,8 +106,7 @@ void normalize(int size, double *vec, const int *group, int groupSize) {
 }
 
 //TODO remove debug
-/*the calculation of Bv by split B to A, and KiKj matrix*/
-
+/**the calculation of multiplying B matrix with a vector v by spliting B : to A (sparse matrix) and KiKj matrix (rank matrix)*/
 void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
     int i, *k = sp->k;
     for (i = 0; i < n; ++i) {
@@ -93,6 +115,16 @@ void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
     }
 }
 
+/**
+ * multiplies a vector and the modularity matrix B
+ * @param sp : the sparse matrix
+ * @param vec : the vector to be multiplied by
+ * @param res : the vector result of the multiplication
+ * @param groupSize : the number of values inserted, inserted into the first indexes
+ * @param group : the subgroup array containing the vertices of the group
+ * @param debug
+ * @return : the time taken to finish the method
+ */
 double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug) {
     double dot;
     int size = sp->n;
@@ -134,8 +166,14 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
     return ((double) (end - start) / CLOCKS_PER_SEC);
 }
 
-/*get a vector and initialize it values to 1*/
-void initOneValVec(double *unitVec, int n, const int *group, int val) {
+/**
+ * initializes a vector with all values identical
+ * @param unitVec : the vector to be initialized
+ * @param n : the size of the vector
+ * @param group : the subgroup array containing the vertices of the group
+ * @param val : the value to be inserted
+ */
+ void initOneValVec(double *unitVec, int n, const int *group, int val) {
     int i;
     for (i = 0; i < n; ++i) {
         *unitVec = val;
@@ -143,7 +181,7 @@ void initOneValVec(double *unitVec, int n, const int *group, int val) {
     }
 }
 
-
+//TODO what does this do? for documentation
 void vecDecFv(double *res, double* vecF, double *v, int n){
     int i;
     for(i = 0; i < n; ++i){
@@ -152,7 +190,18 @@ void vecDecFv(double *res, double* vecF, double *v, int n){
     }
 }
 
-/* calculate the vector B^*v to res, by split the B^ into B and F vector as values of diag matrix*/
+/**
+ * multiplies a vector and the modularity matrix B-roof, of a specific subgroup
+ * @return
+ * @param sp : the sparse matrix
+ * @param vec : the vector to be multiplied by
+ * @param res : the vector result of the multiplication
+ * @param groupSize : the number of values inserted, inserted into the first indexes
+ * @param group : the subgroup array containing the vertices of the group
+ * @param vecF : an array containing the sum of values for each column
+ * @param debug
+ * @return : the time taken to finish the method
+ */
 //TODO remove debug
 double
 multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int debug) {
@@ -186,9 +235,18 @@ multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, 
 }
 
 
-/*power iteration on B^ to calculate the leading eigenvalue, using matrix shifting*/
-void
-powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF, int debug) {
+/**
+ * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector
+ * @param sp : sparse matrix
+ * @param b0  : initial random vector
+ * @param shifting  : shifting value to shift the matrix & find max positive eigenvalue
+ * @param result : the vector result of the power iteration
+ * @param groupSize : the number of values inserted, inserted into the first indexes
+ * @param group : the subgroup array containing the vertices of the group
+ * @param vecF : an array containing the sum of values for each column
+ * @param debug
+ */
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF, int debug) {
     int flag = 1, i, idx;
     int size = sp->n;
     int counter = 0;
@@ -216,8 +274,16 @@ powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, dou
 //    printf("mult A in PI took %f\n", total);
 }
 
-/*calculate the eigenvalue of the leading eigenVector found*/
-double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF) {
+/**
+ * Calculates the eigenvalue of a vector
+ * @param sp : sparse matrix
+ * @param vec : the eigenvector
+ * @param group : the subgroup array containing the vertices of the group
+ * @param groupSize : the number of values inserted, inserted into the first indexes
+ * @param vecF : an array containing the sum of values for each column
+ * @return : the eigenvalue
+ */
+ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF) {
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
     if (tmp == NULL) {
@@ -232,8 +298,16 @@ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, doubl
     return res;
 }
 
-/*modularity calculation by multiply +-1 vector with B^*/
-double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF) {
+/**
+ * calculates the modularity of a division vector for a subgroup
+ * @param sp : sparse matrix
+ * @param vec : the eigenvector
+ * @param group : the subgroup array containing the vertices of the group
+ * @param groupSize : the number of values inserted, inserted into the first indexes
+ * @param vecF : an array containing the sum of values for each column
+ * @return the modularity of the division
+ */
+ double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF) {
     double res = 0;
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
