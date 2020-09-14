@@ -28,6 +28,7 @@
  * @param *res : a vector used for calculations
  * */
 
+
 typedef struct _division {
     int n;
     int **groups;
