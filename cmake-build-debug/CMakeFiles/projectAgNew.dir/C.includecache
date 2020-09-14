@@ -6,47 +6,30 @@
 
 #IncludeRegexTransform: 
 
-<<<<<<< HEAD
-C:/Users/gal21/CLionProjects/projectAgNew/divider.c
+C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.c
 stdio.h
 -
 stdlib.h
 -
 spmat.h
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 divider.h
-C:/Users/gal21/CLionProjects/projectAgNew/divider.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.h
 float.h
 -
 utils.h
-C:/Users/gal21/CLionProjects/projectAgNew/utils.h
+C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.h
 
-C:/Users/gal21/CLionProjects/projectAgNew/divider.h
-spmat.h
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
-
-C:/Users/gal21/CLionProjects/projectAgNew/main.c
-=======
 C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.h
 spmat.h
 C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 
 C:/Users/divin/CLionProjects/splitUpdate/cProject/main.c
->>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
 stdio.h
 -
 stdlib.h
 -
 spmat.h
-<<<<<<< HEAD
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
-divider.h
-C:/Users/gal21/CLionProjects/projectAgNew/divider.h
-time.h
--
-
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.c
-=======
 C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 divider.h
 C:/Users/divin/CLionProjects/splitUpdate/cProject/divider.h
@@ -54,7 +37,6 @@ time.h
 -
 
 C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.c
->>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
 stdlib.h
 -
 stdio.h
@@ -70,15 +52,9 @@ C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 stdio.h
 -
 
-<<<<<<< HEAD
-C:/Users/gal21/CLionProjects/projectAgNew/utils.c
-utils.h
-C:/Users/gal21/CLionProjects/projectAgNew/utils.h
-=======
 C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.c
 utils.h
 C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.h
->>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
 stdio.h
 -
 stdlib.h
@@ -86,15 +62,6 @@ stdlib.h
 math.h
 -
 spmat.h
-<<<<<<< HEAD
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
-time.h
--
-
-C:/Users/gal21/CLionProjects/projectAgNew/utils.h
-spmat.h
-C:/Users/gal21/CLionProjects/projectAgNew/spmat.h
-=======
 C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
 time.h
 -
@@ -102,5 +69,4 @@ time.h
 C:/Users/divin/CLionProjects/splitUpdate/cProject/utils.h
 spmat.h
 C:/Users/divin/CLionProjects/splitUpdate/cProject/spmat.h
->>>>>>> af33e4436c4ec050f5a87e2db7f539e4e357533f
 

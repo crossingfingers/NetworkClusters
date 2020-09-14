@@ -12,6 +12,11 @@ typedef struct _division {
     int **groups;
     int numOfGroups;
     int *nodesforGroup;
+    int *unmoved;
+    int *indices;
+    double *score;
+    double *improve;
+    double *res;
     double Q;
 
 

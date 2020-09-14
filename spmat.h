@@ -46,6 +46,12 @@ typedef struct _spmat {
     /*gets value of sparse matrix in coordinates (i,j) */
     int (*findAij)(struct _spmat *sp, int i, int j);
 
+    /*iterates over a specific row in the sparse matrix, returns 0 if theres a next value*/
+    int (*hasNextARow)(struct _spmat *A, int i, int *ptr);
+
+    /*gets the next value in the row from the sparse matrix*/
+    int *(*getARowIterator)(struct _spmat *A, int i);
+
     /* Private field for inner implementation.
      * Should not be read or modified externally, in our case a pointer to the array struct */
     void *private;

@@ -29,24 +29,13 @@ void printIntVector(int *vec, int n) {
 void randomizeVec(int size, double *vec, int groupSize, int *group) {
     int i;
     for (i = 0; i < groupSize; i++) {
-        vec[i] = rand();
-//        vec[i] = group[i];
+//        vec[i] = rand();
+        vec[i] = group[i];
 //        vec[i] = i;
     }
 //    for (; i < size; ++i) {
 //        vec[i] = 0;
 //    }
-}
-
-/* used for the F vector as a Matrix to multiply it by the v vector*/
-void vecMult(double *vec1, const double *vec2, const int *group, int size) {
-    int i;
-    for (i = 0; i < size; ++i) {
-        *vec1 = (*vec1) * (*vec2);
-        vec1++;
-        vec2++;
-
-    }
 }
 
 /* gets to vectors and return the sum of vec with b0*shifting (shifting is the value from matrix shifting*/
@@ -59,23 +48,12 @@ void vecSum(double *vec, const double *b0, double shifting, const int *group, in
     }
 }
 
-/*decrease vec1 by vec2*/
-void vecDec(double *vec1, const double *vec2, const int *group, int n) {
-    int i;
-
-    for (i = 0; i < n; ++i) {
-        *vec1 -= *vec2++;
-        vec1++;
-    }
-}
-
 void scalarMult(double *vec, double x, const int *group, int n) {
     int i;
     for (i = 0; i < n; ++i) {
         *vec++ *= x;
     }
 }
-
 
 /*this is a dot product of int vector with double vector*/
 double dotProd(const int *vec1, const double *vec2, const int *group, int n) {
@@ -96,24 +74,6 @@ double dotDoubleProd(const double *vec1, const double *vec2, const int *group, i
         res += *vec1++ * *vec2++;
     }
     return res;
-}
-
-void copyDoubleVec(const double *src, double *dst, const int *group, int n) {
-    int i;
-    for (i = 0; i < n; ++i) {
-
-        *dst = *src++;
-        dst++;
-    }
-}
-
-void copyVec(const int *src, double *dst, const int *group, int n) {
-    int i;
-
-    for (i = 0; i < n; ++i) {
-        *dst = *src++;
-        dst++;
-    }
 }
 
 void normalize(int size, double *vec, const int *group, int groupSize) {

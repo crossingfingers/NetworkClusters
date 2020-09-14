@@ -36,7 +36,6 @@ typedef struct _array {
     int nnz;
 } array;
 
-//TODO remove values array, no need....
 void add_row_array(struct _spmat *A, int *row, int i, int k) {
     array *sparray = (array *) A->private;
     int *rowInput = row;
@@ -73,6 +72,19 @@ int findAijArray(spmat *sp, int i, int j) {
         cols++;
     }
     return 0;
+}
+
+int hasNextARowArray(spmat *A, int i, int *ptr){
+    array *spArray = (array *) A->private;
+    return ptr - (spArray->colind) < *(spArray->rowptr +i +1) - 1;
+}
+
+int *getARowIteratorArray(spmat *A, int i) {
+    array *spArray = (array *) A->private;
+    if(*(spArray->rowptr+ i + 1) - *(spArray->rowptr + i) > 0){
+        return spArray->colind + *(spArray->rowptr + i);
+    }
+    return NULL;
 }
 
 void mult_array(const struct _spmat *A, const double *vec, double *result, int groupSize) {
@@ -141,6 +153,8 @@ void print_array(struct _spmat *A) {
     printMatrix(A);
     printf("\n");
 }
+
+
 
 double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
     double max = 0;
@@ -220,6 +234,8 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->private = sparray;
     sp->printSparse = print_array;
     sp->splitGraph = splitGraphArray;
+    sp->getARowIterator = getARowIteratorArray;
+    sp->hasNextARow = hasNextARowArray;
     sp->M = 0;
     sp->findAij = findAijArray;
     sp->k = malloc(sizeof(int) * n);

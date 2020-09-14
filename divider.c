@@ -22,28 +22,46 @@ void resetUnmoved(int *unmoved, int groupSize) {
     }
 }
 
+
 /**calculates the difference in modularity if a certain vertice is moved
  * @param *score : an array keeping the score(modularity) of each vertice in the subgroup
  * @param M : the M value of the graph (sum of edges divided by two
  * @param *unmoved : an array that keeps track which vertice hasn't been moved
  * */
-void updateScore(spmat *sp, double *s, double *score, int groupSize, const int *unmoved, int k, int movedFlag) {
+void
+updateScore(spmat *sp, double *s, double *score, int groupSize, const int *unmoved, int k, int movedFlag, int *maxIdx) {
     register int i, M = sp->M;
     register double sk = s[k];
+    int *Acol, Aval;
+    double max = -DBL_MAX;
+    int idx = -1;
+    Acol = sp->getARowIterator(sp, k);
     for (i = 0; i < groupSize; ++i) {
         if (*unmoved++ == movedFlag) {
             score++;
             s++;
+            if (Acol != NULL && *Acol <= i && sp->hasNextARow(sp, k, Acol))
+                Acol++;
             continue;
         }
+        Aval = (Acol != NULL && *Acol == i) ? 1 : 0;
+
         if (k == i)
             *score = -*score;
         else {
-            *score -= (4 * *s * sk * (sp->findAij(sp, i, k) - (double) (sp->k[i] * sp->k[k]) / M));
+            *score -= (4 * *s * sk * (Aval - (double) (sp->k[i] * sp->k[k]) / M));
+        }
+        if (*score > max) {
+            max = *score;
+            idx = i;
+        }
+        if (Acol != NULL && *Acol <= i && sp->hasNextARow(sp, k, Acol)) {
+            Acol++;
         }
         score++;
         s++;
     }
+    *maxIdx = idx;
 }
 
 /**Finds the index of the vertice that if moved, will add maximum modularity
@@ -101,17 +119,16 @@ double findMaxImprove(double *s, const double *improve, const int *indices, int 
  * @param *score : an array keeping the score(modularity) of each vertice in the subgroup
  * @param *res : a vector used for calculations
  * */
-void optimize(spmat *sp, double *s, int *group, int groupSize) {
-    int size = sp->n;
+void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSize) {
     register int i, *k = sp->k;
     int maxIdx;
     int movedFlag = 1;
     register double delta;
-    register int *unmoved = malloc(sizeof(int) * groupSize);
-    register int *indices = malloc(sizeof(int) * groupSize);
-    register double *score = malloc(sizeof(double) * groupSize);
-    register double *improve = malloc(sizeof(double) * groupSize);
-    register double *res = malloc(sizeof(double) * size);
+    register int *unmoved = d->unmoved;
+    register int *indices = d->indices;
+    register double *score = d->score;
+    register double *improve = d->improve;
+    register double *res = d->res;
 
     if ((unmoved == NULL) || (indices == NULL) || (score == NULL) || (improve == NULL) || (res == NULL)) {
         printf("ERROR - memory allocation unsuccessful");
@@ -125,17 +142,18 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
     /*runs until modularity improvement is not positive*/
     do {
         movedFlag = -movedFlag;
-        maxScore = -DBL_MAX;
-        maxIdx = -1;
         maxImp = -DBL_MAX;
         maxImpIdx = -1;
-        multBv(sp, s, group, res, groupSize, 0);
 
+
+        maxScore = -DBL_MAX;
+        maxIdx = -1;
+        multBv(sp, s, group, res, groupSize, 0);
         /*calculates initial score for all vertices*/
         for (i = 0; i < groupSize; ++i) {
             square = *k * *k;
             *score = -2 * ((*s * *res) + ((double) square) / M);
-            if (*score == maxScore) {
+            if (*score >= maxScore) {
                 maxScore = *score;
                 maxIdx = i;
             }
@@ -152,10 +170,6 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
         /*runs until all vertices have been moved once (unmoved array is empty)*/
         for (i = 0; i < groupSize; ++i) {
 
-            /* finds vertice with max modularity score for first vertice move*/
-            if (maxIdx == -1)
-                maxIdx = findMaxIdx(score, groupSize, unmoved, movedFlag);
-
             /*moves the vertice*/
             sMaxIdx = s + maxIdx;
             *sMaxIdx = -*sMaxIdx;
@@ -167,20 +181,19 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
                 *improve = score[maxIdx];
             else
                 *improve = *(prevImp) + score[maxIdx];
-//            printf("improve is :%f\n",*improve);
             if (*improve > maxImp) {
                 maxImp = *improve;
                 maxImpIdx = i;
             }
 
+            //TODO- check with gal about this part
             /*updates for all vertices modularity score after vertice movement*/
-            updateScore(sp, s, score, groupSize, unmoved, maxIdx, movedFlag);
-
+            updateScore(sp, s, score, groupSize, unmoved, maxIdx, movedFlag, &maxIdx);
             unmoved[maxIdx] = movedFlag;
+
             indices++;
             prevImp = improve;
             improve++;
-            maxIdx = -1;
         }
 
         indices -= i;
@@ -189,12 +202,6 @@ void optimize(spmat *sp, double *s, int *group, int groupSize) {
         delta = findMaxImprove(s, improve, indices, groupSize, maxImpIdx);
 //        printf("delta is: %f\n",delta);
     } while (IS_POSITIVE(delta));
-
-    free(unmoved);
-    free(indices);
-    free(score);
-    free(improve);
-    free(res);
 }
 
 /**Calculates the size of a subgroup divided by  vector s
@@ -251,7 +258,7 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
     int counter = 0;
     createSVector(vec, size);
     /*calls modularity division optimization function*/
-    optimize(sp, vec, g, size);
+    optimize(d, sp, vec, g, size);
     counter = getNewGroupSize(vec, size);
 
     delta = modularityCalc(sp, vec, g, size, vecF);
@@ -371,6 +378,11 @@ void freeDivision(division *d) {
     }
     free(d->groups);
     free(d->nodesforGroup);
+    free(d->res);
+    free(d->improve);
+    free(d->score);
+    free(d->indices);
+    free(d->unmoved);
 }
 
 /**
@@ -454,6 +466,11 @@ division *allocateDivision(int n) {
     d->free = freeDivision;
     d->groups = malloc(sizeof(int *) * n);
     d->nodesforGroup = malloc(sizeof(int) * n);
+    d->unmoved = malloc(sizeof(int) * n);
+    d->indices = malloc(sizeof(int) * n);
+    d->score = malloc(sizeof(double) * n);
+    d->improve = malloc(sizeof(double) * n);
+    d->res = malloc(sizeof(double) * n);
     d->writeDivision = writeDivision;
     d->findGroups = findGroups;
     d->Q = 0;
