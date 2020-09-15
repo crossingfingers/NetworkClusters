@@ -367,6 +367,10 @@ void writeDivision(struct _division *div, FILE *output) {
  * @return updates the struct division with the subgroups which give max modularity
  */
 void findGroups(division *div, networks *graphs) {
+    if (graphs->A[0]->M == 0) {
+        error(ZERODIV);
+        exit(EXIT_FAILURE);
+    }
     double delta;
     int size = graphs->n;
     spmat **mats = graphs->A;

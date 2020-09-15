@@ -133,7 +133,6 @@ void normalize(int size, double *vec, const int *group, int groupSize) {
     scalarMult(vec, 1 / res, group, groupSize);
 }
 
-//TODO remove debug
 /**the calculation of multiplying B matrix with a vector v by spliting B : to A (sparse matrix) and KiKj matrix (rank matrix)*/
 void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
     int i, *k = sp->k;
@@ -157,10 +156,6 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
     double dot;
     double start, end;
     dot = dotProd(sp->k, vec, group, groupSize);
-    if (sp->M == 0) {
-        error(ZERODIV);
-        exit(EXIT_FAILURE);
-    }
     start = clock();
     sp->mult(sp, vec, res, groupSize);
     end = clock();
