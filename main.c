@@ -3,6 +3,7 @@
 #include "spmat.h"
 #include "divider.h"
 #include <time.h>
+#include "utils.h"
 //
 /**
 @file main.c
@@ -24,8 +25,7 @@ int main(int argc, char **argv) {
 
     srand(time(NULL));
     if (argc != 3) {
-        printf("ERROR - there is not 2 arguments");
-        exit(EXIT_FAILURE);
+        error(ARGSERROR);
     }
     /*Reads input */
     input = fopen(argv[1], "rb");

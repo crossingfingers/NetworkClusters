@@ -245,7 +245,7 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
         groups[newGroupIdx] = malloc(sizeof(int) * counter);
         tempGroup = malloc(sizeof(int) * (size - counter));
         if (groups[newGroupIdx] == NULL || tempGroup == NULL) {
-            printf("ERROR - memory allocation unsuccessful");
+            error(ALLOCERROR);
             exit(EXIT_FAILURE);
         }
         g2Ptr = groups[newGroupIdx];
@@ -373,7 +373,7 @@ void findGroups(division *div, networks *graphs) {
     double *unitVec = malloc(size * sizeof(double));
     double *vecF = malloc(size * sizeof(double));
     if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     initOneValVec(unitVec, size, groups[0], 1);
@@ -425,7 +425,7 @@ division *allocateDivision(int n) {
     d->Q = 0;
     d->groups[0] = malloc(sizeof(int) * n);
     if (d->groups == NULL || d->nodesforGroup == NULL || d->groups[0] == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     d->numOfGroups = 1;

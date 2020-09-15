@@ -3,6 +3,8 @@
 #include "spmat.h"
 #include <math.h>
 #include <time.h>
+#include "utils.h"
+
 /**
 @file spmat.c
 **Author:** Ofek Bransky & Gal Cohen
@@ -262,13 +264,13 @@ spmat *spmat_allocate_array(int n, int nnz) {
     spmat *sp;
     array *sparray = malloc(sizeof(array));
     if (sparray == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     sparray->colind = malloc(nnz * sizeof(int));
     sparray->rowptr = malloc((n + 1) * sizeof(int));
     if ((sparray->rowptr == NULL) || (sparray->colind == NULL)) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     sparray->lastindex = 0;
@@ -277,7 +279,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sparray->nnz = nnz;
     sp = malloc(sizeof(spmat));
     if (sp == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     sp->n = n;
@@ -293,7 +295,7 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->findAij = findAijArray;
     sp->k = malloc(sizeof(int) * n);
     if (sp->k == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     initk(sp);
@@ -344,13 +346,13 @@ void freeNetworks(networks *graphs, int numOfGroups) {
 networks *allocateNetworks(int n) {
     networks *graphs = malloc(sizeof(networks));
     if (graphs == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     graphs->n = n;
     graphs->A = malloc(sizeof(spmat *) * n);
     if (graphs->A == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     graphs->free = freeNetworks;
@@ -373,6 +375,7 @@ networks *readArray(FILE *input) {
     n = fread(&elem, sizeof(int), 1, input);
     if (n != 1) {
         printf("ERROR - mismatch reading value");
+        error(READVALERROR);
         exit(EXIT_FAILURE);
     }
     size = elem;
@@ -381,18 +384,18 @@ networks *readArray(FILE *input) {
     graphs = allocateNetworks(size);
     row = malloc(sizeof(int) * size);
     if (row == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     for (i = 0; i < size; ++i) {
         n = fread(&elem, sizeof(int), 1, input);
         if (n != 1) {
-            printf("ERROR - mismatch reading value");
+            error(READVALERROR);
             exit(EXIT_FAILURE);
         }
         n = fread(row, sizeof(int), elem, input);
         if (n != elem) {
-            printf("ERROR - mismatch reading value");
+            error(READVALERROR);
             exit(EXIT_FAILURE);
         }
         graph->add_row(graph, row, i, elem);
@@ -557,7 +560,7 @@ splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int 
     spmat *currSp = Amats[groupIdx], *g1Sp, *g2Sp;
     int *newNnz = malloc(sizeof(int) * 2), size = graphs->n;
     if (newNnz == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     getNewNnz(currSp, s, group, groupSize, newNnz);

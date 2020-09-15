@@ -8,6 +8,11 @@
 #include "spmat.h"
 
 #define IS_POSITIVE(X) ((X) > 0.00001)
+#define PIERROR 2
+#define ALLOCERROR 1
+#define READVALERROR 3
+#define ARGSERROR 4
+#define ZERODIV 5
 
 /**
 @file utils.h
@@ -112,5 +117,12 @@ void printVector(double *vec, int n);
  * @param n : the size of the vector
  */
 void printIntVector(int *vec, int n);
+
+/** A method to print the type of error event in runtime
+ *
+ * @param errorCode
+ */
+void error(int errorCode);
+
 
 #endif //CPROJECT_UTILS_H

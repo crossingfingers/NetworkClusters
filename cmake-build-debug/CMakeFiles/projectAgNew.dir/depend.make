@@ -9,9 +9,11 @@ CMakeFiles/projectAgNew.dir/divider.c.obj: ../utils.h
 CMakeFiles/projectAgNew.dir/main.c.obj: ../divider.h
 CMakeFiles/projectAgNew.dir/main.c.obj: ../main.c
 CMakeFiles/projectAgNew.dir/main.c.obj: ../spmat.h
+CMakeFiles/projectAgNew.dir/main.c.obj: ../utils.h
 
 CMakeFiles/projectAgNew.dir/spmat.c.obj: ../spmat.c
 CMakeFiles/projectAgNew.dir/spmat.c.obj: ../spmat.h
+CMakeFiles/projectAgNew.dir/spmat.c.obj: ../utils.h
 
 CMakeFiles/projectAgNew.dir/utils.c.obj: ../spmat.h
 CMakeFiles/projectAgNew.dir/utils.c.obj: ../utils.c

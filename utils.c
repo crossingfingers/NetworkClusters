@@ -15,6 +15,33 @@
 */
 
 /**
+ * Method that recieves a type of error, and prints the error event
+ * @param errorCode
+ */
+void error(int errorCode) {
+    switch (errorCode) {
+        case ALLOCERROR:
+            printf("ERROR - memory allocation unsuccessful\n");
+            break;
+        case PIERROR:
+            printf("PI can't converge\n");
+            break;
+        case READVALERROR:
+            printf("ERROR - mismatch reading value\n");
+            break;
+        case ARGSERROR:
+            printf("ERROR - there is not 2 arguments\n");
+            break;
+        case ZERODIV:
+            printf("ERROR - divide in zero\n");
+        default:
+            printf("unexpected error\n");
+    }
+}
+
+
+
+/**
  * Prints the vector
  * @param vec : the vector to be printed
  * @param n : the size of the vector
@@ -139,7 +166,7 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
 //        printf("dot is %f\n", dot);
 //    }
     if (sp->M == 0) {
-        printf("ERROR - divide in zero");
+        error(ZERODIV);
         exit(EXIT_FAILURE);
     }
 //    copyVec(sp->k, res1, group, groupSize);
@@ -267,7 +294,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
         debug = 0;
     }
     if (counter == 10000) {
-        printf("PI can't converge\n");
+        error(PIERROR);
         exit(EXIT_FAILURE);
     }
 //    printf("took %d iterations\n", counter);
@@ -287,7 +314,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
     if (tmp == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     double res;
@@ -312,7 +339,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
     if (tmp == NULL) {
-        printf("ERROR - memory allocation unsuccessful");
+        error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
     multBRoof(sp, vec, group, groupSize, tmp, vecF, 0);
