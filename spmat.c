@@ -340,6 +340,7 @@ networks *readArray(FILE *input) {
     spmat *graph;
     int i, size, elem, *row;
     networks *graphs;
+    //TODO- fix unsigned
     unsigned int n;
     int nnz;
     if(input==NULL){

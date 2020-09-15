@@ -84,7 +84,7 @@ void randomizeVec(int size, double *vec, int groupSize, int *group) {
     for (i = 0; i < groupSize; i++) {
 //        vec[i] = rand();
         vec[i] = group[i];
-    }
+    }//TODO- Randomize vec before due date
 }
 
 /** gets to vectors and returns the sum of the vector with b0*shifting (shifting is the value from matrix shifting)*/

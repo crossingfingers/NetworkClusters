@@ -1,6 +1,3 @@
-//
-// Created by gal21 on 05/09/2020.
-//
 
 #ifndef CPROJECT_UTILS_H
 #define CPROJECT_UTILS_H
@@ -124,4 +121,4 @@ void printIntVector(int *vec, int n);
 void error(int errorCode);
 
 
-#endif //CPROJECT_UTILS_H
+#endif
