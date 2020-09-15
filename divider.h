@@ -1,6 +1,3 @@
-//
-// Created by gal21 on 12/08/2020.
-//
 
 #ifndef CPROJECT_DIVIDER_H
 #define CPROJECT_DIVIDER_H
@@ -55,4 +52,4 @@ typedef struct _division {
 division *allocateDivision(int n);
 
 
-#endif //CPROJECT_DIVIDER_H
+#endif

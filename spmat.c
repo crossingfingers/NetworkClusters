@@ -301,7 +301,6 @@ int find_nnz(FILE *input) {
 void freeNetworks(networks *graphs, int numOfGroups) {
     int i;
     spmat *sp, **mats = graphs->A;
-    //TODO change 1 to numOfGroups!!
     for (i = 0; i < numOfGroups; ++i) {
         sp = *mats++;
         sp->free(sp);
@@ -340,8 +339,7 @@ networks *readArray(FILE *input) {
     spmat *graph;
     int i, size, elem, *row;
     networks *graphs;
-    //TODO- fix unsigned
-    unsigned int n;
+    int n;
     int nnz;
     if(input==NULL){
         error(FILECORR);

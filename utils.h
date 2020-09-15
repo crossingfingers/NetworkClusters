@@ -20,14 +20,13 @@
 ## This is the utility header file, contains various functions for different calculations in the program
 */
 
+
 /**
  * inserts random variables into an initialized vector
- * @param size : the size of the vector
  * @param vec : the initialized vector
  * @param groupSize : the number of values inserted, inserted into the first indexes
- * @param group : the subgroup array containing the vertices of the group
  */
-void randomizeVec(int size, double *vec, int groupSize, int *group);
+void randomizeVec( double *vec, int groupSize);
 
 /**
  * multiplies a vector and the modularity matrix B
@@ -35,21 +34,18 @@ void randomizeVec(int size, double *vec, int groupSize, int *group);
  * @param vec : the vector to be multiplied by
  * @param res : the vector result of the multiplication
  * @param groupSize : the number of values inserted, inserted into the first indexes
- * @param group : the subgroup array containing the vertices of the group
- * @param debug
  * @return : the time taken to finish the method
  */
-double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize);
+double multBv(spmat *sp, double *vec, double *res, int groupSize);
 
 
 /**
  * initializes a vector with all values identical
  * @param unitVec : the vector to be initialized
  * @param n : the size of the vector
- * @param group : the subgroup array containing the vertices of the group
  * @param val : the value to be inserted
  */
-void initOneValVec(double *unitVec, int n, const int *group, int val);
+void initOneValVec(double *unitVec, int n, int val);
 
 /**
  * multiplies a vector and the modularity matrix B-roof, of a specific subgroup
@@ -58,12 +54,10 @@ void initOneValVec(double *unitVec, int n, const int *group, int val);
  * @param vec : the vector to be multiplied by
  * @param res : the vector result of the multiplication
  * @param groupSize : the number of values inserted, inserted into the first indexes
- * @param group : the subgroup array containing the vertices of the group
  * @param vecF : an array containing the sum of values for each column
- * @param debug
  * @return the time taken to finish the method
  */
-double multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF);
+double multBRoof(spmat *sp, double *vec, int groupSize, double *res, double *vecF);
 
 /**
  * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector
@@ -72,23 +66,20 @@ double multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double
  * @param shifting  : shifting value to shift the matrix & find max positive eigenvalue
  * @param result : the vector result of the power iteration
  * @param groupSize : the number of values inserted, inserted into the first indexes
- * @param group : the subgroup array containing the vertices of the group
  * @param vecF : an array containing the sum of values for each column
- * @param debug
  */
 void
-powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF);
+powerIter(spmat *sp, double *b0, double shifting,  int groupSize, double *result, double *vecF);
 
 /**
  * Calculates the eigenvalue of a vector
  * @param sp : sparse matrix
  * @param vec : the eigenvector
- * @param group : the subgroup array containing the vertices of the group
  * @param groupSize : the number of values inserted, inserted into the first indexes
  * @param vecF : an array containing the sum of values for each column
  * @return : the eigenvalue
  */
-double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF);
+double eigenValue(spmat *sp, double *vec,  int groupSize, double *vecF);
 
 /**
  * calculates the modularity of a division vector for a subgroup
@@ -99,7 +90,7 @@ double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, doubl
  * @param vecF : an array containing the sum of values for each column
  * @return the modularity of the division
  */
-double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF);
+double modularityCalc(spmat *sp, double *vec, int groupSize, double *vecF);
 /**
  * Prints the vector
  * @param vec : the vector to be printed

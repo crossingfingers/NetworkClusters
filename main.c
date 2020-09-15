@@ -4,7 +4,7 @@
 #include "divider.h"
 #include <time.h>
 #include "utils.h"
-//
+
 /**
 @file main.c
 **Author:** Ofek Bransky & Gal Cohen

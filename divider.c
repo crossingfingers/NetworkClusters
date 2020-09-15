@@ -94,7 +94,7 @@ double findMaxImprove(double *s, const double *improve, const int *indices, int 
  * @param score : an array keeping the score(modularity) of each vertice in the subgroup
  * @param res : a vector used for calculations
  * */
-void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSize) {
+void optimize(struct _division *d, spmat *sp, double *s,  int groupSize) {
     register int i, *k = sp->k;
     int maxIdx;
     int movedFlag = 1;
@@ -116,7 +116,7 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
         maxImpIdx = -1;
         maxScore = -DBL_MAX;
         maxIdx = -1;
-        multBv(sp, s, group, res, groupSize);
+        multBv(sp, s, res, groupSize);
 
         /*calculates initial score for all vertices*/
         for (i = 0; i < groupSize; ++i) {
@@ -156,10 +156,10 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
                 maxImpIdx = i;
             }
 
-            //TODO- check with gal about this part
             /*updates for all vertices modularity score after vertice movement*/
-            updateScore(sp, s, score, groupSize, unmoved, maxIdx, movedFlag, &maxIdx);
             unmoved[maxIdx] = movedFlag;
+            updateScore(sp, s, score, groupSize, unmoved, maxIdx, movedFlag, &maxIdx);
+
             indices++;
             prevImp = improve;
             improve++;
@@ -169,7 +169,6 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
 
         /*reverts to division vector *s that gave max modularity improvement*/
         delta = findMaxImprove(s, improve, indices, groupSize, maxImpIdx);
-//        printf("delta is: %f\n",delta);
     } while (IS_POSITIVE(delta));
 }
 
@@ -227,10 +226,10 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
     int counter = 0;
     createSVector(vec, size);
     /*calls modularity division optimization function*/
-    optimize(d, sp, vec, g, size);
+    optimize(d, sp, vec,  size);
     counter = getNewGroupSize(vec, size);
 
-    delta = modularityCalc(sp, vec, g, size, vecF);
+    delta = modularityCalc(sp, vec,  size, vecF);
     if (!IS_POSITIVE(delta))
         return 0;
     d->Q += delta;
@@ -280,17 +279,13 @@ double split(struct _division *d, spmat *sp, networks *graphs, double *vec, int 
  */
 int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double *res, double *b0, double *vecF,
                 double shifting) {
-//    printf("working on group %d\n", groupIdx);
-//TODO make vecF only calculated here and send it to all functions !!!!
-    int size = sp->n;
-    double delta;
-    int *group = *(div->groups + groupIdx);
+    double delta,eigen;
     int groupSize = div->nodesforGroup[groupIdx];
-    randomizeVec(size, b0, groupSize, group);
-    powerIter(sp, b0, shifting, group, groupSize, res, vecF);
+    randomizeVec(b0, groupSize);
+    powerIter(sp, b0, shifting, groupSize, res, vecF);
 
     /*calculates eigen value of the division vector found*/
-    double eigen = eigenValue(sp, res, group, groupSize, vecF);
+     eigen = eigenValue(sp, res, groupSize, vecF);
     if (!IS_POSITIVE(eigen)) {
         return 0;
     }
@@ -367,10 +362,6 @@ void writeDivision(struct _division *div, FILE *output) {
  * @return updates the struct division with the subgroups which give max modularity
  */
 void findGroups(division *div, networks *graphs) {
-    if (graphs->A[0]->M == 0) {
-        error(ZERODIV);
-        exit(EXIT_FAILURE);
-    }
     double delta;
     int size = graphs->n;
     spmat **mats = graphs->A;
@@ -385,12 +376,16 @@ void findGroups(division *div, networks *graphs) {
         error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
-    initOneValVec(unitVec, size, groups[0], 1);
+    if (graphs->A[0]->M == 0) {
+        error(ZERODIV);
+        exit(EXIT_FAILURE);
+    }
+    initOneValVec(unitVec, size,  1);
     while (groupIdx < div->numOfGroups) {
         delta = 1;
         while (delta == 1) {
             sp = *mats;
-            multBv(sp, unitVec, *groups, vecF, *nodesForGroup);
+            multBv(sp, unitVec,  vecF, *nodesForGroup);
             if (shifting == -1) {
                 shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
             }
