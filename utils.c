@@ -31,7 +31,8 @@ void error(int errorCode) {
             printf("ERROR - there aren't 2 input arguments\n");
             break;
         case ZERODIV:
-            printf("ERROR - divide in zero\n");
+            printf("ERROR - dividing with value that equals to zero (no edges found!)\n");
+            break;
         case FILECORR:
             printf("ERROR - input file not found or is corrupt\n");
             break;

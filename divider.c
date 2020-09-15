@@ -368,18 +368,23 @@ void findGroups(division *div, networks *graphs) {
     spmat *sp = *mats;
     double shifting = -1;
     int groupIdx = 0, *nodesForGroup = div->nodesforGroup, **groups = div->groups;
-    double *b0 = malloc(sizeof(double) * size);
-    double *res = malloc(sizeof(double) * size);
-    double *unitVec = malloc(size * sizeof(double));
-    double *vecF = malloc(size * sizeof(double));
-    if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
-        error(ALLOCERROR);
-        exit(EXIT_FAILURE);
-    }
+    double *b0 ;
+    double *res;
+    double *unitVec;
+    double *vecF;
     if (graphs->A[0]->M == 0) {
         error(ZERODIV);
         exit(EXIT_FAILURE);
     }
+    b0 = malloc(sizeof(double) * size);
+    res = malloc(sizeof(double) * size);
+    unitVec = malloc(size * sizeof(double));
+    vecF = malloc(size * sizeof(double));
+    if (b0 == NULL || res == NULL || unitVec == NULL || vecF == NULL) {
+        error(ALLOCERROR);
+        exit(EXIT_FAILURE);
+    }
+
     initOneValVec(unitVec, size,  1);
     while (groupIdx < div->numOfGroups) {
         delta = 1;
