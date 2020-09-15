@@ -16,7 +16,7 @@ struct  _networks;
 /**Sparse matrix structure with various methods, maintained by a CSR array
  * @param n : size of matrix ( n x n)
  * @param M : total rank of full graph
- * @param *k : array containing ranks of all vertices in the sparse matrix
+ * @param k : an array containing ranks of all vertices in the sparse matrix
  */
 typedef struct _spmat {
     /* Matrix size (n*n) */
@@ -43,8 +43,6 @@ typedef struct _spmat {
     /*method to split sparse matrix into two subgroups (each sparse matrix contains only vertices in subgroup)*/
     void (*splitGraph)(struct _networks *graphs, int groupIdx, int newGroupIdx, double *s, int *group, int groupSize, int g1Size,
                        int g2Size);
-    /*gets value of sparse matrix in coordinates (i,j) */
-    int (*findAij)(struct _spmat *sp, int i, int j);
 
     /*iterates over a specific row in the sparse matrix, returns 0 if theres a next value*/
     int (*hasNextARow)(struct _spmat *A, int i, int *ptr);
@@ -58,7 +56,7 @@ typedef struct _spmat {
 } spmat;
 
 /** a struct that contains all the sparse matrices in the program
- * @param **A : a array of sparse matrices
+ * @param A : a array containing pointers to a set of sparse matrices, each belonging to a subgroup
  * @paran n : number of vertices in the graph
  */
 typedef struct _networks{

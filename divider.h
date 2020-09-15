@@ -18,14 +18,14 @@
 
 /**Division struct maintains the groups found during the algorithm run,
  *@param n : number of vertices in the graph
- *@param *groups : an array containing subgroups of the vertices
+ *@param groups : an array containing subgroups of the vertices
  *@param numOfGroups : the number of subgroups (communities) in the graph
- *@param *nodesofGroup : an array containing the number of nodes in each subgroup
- * @param *improve : an array keeping the improvement in modularity after each vertice movement
- * @param *indices : keeps the order of vertices moved, during the optimization
- * @param *unmoved : an array that keeps track which vertice hasn't been moved
- * @param *score : an array keeping the score(modularity) of each vertice in the subgroup
- * @param *res : a vector used for calculations
+ *@param *odesofGroup : an array containing the number of nodes in each subgroup
+ * @param improve : an array keeping the improvement in modularity after each vertice movement
+ * @param indices : an array that keeps the order of vertices moved, during the optimization
+ * @param unmoved : an array that keeps track which vertice hasn't been moved
+ * @param score : an array keeping the score(modularity) of each vertice in the subgroup
+ * @param res : a vector used for calculations
  * */
 
 

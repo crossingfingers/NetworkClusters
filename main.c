@@ -21,18 +21,20 @@ int main(int argc, char **argv) {
     FILE *output;
     double start;
     double end;
-    /*Checks if program arguments are OK */
 
+    /*Checks if program arguments are OK */
     srand(time(NULL));
     if (argc != 3) {
         error(ARGSERROR);
+        exit(EXIT_FAILURE);
     }
+
     /*Reads input */
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
     start = clock();
     graphs = readGraph(input);
-    //graphs->A[0]->printSparse(graphs->A[0]);
+
     /* Allocates group division struct, runs findGroup Algorithm*/
     div = allocateDivision(graphs->n);
     div->findGroups(div, graphs);

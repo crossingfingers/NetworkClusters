@@ -13,6 +13,8 @@
 #define READVALERROR 3
 #define ARGSERROR 4
 #define ZERODIV 5
+#define FILECORR 6
+#define FILEOUT 7
 
 /**
 @file utils.h
@@ -30,7 +32,6 @@
  */
 void randomizeVec(int size, double *vec, int groupSize, int *group);
 
-//TODO- remove debug
 /**
  * multiplies a vector and the modularity matrix B
  * @param sp : the sparse matrix
@@ -41,7 +42,7 @@ void randomizeVec(int size, double *vec, int groupSize, int *group);
  * @param debug
  * @return : the time taken to finish the method
  */
-double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug);
+double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize);
 
 
 /**
@@ -53,7 +54,6 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
  */
 void initOneValVec(double *unitVec, int n, const int *group, int val);
 
-//TODO- remove debug
 /**
  * multiplies a vector and the modularity matrix B-roof, of a specific subgroup
  * @return
@@ -64,11 +64,10 @@ void initOneValVec(double *unitVec, int n, const int *group, int val);
  * @param group : the subgroup array containing the vertices of the group
  * @param vecF : an array containing the sum of values for each column
  * @param debug
- * @return : the time taken to finish the method
+ * @return the time taken to finish the method
  */
-double multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int debug);
+double multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF);
 
-//TODO- remove debug
 /**
  * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector
  * @param sp : sparse matrix
@@ -81,7 +80,7 @@ double multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double
  * @param debug
  */
 void
-powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF, int debug);
+powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF);
 
 /**
  * Calculates the eigenvalue of a vector
@@ -118,9 +117,9 @@ void printVector(double *vec, int n);
  */
 void printIntVector(int *vec, int n);
 
-/** A method to print the type of error event in runtime
- *
- * @param errorCode
+/**
+ *  A method to print the type of error event in runtime
+ * @param errorCode : error to be printed
  */
 void error(int errorCode);
 

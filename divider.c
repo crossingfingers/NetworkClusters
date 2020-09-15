@@ -24,7 +24,7 @@ void resetUnmoved(int *unmoved, int groupSize) {
 
 
 /**calculates the difference in modularity if a certain vertice is moved
- * @param *score : an array keeping the score(modularity) of each vertice in the subgroup
+ * @param score : an array keeping the score(modularity) of each vertice in the subgroup
  * @param M : the M value of the graph (sum of edges divided by two
  * @param *unmoved : an array that keeps track which vertice hasn't been moved
  * */
@@ -65,8 +65,8 @@ updateScore(spmat *sp, double *s, double *score, int groupSize, const int *unmov
 }
 
 /**Reverts the group division to the optimal one, by moving back vertices that reduced the modularity
- * @param *improve : an array keeping the improvement in modularity after each vertice movement
- * @param *indices : keeps the order of vertices moved, during the optimization
+ * @param improve : an array keeping the improvement in modularity after each vertice movement
+ * @param indices : an array that keeps the order of vertices moved, during the optimization
  * @return delta : returns modularity improvement
  * */
 double findMaxImprove(double *s, const double *improve, const int *indices, int groupSize, int maxIdx) {
@@ -88,11 +88,11 @@ double findMaxImprove(double *s, const double *improve, const int *indices, int 
  * We revert to the division that gives max modularity
  * if there was an improvement in modularity, we run the algorithm again
  * we stop when there is no improvement possible (max modularity is not positive)
- * @param *improve : an array keeping the improvement in modularity after each vertice movement
- * @param *indices : keeps the order of vertices moved, during the optimization
- * @param *unmoved : an array that keeps track which vertice hasn't been moved
- * @param *score : an array keeping the score(modularity) of each vertice in the subgroup
- * @param *res : a vector used for calculations
+ * @param improve : an array keeping the improvement in modularity after each vertice movement
+ * @param indices : an array that keeps the order of vertices moved, during the optimization
+ * @param unmoved : an array that keeps track which vertice hasn't been moved
+ * @param score : an array keeping the score(modularity) of each vertice in the subgroup
+ * @param res : a vector used for calculations
  * */
 void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSize) {
     register int i, *k = sp->k;
@@ -116,7 +116,7 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
         maxImpIdx = -1;
         maxScore = -DBL_MAX;
         maxIdx = -1;
-        multBv(sp, s, group, res, groupSize, 0);
+        multBv(sp, s, group, res, groupSize);
 
         /*calculates initial score for all vertices*/
         for (i = 0; i < groupSize; ++i) {
@@ -173,10 +173,10 @@ void optimize(struct _division *d, spmat *sp, double *s, int *group, int groupSi
     } while (IS_POSITIVE(delta));
 }
 
-/**Calculates the size of a subgroup divided by  vector s
- * @param s the division vector (splits the group into 2, one group with the value -1, one with 1
- * @param groupSize
- * @return counter the number of vertices in the group asigned with the val -1
+/**Calculates the size of a subgroup divided by vector s
+ * @param s : the division vector (splits the group into 2, one group with the value -1, one with 1
+ * @param groupSize : size of the subgroup
+ * @return counter : the number of vertices in the group asigned with the val -1
  */
 int getNewGroupSize(const double *s, int groupSize) {
     int i, counter = 0;
@@ -287,7 +287,7 @@ int divideToTwo(division *div, spmat *sp, networks *graphs, int groupIdx, double
     int *group = *(div->groups + groupIdx);
     int groupSize = div->nodesforGroup[groupIdx];
     randomizeVec(size, b0, groupSize, group);
-    powerIter(sp, b0, shifting, group, groupSize, res, vecF, 1);
+    powerIter(sp, b0, shifting, group, groupSize, res, vecF);
 
     /*calculates eigen value of the division vector found*/
     double eigen = eigenValue(sp, res, group, groupSize, vecF);
@@ -346,6 +346,11 @@ void writeDivision(struct _division *div, FILE *output) {
     int *vertexForGroup = div->nodesforGroup;
     int **groups = div->groups;
     int i;
+    if(output==NULL)
+    {
+            error(FILEOUT);
+            exit(EXIT_FAILURE);
+    }
     fwrite(&numOfGroups, sizeof(int), 1, output);
     for (i = 0; i < numOfGroups; ++i) {
         fwrite(&vertexForGroup[i], sizeof(int), 1, output);
@@ -381,7 +386,7 @@ void findGroups(division *div, networks *graphs) {
         delta = 1;
         while (delta == 1) {
             sp = *mats;
-            multBv(sp, unitVec, *groups, vecF, *nodesForGroup, 0);
+            multBv(sp, unitVec, *groups, vecF, *nodesForGroup);
             if (shifting == -1) {
                 shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
             }

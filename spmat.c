@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "spmat.h"
 #include <math.h>
-#include <time.h>
 #include "utils.h"
 
 /**
@@ -25,8 +24,8 @@ void initk(spmat *A) {
 
 /**
  * definition of CSR array to maintain the sparse matrices
- * @param *colind : pointer to column indexes of non zero values in sparse matrix
- * @param *rowptr : pointer to row pointers in sparse matrix
+ * @param colind : pointer to an array containing column indexes of non zero values in sparse matrix
+ * @param rowptr : pointer to an array containing row pointers in sparse matrix
  * @param lastindex : used to add values to array when reading graph from input
  * @param lastRowPtr : used to add values to array when reading graph from input
  * @param nnz : the number of non zero values in the sparse matrix
@@ -61,29 +60,6 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
         rowInput++;
         sparray->lastindex++;
     }
-}
-
-//TODO - remove
-int findAijArray(spmat *sp, int i, int j) {
-    array *sparray = (array *) sp->private;
-    int *rowPtr = sparray->rowptr;
-    register int *cols;
-    int colStart;
-    register int size;
-    register int counter = 0;
-    int colEnd;
-    colStart = *(rowPtr + i);
-    cols = sparray->colind + colStart;
-    colEnd = *(rowPtr + i + 1);
-    size = colEnd - colStart;
-    while (counter < size && *cols <= j) {
-        if (*cols == j) {
-            return 1;
-        }
-        counter++;
-        cols++;
-    }
-    return 0;
 }
 
 /**
@@ -292,7 +268,6 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->getARowIterator = getARowIteratorArray;
     sp->hasNextARow = hasNextARowArray;
     sp->M = 0;
-    sp->findAij = findAijArray;
     sp->k = malloc(sizeof(int) * n);
     if (sp->k == NULL) {
         error(ALLOCERROR);
@@ -313,10 +288,7 @@ int find_nnz(FILE *input) {
     int size;
     fread(&size, sizeof(int), 1, input);
     fseek(input, 0L, SEEK_END);
-//    printf("size of file is %ld\n", ftell(input));
-//    printf("size is %d\n", size);
     res = ftell(input) - (int) ((1 + size) * sizeof(int));
-//    printf("res is %d\n", res);
     fseek(input, 0, SEEK_SET);
     return res / 4;
 }
@@ -366,20 +338,21 @@ networks *allocateNetworks(int n) {
  */
 networks *readArray(FILE *input) {
     spmat *graph;
-    int i, size, elem, *row, j;
+    int i, size, elem, *row;
     networks *graphs;
     unsigned int n;
     int nnz;
+    if(input==NULL){
+        error(FILECORR);
+        exit(EXIT_FAILURE);
+    }
     nnz = find_nnz(input);
-//    printf("nnz is %d\n", nnz);
     n = fread(&elem, sizeof(int), 1, input);
     if (n != 1) {
-        printf("ERROR - mismatch reading value");
         error(READVALERROR);
         exit(EXIT_FAILURE);
     }
     size = elem;
-//    printf("n: %d, nnz: %d\n", elem, nnz);
     graph = spmat_allocate_array(size, nnz);
     graphs = allocateNetworks(size);
     row = malloc(sizeof(int) * size);
@@ -402,7 +375,6 @@ networks *readArray(FILE *input) {
     }
     free(row);
     graphs->A[0] = graph;
-//    graph->printSprase(graph);
     return graphs;
 }
 
@@ -425,11 +397,10 @@ networks *readGraph(FILE *input) {
  * @param newNnz : the new non zero value pointer to insert the found NNZ
  */
 void getNewNnz(spmat *sp, double *s, int *group, int groupSize, int *newNnz) {
-    int *g2Nnz = &newNnz[1], i, counterNnz1 = 0, counterNnz2 = 0, t, *groupCopy = group;
+    int *g2Nnz = &newNnz[1], i, counterNnz1 = 0, counterNnz2 = 0, t, *groupCopy;
     array *spArray = (array *) sp->private;
-    int *rowPtr = spArray->rowptr, curr, j, valsInRow, idx, *colIdx, flag, *counter;
+    int *rowPtr = spArray->rowptr, curr, j, valsInRow, *colIdx, flag, *counter;
     for (i = 0; i < groupSize; ++i) {
-        idx = group[i];
         if (s[i] == 1) {
             flag = 1;
             counter = &counterNnz1;
@@ -475,7 +446,7 @@ void getNewNnz(spmat *sp, double *s, int *group, int groupSize, int *newNnz) {
  * @param groupSize : the original group size
  */
 void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, int groupSize) {
-    int i, j, t, valsCounter, idxI, flag;
+    int i, j, t, valsCounter, flag;
     int *groupCopy;
     array *currSpArray = (array *) currSp->private, *g1SpArray = (array *) g1Sp->private, *g2SpArray = (array *) g2Sp->private;
     array *currArray;
@@ -487,7 +458,6 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
     g1SpArray->lastindex = 0;
     g2SpArray->lastindex = 0;
     for (i = 0; i < groupSize; ++i) {
-        idxI = group[i];
         if (*sI++ == 1) {
             currArray = g1SpArray;
             flag = 1;
@@ -512,7 +482,6 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
         while (j < valsInRow && t < groupSize) {
             if (*oldColIdx == t) {
                 if (*sT == flag) {
-//                    *currColIdx = *groupCopy;
                     *currColIdx = currGroupCounter;
                     currColIdx++;
                     valsCounter++;
@@ -534,7 +503,6 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
                 groupCopy++;
             }
         }
-        int test = *(currArray->rowptr + currArray->lastRowPtr);
         *(currArray->rowptr + currArray->lastRowPtr + 1) = *(currArray->rowptr + currArray->lastRowPtr) + valsCounter;
         currArray->lastindex += valsCounter;
         currArray->lastRowPtr++;
@@ -558,7 +526,7 @@ splitGraphArray(networks *graphs, int groupIdx, int newGroupIdx, double *s, int 
                 int g2Size) {
     spmat **Amats = graphs->A;
     spmat *currSp = Amats[groupIdx], *g1Sp, *g2Sp;
-    int *newNnz = malloc(sizeof(int) * 2), size = graphs->n;
+    int *newNnz = malloc(sizeof(int) * 2);
     if (newNnz == NULL) {
         error(ALLOCERROR);
         exit(EXIT_FAILURE);

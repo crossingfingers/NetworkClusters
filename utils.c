@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "spmat.h"
 #include <time.h>
+
 /**
 @file utils.c
 **Author:** Ofek Bransky & Gal Cohen
@@ -16,7 +16,7 @@
 
 /**
  * Method that recieves a type of error, and prints the error event
- * @param errorCode
+ * @param errorCode : the type of error
  */
 void error(int errorCode) {
     switch (errorCode) {
@@ -24,21 +24,26 @@ void error(int errorCode) {
             printf("ERROR - memory allocation unsuccessful\n");
             break;
         case PIERROR:
-            printf("PI can't converge\n");
+            printf("Power Iteration can't converge\n");
             break;
         case READVALERROR:
-            printf("ERROR - mismatch reading value\n");
+            printf("ERROR - mismatch in data during reading input values (file cannot be found or is corrupt)\n");
             break;
         case ARGSERROR:
-            printf("ERROR - there is not 2 arguments\n");
+            printf("ERROR - there aren't 2 input arguments\n");
             break;
         case ZERODIV:
             printf("ERROR - divide in zero\n");
+        case FILECORR:
+            printf("ERROR - input file not found or is corrupt\n");
+            break;
+        case FILEOUT:
+            printf("ERROR - output file not found or is corrupt\n");
+            break;
         default:
             printf("unexpected error\n");
     }
 }
-
 
 
 /**
@@ -79,11 +84,7 @@ void randomizeVec(int size, double *vec, int groupSize, int *group) {
     for (i = 0; i < groupSize; i++) {
 //        vec[i] = rand();
         vec[i] = group[i];
-//        vec[i] = i;
     }
-//    for (; i < size; ++i) {
-//        vec[i] = 0;
-//    }
 }
 
 /** gets to vectors and returns the sum of the vector with b0*shifting (shifting is the value from matrix shifting)*/
@@ -152,43 +153,17 @@ void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
  * @param debug
  * @return : the time taken to finish the method
  */
-double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize, int debug) {
+double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSize) {
     double dot;
-    int size = sp->n;
-//    double *res1 = malloc(size * sizeof(double));
-//    if (res1 == NULL) {
-//        printf("ERROR - memory allocation unsuccessful");
-//        exit(EXIT_FAILURE);
-//    }
     double start, end;
     dot = dotProd(sp->k, vec, group, groupSize);
-//    if (debug == 1){
-//        printf("dot is %f\n", dot);
-//    }
     if (sp->M == 0) {
         error(ZERODIV);
         exit(EXIT_FAILURE);
     }
-//    copyVec(sp->k, res1, group, groupSize);
-//    scalarMult(res1, (double) dot / sp->M, group, groupSize);
-//    if (debug == 1){
-//        printf("res1 is : ");
-//        printVector(res1, size);
-//    }
     start = clock();
     sp->mult(sp, vec, res, groupSize);
     end = clock();
-//    if (debug == 2) {
-//        printf("dot is %f\n", dot);
-//        printf("res after mult A is : ");
-//        printVector(res, groupSize, group);
-//        printf("vec is : ");
-//        printVector(vec, groupSize,group);
-//        printf("groupsize is %d\n and group is : ", groupSize);
-//        printIntVector(group, groupSize);
-//    }
-//    vecDec(res, res1, group, groupSize);
-//    free(res1);
     vecDecK(res, sp, groupSize, (double) dot / sp->M);
     return ((double) (end - start) / CLOCKS_PER_SEC);
 }
@@ -200,7 +175,7 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
  * @param group : the subgroup array containing the vertices of the group
  * @param val : the value to be inserted
  */
- void initOneValVec(double *unitVec, int n, const int *group, int val) {
+void initOneValVec(double *unitVec, int n, const int *group, int val) {
     int i;
     for (i = 0; i < n; ++i) {
         *unitVec = val;
@@ -209,9 +184,9 @@ double multBv(spmat *sp, double *vec, const int *group, double *res, int groupSi
 }
 
 //TODO what does this do? for documentation
-void vecDecFv(double *res, double* vecF, double *v, int n){
+void vecDecFv(double *res, double *vecF, double *v, int n) {
     int i;
-    for(i = 0; i < n; ++i){
+    for (i = 0; i < n; ++i) {
         *res -= *vecF++ * *v++;
         res++;
     }
@@ -229,35 +204,12 @@ void vecDecFv(double *res, double* vecF, double *v, int n){
  * @param debug
  * @return : the time taken to finish the method
  */
-//TODO remove debug
 double
-multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF, int debug) {
+multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, double *vecF) {
     int size = sp->n;
-//    double *unitVec = malloc(size * sizeof(double));
-//    double *vecFCopy = malloc(size * sizeof(double));
-    double total, start, end;
-//    if (vecFCopy == NULL) {
-//        printf("ERROR - memory allocation unsuccessful");
-//        exit(EXIT_FAILURE);
-//    }
-    start = clock();
-//    initOneValVec(unitVec, groupSize, group, 1);
-//    multBv(sp, unitVec, group, vecF, groupSize, 0);
-//    copyDoubleVec(vecF, vecFCopy, group, groupSize);
-//    vecMult(vecFCopy, vec, group, groupSize);
-    total = multBv(sp, vec, group, res, groupSize, debug);
-//    if (debug == 1) {
-//        printVector(vec, size, group);
-//            printVector(result, size, group);
-//        printf("PI multBv total time took %f\n", total);
-//    }
-//    vecDec(res, vecFCopy, group, groupSize);
-//    free(vecFCopy);
+    double total;
+    total = multBv(sp, vec, group, res, groupSize);
     vecDecFv(res, vecF, vec, size);
-    debug = 0;
-//    free(unitVec);
-    end = clock();
-//    return ((double)(end-start)/ CLOCKS_PER_SEC);
     return total;
 }
 
@@ -273,32 +225,28 @@ multBRoof(spmat *sp, double *vec, const int *group, int groupSize, double *res, 
  * @param vecF : an array containing the sum of values for each column
  * @param debug
  */
-void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF, int debug) {
-    int flag = 1, i, idx;
+void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize, double *result, double *vecF) {
+    int flag = 1, i;
     int size = sp->n;
     int counter = 0;
     double MAX_ITERS = 0.5 * (size * size) + 5000 * size + 10000;
     double total = 0;
     while (flag == 1 && counter < MAX_ITERS) {
         flag = 0;
-        total += multBRoof(sp, b0, group, groupSize, result, vecF, debug);
+        total += multBRoof(sp, b0, group, groupSize, result, vecF);
         vecSum(result, b0, shifting, group, groupSize);
         normalize(size, result, group, groupSize);
         for (i = 0; i < groupSize; i++) {
-            idx = group[i];
             if (IS_POSITIVE(fabs(result[i] - b0[i])))
                 flag = 1;
             b0[i] = result[i];
         }
         counter++;
-        debug = 0;
     }
     if (counter == 10000) {
         error(PIERROR);
         exit(EXIT_FAILURE);
     }
-//    printf("took %d iterations\n", counter);
-//    printf("mult A in PI took %f\n", total);
 }
 
 /**
@@ -310,7 +258,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
  * @param vecF : an array containing the sum of values for each column
  * @return : the eigenvalue
  */
- double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF) {
+double eigenValue(spmat *sp, double *vec, const int *group, int groupSize, double *vecF) {
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
     if (tmp == NULL) {
@@ -318,10 +266,9 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
         exit(EXIT_FAILURE);
     }
     double res;
-    multBRoof(sp, vec, group, groupSize, tmp, vecF, 0);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
-    //   printf("eigen value is %f\n", res);
     return res;
 }
 
@@ -334,7 +281,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
  * @param vecF : an array containing the sum of values for each column
  * @return the modularity of the division
  */
- double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF) {
+double modularityCalc(spmat *sp, double *vec, int *group, int groupSize, double *vecF) {
     double res = 0;
     int size = sp->n;
     double *tmp = malloc(sizeof(double) * size);
@@ -342,7 +289,7 @@ void powerIter(spmat *sp, double *b0, double shifting, int *group, int groupSize
         error(ALLOCERROR);
         exit(EXIT_FAILURE);
     }
-    multBRoof(sp, vec, group, groupSize, tmp, vecF, 0);
+    multBRoof(sp, vec, group, groupSize, tmp, vecF);
     res = dotDoubleProd(tmp, vec, group, groupSize);
     free(tmp);
     return res / 2;
