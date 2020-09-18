@@ -204,7 +204,52 @@ void print_array(struct _spmat *A) {
  * @param group : the current subgroup
  * @return the shifting value
  * */
-double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
+ double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
+    double max = 0;
+    double sum;
+    int val;
+    array *sparray = A->private;
+    int *rowPtr = sparray->rowptr;
+    int *cols;
+    int colStart;
+    int colEnd;
+    int i;
+    int j;
+    int ki;
+    int kj;
+    int M = A->M;
+    int vertice1;
+    double Fi;
+
+    for (i = 0; i < groupSize; ++i) {
+        sum = 0;
+        vertice1 = i;
+        ki = A->k[i];
+        Fi = (double) F[i];
+        colStart = *(rowPtr + i);
+        cols = sparray->colind + colStart;
+        colEnd = *(rowPtr + i + 1);
+        for (j = 0; j < groupSize; ++j) {
+            kj = A->k[j];
+            if ((*(cols) == j) && (colStart < colEnd)) {
+                val = 1;
+                colStart++;
+                if (colStart < colEnd) { cols++; }
+            } else {
+                val = 0;
+            }
+            if (vertice1 != j) {
+                sum += fabs((double) val - ((double) (ki * kj) / M));
+            } else {
+                sum += fabs(
+                        (double) val - ((double) (ki * kj) / M) - Fi);
+            }
+        }
+        max = (max >= sum) ? max : sum;
+    }
+    return max;
+}
+/*double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
     double max = 0;
     double sum;
     int val;
@@ -249,52 +294,7 @@ double arrayShifting(spmat *A, const int *group, int groupSize, const double *F)
     }
     return max;
 }
-
-//double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
-//    double max = 0;
-//    double sum;
-//    int val;
-//    array *sparray = A->private;
-//    int *rowPtr = sparray->rowptr;
-//    int *cols;
-//    int colStart;
-//    int colEnd;
-//    int i;
-//    int j;
-//    int ki;
-//    int kj;
-//    int M = A->M;
-//    int vertice1;
-//    double Fi;
-//
-//    for (i = 0; i < groupSize; ++i) {
-//        sum = 0;
-//        vertice1 = i;
-//        ki = A->k[i];
-//        Fi = (double) F[i];
-//        colStart = *(rowPtr + i);
-//        cols = sparray->colind + colStart;
-//        colEnd = *(rowPtr + i + 1);
-//        for (j = 0; j < groupSize; ++j) {
-//            kj = A->k[j];
-//            if ((*(cols) == j) && (colStart < colEnd)) {
-//                val = 1;
-//                colStart++;
-//                if (colStart < colEnd) { cols++; }
-//            } else {
-//                val = 0;
-//            }
-//            if (vertice1 != j) {
-//                sum += fabs((double) val - ((double) (ki * kj) / M));
-//            } else {
-//                sum += fabs(
-//                        (double) val - ((double) (ki * kj) / M) - Fi);
-//            }
-//        }
-//        max = (max >= sum) ? max : sum;
-//    }
-//    return max;
-//}
+*/
 
 /**
  * once a division is found, the function splits the sparse matrix into two sparse matrix, each representing a subgroup

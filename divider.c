@@ -310,9 +310,9 @@ int divideToTwo(division *div, BMat *B, networks *graphs, int groupIdx, double *
     /*calculates eigen value of the division vector found*/
     eigen = eigenValue(B, res, graphs->tmp);
 //    printf("eigen value is %f\n", eigen);
-    if (!IS_POSITIVE(eigen)) {
+    /*if (!IS_POSITIVE(eigen)) {
         return 0;
-    }
+    }*/
 
     /*calls split function*/
     delta = split(div, B, graphs, res, groupIdx);
@@ -420,7 +420,6 @@ void findGroups(division *div, networks *graphs) {
             multBv(sp, unitVec, vecF);
             if(shifting == -1)
                 shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
-//            shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
             B->shifting = shifting;
             B->vecF = vecF;
             delta = divideToTwo(div, B, graphs, groupIdx, res, b0);

@@ -192,7 +192,7 @@ void powerIter(BMat *B, double *b0, double *result) {
     spmat *sp = B->sp;
     int groupSize = sp->n;
     int counter = 0;
-    double MAX_ITERS = 0.5 * (groupSize * groupSize) + 5000 * groupSize + 50000;
+    double MAX_ITERS = 5000 * groupSize + 80000;
     double total = 0, shifting = B->shifting, *vecF = B->vecF;
     while (flag == 1 && counter < MAX_ITERS) {
         flag = 0;
