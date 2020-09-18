@@ -324,21 +324,6 @@ int divideToTwo(division *div, BMat *B, networks *graphs, int groupIdx, double *
     return 1;
 }
 
-/** prints all subgroups of the graph
- * @param d : the division to be printed
- */
-void printGroups(division *d) {
-    int i, j;
-    printf("number of groups = %d\n", d->numOfGroups);
-    for (i = 0; i < d->numOfGroups; ++i) {
-        int *group = d->groups[i];
-        for (j = 0; j < d->nodesforGroup[i]; ++j) {
-            printf("(%d,%d)\t", group[j], i);
-        }
-    }
-    printf("\nmodularity value: %f\n", d->Q);
-}
-
 /**
  * frees all allocated memory in the division struct
  * @param d the division struct to be freed
@@ -420,7 +405,7 @@ void findGroups(division *div, networks *graphs) {
             spmat *sp = B->sp;
             multBv(sp, unitVec, vecF);
             if(shifting == -1)
-                shifting = sp->matShifting(sp, div->groups[groupIdx], div->nodesforGroup[groupIdx], vecF);
+                shifting = sp->matShifting(sp,  div->nodesforGroup[groupIdx], vecF);
             B->shifting = shifting;
             B->vecF = vecF;
             delta = divideToTwo(div, B, graphs, groupIdx, res, b0);
@@ -449,7 +434,6 @@ division *allocateDivision(int n) {
         exit(EXIT_FAILURE);
     }
     d->n = n;
-    d->printGroups = printGroups;
     d->free = freeDivision;
     d->groups = malloc(sizeof(int *) * n);
     d->nodesforGroup = malloc(sizeof(int) * n);

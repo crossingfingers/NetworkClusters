@@ -42,11 +42,8 @@ typedef struct _spmat {
     /* Multiplies matrix A by vector v, into result (result is pre-allocated) */
     void (*mult)(const struct _spmat *A, const double *vec, double *result, int groupSize);
 
-    /*prints matrix*/
-    void (*printSparse)(struct _spmat *A);
-
     /*calculates matrix shifting value to get positive eigen values*/
-    double (*matShifting)(struct _spmat *A, const int *group, int groupSize, const double *F);
+    double (*matShifting)(struct _spmat *A, int groupSize, const double *F);
 
     /*method to split sparse matrix into two subgroups (each sparse matrix contains only vertices in subgroup)*/
     struct _spmat **(*splitGraph)(struct _spmat *currSp, double *s, int *group, int g1Size, int g2Size);

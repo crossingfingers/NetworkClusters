@@ -163,48 +163,13 @@ void free_array(struct _spmat *A) {
     free(A->private);
 }
 
-/**prints the sparse matrix in a readable format*/
-void printMatrix(spmat *A) {
-    int i;
-    array *sparr = (array *) A->private;
-    printf("\ncollarr:\n");
-    for (i = 0; i < sparr->nnz; i++) {
-        printf("%d", sparr->colind[i]);
-    }
-    printf("\nrowptrarr:\n");
-    for (i = 0; i <= A->n; i++) {
-        printf("%d", sparr->rowptr[i]);
-    }
-
-}
-
-/**prints the sparse matrix in sparse format*/
-void print_array(struct _spmat *A) {
-    int i;
-    int j;
-    array *sparray = (array *) A->private;
-    int *colindarr = (int *) sparray->colind;
-    int counter = 0;
-    for (i = 0; i < A->n; ++i) {
-        printf("%d - \t", i);
-
-        for (j = 0; j < A->k[i]; ++j) {
-            printf("%d\t", colindarr[counter]);
-            counter++;
-        }
-        printf("\n");
-    }
-    printMatrix(A);
-    printf("\n");
-}
-
 
 /**calculates matrix shifting value to get positive eigen values
  * @param A : the sparse matrix of the current subgroup
  * @param group : the current subgroup
  * @return the shifting value
  * */
- double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
+double arrayShifting(spmat *A, int groupSize, const double *F) {
     double max = 0;
     double sum;
     int val;
@@ -249,52 +214,7 @@ void print_array(struct _spmat *A) {
     }
     return max;
 }
-/*double arrayShifting(spmat *A, const int *group, int groupSize, const double *F) {
-    double max = 0;
-    double sum;
-    int val;
-    array *sparray = A->private;
-    int *rowPtr = sparray->rowptr;
-    int *cols;
-    int colStart;
-    int colEnd;
-    int i;
-    int j;
-    int ki;
-    int kj;
-    int M = A->M;
-    int vertice1;
-    double Fi;
 
-    for (i = 0; i < groupSize; ++i) {
-        sum = 0;
-        vertice1 = group[i];
-        ki = A->k[i];
-        Fi = (double) F[i];
-        colStart = *(rowPtr + i);
-        cols = sparray->colind + colStart;
-        colEnd = *(rowPtr + i + 1);
-        for (j = 0; j < groupSize; ++j) {
-            kj = A->k[j];
-            if ((*(cols) == group[j]) && (colStart < colEnd)) {
-                val = 1;
-                colStart++;
-                if (colStart < colEnd) { cols++; }
-            } else {
-                val = 0;
-            }
-            if (vertice1 != group[j]) {
-                sum += fabs((double) val - ((double) (ki * kj) / M));
-            } else {
-                sum += fabs(
-                        (double) val - ((double) (ki * kj) / M) - Fi);
-            }
-        }
-        max = (max >= sum) ? max : sum;
-    }
-    return max;
-}
-*/
 
 /**
  * once a division is found, the function splits the sparse matrix into two sparse matrix, each representing a subgroup
@@ -307,7 +227,7 @@ void print_array(struct _spmat *A) {
  * @param g1Size : group 1's size
  * @param g2Size : group 2's size
  */
-spmat **splitGraphArray(spmat *currSp, double *s, int *group,int g1Size, int g2Size);
+spmat **splitGraphArray(spmat *currSp, double *s, int *group, int g1Size, int g2Size);
 
 /**
  * Allocates a sparse matrix array in CSR format
@@ -342,7 +262,6 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sp->free = free_array;
     sp->mult = mult_array;
     sp->private = sparray;
-    sp->printSparse = print_array;
     sp->splitGraph = splitGraphArray;
     sp->getARowIterator = getARowIteratorArray;
     sp->hasNextARow = hasNextARowArray;
@@ -383,7 +302,7 @@ spmat *readArray(FILE *input) {
     int i, size, elem, *row;
     unsigned int n;
     int nnz;
-    if(input==NULL){
+    if (input == NULL) {
         error(FILECORR);
         exit(EXIT_FAILURE);
     }
@@ -551,7 +470,7 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
  * @param g1Size : group 1's size
  * @param g2Size : group 2's size
  */
-spmat **splitGraphArray(spmat *currSp, double *s, int *group,int g1Size, int g2Size) {
+spmat **splitGraphArray(spmat *currSp, double *s, int *group, int g1Size, int g2Size) {
     int groupSize = g1Size + g2Size;
     spmat *g1Sp, *g2Sp, **newSpMats;
     int *newNnz = malloc(sizeof(int) * 2);
@@ -574,7 +493,7 @@ spmat **splitGraphArray(spmat *currSp, double *s, int *group,int g1Size, int g2S
     return newSpMats;
 }
 
-spmat *readGraphA(FILE *input){
+spmat *readGraphA(FILE *input) {
     return readArray(input);
 }
 

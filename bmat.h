@@ -95,19 +95,6 @@ double eigenValue(BMat *B, double *vec,double *tmp);
  * @return the modularity of the division
  */
 double modularityCalc(spmat *sp, double *vec,double *tmp, double *vecF);
-/**
- * Prints the vector
- * @param vec : the vector to be printed
- * @param n : the size of the vector
- */
-void printVector(double *vec, int n);
-
-/**
- * Prints a integer vector
- * @param vec : the vector to be printed
- * @param n : the size of the vector
- */
-void printIntVector(int *vec, int n);
 
 /**
  *  A method to print the type of error event in runtime

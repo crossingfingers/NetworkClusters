@@ -12,33 +12,6 @@
 ## This is the utility C file, contains various functions for different calculations in the program
 */
 
-
-/**
- * Prints the vector
- * @param vec : the vector to be printed
- * @param n : the size of the vector
- */
-void printVector(double *vec, int n) {
-    int i;
-    for (i = 0; i < n; ++i) {
-        printf("%f\t", vec[i]);
-    }
-    printf("\n");
-}
-
-/**
- * Prints a integer vector
- * @param vec : the vector to be printed
- * @param n : the size of the vector
- */
-void printIntVector(int *vec, int n) {
-    int i;
-    for (i = 0; i < n; ++i) {
-        printf("%d\t", vec[i]);
-    }
-    printf("\n");
-}
-
 /**
  * inserts random variables into an initialized vector
  * @param vec : the initialized vector
@@ -48,9 +21,7 @@ void randomizeVec(double *vec, int groupSize) {
     int i;
     for (i = 0; i < groupSize; i++) {
         *vec = rand();
-//        *vec=i;
         vec++;
-
     }
 }
 
@@ -60,7 +31,6 @@ void vecSum(double *vec, const double *b0, double shifting, int n) {
     for (i = 0; i < n; ++i) {
         *vec += *b0++ * shifting;
         vec++;
-
     }
 }
 
@@ -76,7 +46,7 @@ void scalarMult(double *vec, double x, int n) {
 double dotProd(const int *vec1, const double *vec2, int n) {
     register double res;
     int i;
-    res=0;
+    res = 0;
     for (i = 0; i < n; ++i) {
         res += *vec1++ * *vec2++;
     }
@@ -88,15 +58,14 @@ double dotDoubleProd(const double *vec1, const double *vec2, int n) {
     register double res = 0;
     int i;
     for (i = 0; i < n; ++i) {
-
         res += *vec1++ * *vec2++;
     }
     return res;
 }
 
 /**normalizes a vector*/
-void normalize( double *vec,  int groupSize) {
-    double res = dotDoubleProd(vec, vec,  groupSize);
+void normalize(double *vec, int groupSize) {
+    double res = dotDoubleProd(vec, vec, groupSize);
     res = sqrt(res);
     scalarMult(vec, 1 / res, groupSize);
 }
@@ -120,14 +89,11 @@ void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
  */
 double multBv(spmat *sp, double *vec, double *res) {
     double dot;
-    double start, end;
-    int groupSize=sp->n;
-    dot = dotProd(sp->k, vec,groupSize);
-    start = clock();
+    int groupSize = sp->n;
+    dot = dotProd(sp->k, vec, groupSize);
     sp->mult(sp, vec, res, groupSize);
-    end = clock();
     vecDecK(res, sp, groupSize, (double) dot / sp->M);
-    return ((double) (end - start) / CLOCKS_PER_SEC);
+    return 1;
 }
 
 /**
@@ -136,13 +102,14 @@ double multBv(spmat *sp, double *vec, double *res) {
  * @param n : the size of the vector
  * @param val : the value to be inserted
  */
-void initOneValVec(double *unitVec, int n,  int val) {
+void initOneValVec(double *unitVec, int n, int val) {
     int i;
     for (i = 0; i < n; ++i) {
         *unitVec = val;
         unitVec++;
     }
 }
+
 /**
  * Decreases the vector F (sum of colums) from the vector result of Bv
  * @param res : the result of the calculation
@@ -172,7 +139,7 @@ double
 multBRoof(spmat *sp, double *vec, double *res, double *vecF) {
     int size = sp->n;
     double total;
-    total = multBv(sp, vec,  res);
+    total = multBv(sp, vec, res);
     vecDecFv(res, vecF, vec, size);
     return total;
 }
@@ -198,7 +165,7 @@ void powerIter(BMat *B, double *b0, double *result) {
         flag = 0;
         total += multBRoof(sp, b0, result, vecF);
         vecSum(result, b0, shifting, groupSize);
-        normalize( result, groupSize);
+        normalize(result, groupSize);
         for (i = 0; i < groupSize; i++) {
             if (IS_POSITIVE(fabs(result[i] - b0[i])))
                 flag = 1;
@@ -210,7 +177,6 @@ void powerIter(BMat *B, double *b0, double *result) {
         error(PIERROR);
         exit(EXIT_FAILURE);
     }
-//    printf("took %d to iterate\n", counter);
 }
 
 /**
@@ -221,13 +187,13 @@ void powerIter(BMat *B, double *b0, double *result) {
  * @param vecF : an array containing the sum of values for each column
  * @return : the eigenvalue
  */
-double eigenValue(BMat *B, double *vec,double *tmp) {
+double eigenValue(BMat *B, double *vec, double *tmp) {
     double res;
     spmat *sp = B->sp;
     double *vecF = B->vecF;
     int groupSize = sp->n;
     multBRoof(sp, vec, tmp, vecF);
-    res = dotDoubleProd(tmp, vec,  groupSize);
+    res = dotDoubleProd(tmp, vec, groupSize);
     return res;
 }
 
@@ -239,19 +205,19 @@ double eigenValue(BMat *B, double *vec,double *tmp) {
  * @param vecF : an array containing the sum of values for each column
  * @return the modularity of the division
  */
-double modularityCalc(spmat *sp, double *vec,double *tmp, double *vecF) {
+double modularityCalc(spmat *sp, double *vec, double *tmp, double *vecF) {
     double res = 0;
     int groupSize = sp->n;
-    multBRoof(sp, vec,  tmp, vecF);
-    res = dotDoubleProd(tmp, vec,  groupSize);
+    multBRoof(sp, vec, tmp, vecF);
+    res = dotDoubleProd(tmp, vec, groupSize);
     return res / 2;
 }
 
-void freeB(BMat *B){
+void freeB(BMat *B) {
     B->sp->free(B->sp);
 }
 
-BMat *allocateB(){
+BMat *allocateB() {
     BMat *B = malloc(sizeof(BMat));
     if (B == NULL) {
         error(ALLOCERROR);
@@ -261,7 +227,7 @@ BMat *allocateB(){
     return B;
 }
 
-BMat *readGraphB(FILE *input){
+BMat *readGraphB(FILE *input) {
     spmat *sp;
     BMat *B = allocateB();
     sp = readGraphA(input);

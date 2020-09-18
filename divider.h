@@ -52,8 +52,6 @@ typedef struct _division {
 
     /**frees the division struct*/
     void (*free)(struct _division *d);
-    /**prints the division subgroups*/
-    void (*printGroups)(struct _division *d);
     /**writes the division subgroups found*/
     void (*writeDivision)(struct _division *div, FILE *output);
     /**finds the subgroups, based on modularity*/
