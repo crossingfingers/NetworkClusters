@@ -9,7 +9,25 @@
 @file divider.c
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
-## This is the Divider C file, maintains all main methods to find the graph subgroups
+*Summary:
+ * This is the Divider C file, mantains all main methods to find the graph subgroups
+ * Functions:
+ * resetUnmoved - initializes an array to all '1' values (for optimization algorithm)
+ * updateScore - updates the modularity score for each vertice after moving a vertice from one group to another (for optimization algorithm)
+ * findMaxImprove - finds best group split to maximize modularity (for optimization algorithm)
+ * optimize
+ * getNewGroupSize
+ * createSVector
+ * splitGraph
+ * split
+ * divideToTwo
+ * freeDivision
+ * writeDivision
+ * findGroups
+ * allocateDivision
+ * freeNetworks
+ * allocateNetworks
+ * readGraph
 */
 
 

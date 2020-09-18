@@ -3,13 +3,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 
 /**
-@file utils.c
+@file bmat.c
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
-## This is the utility C file, contains various functions for different calculations in the program
+* Summary:
+* This is the B matrix C file, contains the B matrix struct, and various functions for different calculations with B
+ * we maintain a B matrix for each subgroup (community) of vertices
+ * Functions:
+ * randomizeVec - returns a random vector
+ * vecSum - sums 2 vectors
+ * scalarMult - multiplies a vector with a scalar value
+ * dotProd -calculates a dot product of a vector (1 int 1 double)
+ * dotDoubleProd -calculates a dot product of a vector (2 double)
+ * normalize- normalizes a vector
+ * vecDecK - the calculation of multiplying B matrix with a vector v
+ * multBv - multiplies a vector v with the B matrix
+ * initOneValVec - initializes a vector, all values are equal to the value input of the function
+ * vecDecFv - Decreases the vector F (sum of colums) from the vector result of Bv
+ * multBRoof - multiplies a vector v with the B^ matrix (B roof matrix of a subgroup)
+ * powerIter - power iteration algorithm
+ * eigenValue - calculates the eigenvalue
+ * modularityCalc - calculates the group's modularity
+ * freeB - frees a B matrix struct from memory
+ * readGraphB - reads the graph into a initial B matrix
+ * allocateB - allocates a B struct
 */
 
 /**
@@ -25,7 +44,12 @@ void randomizeVec(double *vec, int groupSize) {
     }
 }
 
-/** gets to vectors and returns the sum of the vector with b0*shifting (shifting is the value from matrix shifting)*/
+/** gets two vectors and returns the sum of the vector with b0*shifting
+ * @param vec : vec1 (and the result)
+ * @param b0 : vec 2
+ * @param shifting : the value from matrix shifting)
+ * @param n : the group size
+ * */
 void vecSum(double *vec, const double *b0, double shifting, int n) {
     int i;
     for (i = 0; i < n; ++i) {
@@ -34,7 +58,12 @@ void vecSum(double *vec, const double *b0, double shifting, int n) {
     }
 }
 
-/**multiplies a scalar value with a vector*/
+/**multiplies a scalar value with a vector
+ * @param vec : the vector
+ * @param x : the scalar
+ * @param n : the group size
+ * @return vec*x
+ * */
 void scalarMult(double *vec, double x, int n) {
     int i;
     for (i = 0; i < n; ++i) {
@@ -42,7 +71,7 @@ void scalarMult(double *vec, double x, int n) {
     }
 }
 
-/**calculates the dot product of integer vector with double vector*/
+/**calculates the dot product of integer vector with double vector (size n) */
 double dotProd(const int *vec1, const double *vec2, int n) {
     register double res;
     int i;
@@ -53,7 +82,7 @@ double dotProd(const int *vec1, const double *vec2, int n) {
     return res;
 }
 
-/**calculates the dot product of two double vectors*/
+/**calculates the dot product of two double vectors (size n)*/
 double dotDoubleProd(const double *vec1, const double *vec2, int n) {
     register double res = 0;
     int i;
@@ -63,14 +92,21 @@ double dotDoubleProd(const double *vec1, const double *vec2, int n) {
     return res;
 }
 
-/**normalizes a vector*/
+/**normalizes a vector (group size n)*/
 void normalize(double *vec, int groupSize) {
     double res = dotDoubleProd(vec, vec, groupSize);
     res = sqrt(res);
     scalarMult(vec, 1 / res, groupSize);
 }
 
-/**the calculation of multiplying B matrix with a vector v by spliting B : to A (sparse matrix) and KiKj matrix (rank matrix)*/
+/**the calculation of multiplying B matrix with a vector v by spliting B :
+ * to A (sparse matrix) and KiKj matrix (rank matrix)
+ * @param vec1 : the multiplication vector
+ * @param sp : the sparse matrix
+ * @param n : the size of the group to be multiplied
+ * @param dotM : the dot product
+ * @return the result is saved in vec1
+ */
 void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
     int i, *k = sp->k;
     for (i = 0; i < n; ++i) {
@@ -84,8 +120,7 @@ void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
  * @param sp : the sparse matrix
  * @param vec : the vector to be multiplied by
  * @param res : the vector result of the multiplication
- * @param groupSize : the number of values inserted, inserted into the first indexes
- * @return : the time taken to finish the method
+ * @return : 1 on success
  */
 double multBv(spmat *sp, double *vec, double *res) {
     double dot;
@@ -127,13 +162,11 @@ void vecDecFv(double *res, double *vecF, double *v, int n) {
 
 /**
  * multiplies a vector and the modularity matrix B-roof, of a specific subgroup
- * @return
  * @param sp : the sparse matrix
  * @param vec : the vector to be multiplied by
  * @param res : the vector result of the multiplication
- * @param groupSize : the number of values inserted, inserted into the first indexes
  * @param vecF : an array containing the sum of values for each column
- * @return : the time taken to finish the method
+ * @return returns 1 on success
  */
 double
 multBRoof(spmat *sp, double *vec, double *res, double *vecF) {
@@ -144,15 +177,12 @@ multBRoof(spmat *sp, double *vec, double *res, double *vecF) {
     return total;
 }
 
-
 /**
  * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector
- * @param sp : sparse matrix
+ * @param B : the B matrix
  * @param b0  : initial random vector
- * @param shifting  : shifting value to shift the matrix & find max positive eigenvalue
  * @param result : the vector result of the power iteration
- * @param groupSize : the number of values inserted, inserted into the first indexes
- * @param vecF : an array containing the sum of values for each column
+ * @return the power iteration result into the result vector
  */
 void powerIter(BMat *B, double *b0, double *result) {
     int flag = 1, i;
@@ -181,10 +211,9 @@ void powerIter(BMat *B, double *b0, double *result) {
 
 /**
  * Calculates the eigenvalue of a vector
- * @param sp : sparse matrix
+ * @param B : B matrix
  * @param vec : the eigenvector
- * @param groupSize : the number of values inserted, inserted into the first indexes
- * @param vecF : an array containing the sum of values for each column
+ * @param tmp : a temporary vector to assist calculation
  * @return : the eigenvalue
  */
 double eigenValue(BMat *B, double *vec, double *tmp) {
@@ -201,7 +230,7 @@ double eigenValue(BMat *B, double *vec, double *tmp) {
  * calculates the modularity of a division vector for a subgroup
  * @param sp : sparse matrix
  * @param vec : the eigenvector
- * @param groupSize : the number of values inserted, inserted into the first indexes
+ * @param tmp : a temporary vector to assist calculation
  * @param vecF : an array containing the sum of values for each column
  * @return the modularity of the division
  */
@@ -212,11 +241,18 @@ double modularityCalc(spmat *sp, double *vec, double *tmp, double *vecF) {
     res = dotDoubleProd(tmp, vec, groupSize);
     return res / 2;
 }
-
+/**
+ * frees the B matrix allocated memory
+ * @param B matrix
+ */
 void freeB(BMat *B) {
     B->sp->free(B->sp);
 }
 
+/**
+ * allocates a new B matrix
+ * @return a pointer to the matrix
+ */
 BMat *allocateB() {
     BMat *B = malloc(sizeof(BMat));
     if (B == NULL) {
@@ -227,6 +263,11 @@ BMat *allocateB() {
     return B;
 }
 
+/**
+ * reads into a initial B struct the input graph from the binary file
+ * @param input : the input file pointer
+ * @return a pointer to the bmat struct
+ */
 BMat *readGraphB(FILE *input) {
     spmat *sp;
     BMat *B = allocateB();

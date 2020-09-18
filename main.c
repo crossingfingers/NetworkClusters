@@ -7,7 +7,11 @@
 @file main.c
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
-## This is the main file, reads the program input, runs the algorithms, and saves the ouput
+ * main.c Summary:
+ * This is the main file, reads the program input, runs the algorithms,
+ * and saves the output to the specified directory.
+ * if the specified path is incorrect or not found, an error will be given.
+
 */
 
 
@@ -33,9 +37,8 @@ int main(int argc, char **argv) {
     start = clock();
     graphs = readGraph(input);
 
-    /* Allocates group division struct, runs findGroup Algorithm*/
+    /* Allocates group division struct, runs findGroup Algorithm */
     div = allocateDivision(graphs->n);
-
     div->findGroups(div, graphs);
 
     /*Writes division to binary file */

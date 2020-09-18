@@ -7,13 +7,45 @@
 @file spmat.c
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
-## This is the Sparse matrix C file, maintains the sparse matrix and networks structures with methods
+**Summary:
+ * This is the Sparse matrix C file, maintains the sparse matrix struct,  inner array implementation, and the errors which can be met during runtime.
+ * Functions:
+ * error - function that activates a runtime error
+ * initk - initializes an array to store vertice ranks (with zero values)
+ * add_row_array - adds a row of values to the sparse matrix array
+ * hasNextARowArray - part of the row iterator, checks if theres a next value in the row
+ * getARowIteratorArray - iterates on row values
+ * mult_array - multiplication of a vector with the sparse matrix
+ * free_array - frees all sparse matrix allocated memory
+ * arrayShifting - calculates matrix shifting value
+ * spmat_allocate_array - allocates an sparse matrix array struct
+ * find_nnz - finds the non zero values in a file input
+ * readArray - reads an graph from a file into a sparse matrix array
+ * getNewNnz - gets the non zero values of the sparse matrix after a split of a group into two
+ * splitArray - splits a sparse matrix array into two small ones (based on modularity split)
+ * splitGraphArray - creates to new sparse matrix struct during group split
+ * readGraphA - reads an graph from a file into a sparse matrix array
 */
 
-
+/**
+ * definition of CSR array to maintain the sparse matrices,
+ * this is an inner implementation of the spmat struct declared in the header file
+ * @param colind : pointer to an array containing column indexes of non zero values in sparse matrix
+ * @param rowptr : pointer to an array containing row pointers in sparse matrix
+ * @param lastindex : used to add values to array when reading graph from input
+ * @param lastRowPtr : used to add values to array when reading graph from input
+ * @param nnz : the number of non zero values in the sparse matrix
+ */
+typedef struct _array {
+    int *colind;
+    int *rowptr;
+    int lastindex;
+    int lastRowPtr;
+    int nnz;
+} array;
 
 /**
- * Method that recieves a type of error, and prints the error event
+ * Method that receives a type of error, and prints the error event
  * @param errorCode : the type of error
  */
 void error(int errorCode) {
@@ -57,22 +89,6 @@ void initk(spmat *A) {
 }
 
 /**
- * definition of CSR array to maintain the sparse matrices
- * @param colind : pointer to an array containing column indexes of non zero values in sparse matrix
- * @param rowptr : pointer to an array containing row pointers in sparse matrix
- * @param lastindex : used to add values to array when reading graph from input
- * @param lastRowPtr : used to add values to array when reading graph from input
- * @param nnz : the number of non zero values in the sparse matrix
- */
-typedef struct _array {
-    int *colind;
-    int *rowptr;
-    int lastindex;
-    int lastRowPtr;
-    int nnz;
-} array;
-
-/**
  * Adds a row to the sparse matrix
  * @param A : the sparse matrix
  * @param row :the row to be added
@@ -97,7 +113,7 @@ void add_row_array(struct _spmat *A, int *row, int i, int k) {
 }
 
 /**
- * Part of iterator, checks if theres a next value in a specific row
+ * Part of a row value iterator, checks if there's a next value in a specific row
  * @param A : The sparse matrix to iterate upon
  * @param i : the row to check
  * @param ptr : the pointer to the current column value
@@ -152,8 +168,8 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, int g
 }
 
 /**
- * Frees the sparse matrix array
- * @param A : the sparse matrix
+ * Frees the allocated sparse matrix, including inner array implementation
+ * @param A : the sparse matrix to be freed
  */
 void free_array(struct _spmat *A) {
     array *sparray = (array *) A->private;
@@ -163,7 +179,6 @@ void free_array(struct _spmat *A) {
     free(A->private);
 }
 
-
 /**calculates matrix shifting value to get positive eigen values
  * @param A : the sparse matrix of the current subgroup
  * @param group : the current subgroup
@@ -171,8 +186,8 @@ void free_array(struct _spmat *A) {
  * */
 double arrayShifting(spmat *A, int groupSize, const double *F) {
     double max = 0;
-    double sum;
-    int val;
+    register double sum;
+    register int val;
     array *sparray = A->private;
     int *rowPtr = sparray->rowptr;
     int *cols;
@@ -182,7 +197,7 @@ double arrayShifting(spmat *A, int groupSize, const double *F) {
     int j;
     int ki;
     int kj;
-    int M = A->M;
+    register int M = A->M;
     int vertice1;
     double Fi;
 
@@ -215,17 +230,14 @@ double arrayShifting(spmat *A, int groupSize, const double *F) {
     return max;
 }
 
-
 /**
- * once a division is found, the function splits the sparse matrix into two sparse matrix, each representing a subgroup
- * @param graphs : an array containing all the graph sparse matrices (of subgroups)
- * @param groupIdx : the current group index
- * @param newGroupIdx : the new sparse matrix, if a split is made into 2 subgroups
+ * the function splits the sparse matrix into two sparse matrix, once a division is found, each representing a subgroup
+ * @param currSp : the current sparse matrix to be split
  * @param s : the division vector
  * @param group : the original vertex group
- * @param groupSize : the original vertex group size
  * @param g1Size : group 1's size
  * @param g2Size : group 2's size
+ * @return an array with two pointers-> one to each new sparse matrix (after split into two different matrices)
  */
 spmat **splitGraphArray(spmat *currSp, double *s, int *group, int g1Size, int g2Size);
 
@@ -291,7 +303,6 @@ int find_nnz(FILE *input) {
     return res / 4;
 }
 
-
 /**
  * Reads the initial graph from a file input
  * @param input : the input file
@@ -337,8 +348,8 @@ spmat *readArray(FILE *input) {
 }
 
 /**
- * Once a division is found, this function is used to count the non zero values in the original sparse matrix, belonging to the divided subgroup
- * this method is used when spliting a sparse matrix, then allocating a correct new sparse matrix with the found size
+ *  this function is used to count the non zero values in the original sparse matrix, belonging to the divided subgroup,Once a division is found.
+ * this method is used when splitting a sparse matrix, then allocating a correct new sparse matrix with the found size
  * @param sp : the original sparse matrix
  * @param s  : the division vector
  * @param group : the original group
@@ -386,7 +397,7 @@ void getNewNnz(spmat *sp, const double *s, int *group, int groupSize, int *newNn
 }
 
 /**
- * A method to copy values from a group into two subgroups, based on a division vector input
+ * this function copies the values of a sparse matrix belonging to a group into two subgroups (2 arrays), based on a division vector input
  * @param currSp : the original Sparse matrix array
  * @param g1Sp : the new sparse matrix for group 1
  * @param g2Sp : the new sparse matrix for group 2
@@ -458,17 +469,14 @@ void splitArray(spmat *currSp, spmat *g1Sp, spmat *g2Sp, double *s, int *group, 
     }
 }
 
-
 /**
- * once a division is found, the function splits the sparse matrix into two sparse matrix, each representing a subgroup
- * @param graphs : an array containing all the graph sparse matrices (of subgroups)
- * @param groupIdx : the current group index
- * @param newGroupIdx : the new sparse matrix, if a split is made into 2 subgroups
+ * the function splits the sparse matrix into two sparse matrix, once a division is found, each representing a subgroup
+ * @param currSp : the current sparse matrix to be split
  * @param s : the division vector
  * @param group : the original vertex group
- * @param groupSize : the original vertex group size
  * @param g1Size : group 1's size
  * @param g2Size : group 2's size
+ * @return an array with two pointers-> one to each new sparse matrix (after split into two different matrices)
  */
 spmat **splitGraphArray(spmat *currSp, double *s, int *group, int g1Size, int g2Size) {
     int groupSize = g1Size + g2Size;
@@ -492,7 +500,12 @@ spmat **splitGraphArray(spmat *currSp, double *s, int *group, int g1Size, int g2
     newSpMats[1] = g2Sp;
     return newSpMats;
 }
-
+//TODO why do we need this?
+/**
+ * when called, reads the array from a file into a sparse matrix
+ * @param input : a pointer to the input binary file
+ * @return a pointer to the new sparse matrix
+ */
 spmat *readGraphA(FILE *input) {
     return readArray(input);
 }
