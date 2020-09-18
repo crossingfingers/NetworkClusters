@@ -233,7 +233,7 @@ double split(struct _division *d, BMat *B, networks *graphs, double *vec, int gr
     /*initiates 2 to subgroups*/
     double delta;
     spmat *sp = B->sp;
-    double *vecF = B->vecF;
+    double *vecF = B->vecF, eigen;
     int newGroupIdx = -1;
     int i;
     int size = d->nodesforGroup[groupIdx];
@@ -242,9 +242,15 @@ double split(struct _division *d, BMat *B, networks *graphs, double *vec, int gr
     int *tempGroup;
     int *g1Ptr, *g2Ptr;
     int counter = 0;
-    createSVector(vec, size);
-    /*calls modularity division optimization function*/
 
+    eigen = eigenValue(B, vec, graphs->tmp);
+//    printf("eigen value is %f\n", eigen);
+    if (!IS_POSITIVE(eigen))
+        initOneValVec(vec, size, 1);
+    else
+        createSVector(vec, size);
+
+    /*calls modularity division optimization function*/
     optimize(d, B, vec);
     counter = getNewGroupSize(vec, size);
 
@@ -308,11 +314,6 @@ int divideToTwo(division *div, BMat *B, networks *graphs, int groupIdx, double *
     double end = clock();
 //    printf("PI took %f seconds \n", ((double) (end - start) / CLOCKS_PER_SEC));
     /*calculates eigen value of the division vector found*/
-    eigen = eigenValue(B, res, graphs->tmp);
-//    printf("eigen value is %f\n", eigen);
-    /*if (!IS_POSITIVE(eigen)) {
-        return 0;
-    }*/
 
     /*calls split function*/
     delta = split(div, B, graphs, res, groupIdx);
@@ -485,9 +486,6 @@ void freeNetworks(networks *graphs, int numOfGroups) {
     BMat **Bmats = graphs->B, *BMat;
     for (i = 0; i < numOfGroups; ++i) {
         BMat = *Bmats++;
-        if (i == 4) {
-            spmat *sp = BMat->sp;
-        }
         BMat->free(BMat);
         free(BMat);
     }
