@@ -34,7 +34,6 @@
  * @param rowptr : pointer to an array containing row pointers in sparse matrix
  * @param lastindex : used to add values to array when reading graph from input
  * @param lastRowPtr : used to add values to array when reading graph from input
- * @param nnz : the number of non zero values in the sparse matrix
  */
 typedef struct _array {
     int *colind;
