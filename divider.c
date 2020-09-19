@@ -50,36 +50,45 @@ void resetUnmoved(int *unmoved, int groupSize) {
  * @param *unmoved : an array that keeps track which vertice hasn't been moved
  * @param k : array containing vertice ranks
  * @param movedFlag : indicates which value is kept in unmoved for unmoved vertices
- * @param maxIdx : a pointer to update the max index found during the function
+ * @param M : sum of vertice ranks
+ * @param kPtr : an array containing all ranks for each vertice
+ * @return the new index which maximize the score
  * */
-void updateScore(BMat *B, double *s, double *score, const int *unmoved, int k, int movedFlag, int *maxIdx) {
-    register int i, groupSize = B->n;
+int updateScore(BMat *B, double *s, double *score, const int *unmoved, int k, int movedFlag, int M, int *kPtr) {
+    register int i,Kk,Aval, groupSize = B->n;
     register double sk = s[k];
     int *Bcol;
     double max = -DBL_MAX;
     int idx = -1;
     Bcol = B->getBIterator(B, k);
+    Kk=*(kPtr+k);
     for (i = 0; i < groupSize; ++i) {
         if (*unmoved++ == movedFlag) {
             score++;
             s++;
-            Bcol = B->getNext(B, k, i, Bcol);
+            kPtr++;
+            if(B->iterHasNext(B, k, i, Bcol) > 0)
+                Bcol++;
             continue;
         }
-        if (k == i)
+        if (k == i) {
             *score = -*score;
+        }
         else {
-            *score -= (4 * *s * sk * B->getBValue(B, k, i, Bcol));
+            Aval = (Bcol != NULL && *Bcol == i) ? 1 : 0;
+            *score -= (4 * *s * sk * (Aval - (double) (Kk * *kPtr) / M));
         }
         if (IS_POSITIVE(*score - max)) {
             max = *score;
             idx = i;
         }
-        Bcol = B->getNext(B, k, i, Bcol);
+        if(B->iterHasNext(B, k, i, Bcol) > 0)
+            Bcol++;
         score++;
         s++;
+        kPtr++;
     }
-    *maxIdx = idx;
+    return idx;
 }
 
 
@@ -164,6 +173,7 @@ void optimize(division *d, BMat *B, double *s, int M) {
     register double *res = d->res;
     register double maxImp, *prevImp = improve, *sMaxIdx;
     register int maxImpIdx;
+    int *k = B->getKPtr(B);
     resetUnmoved(unmoved, groupSize);
 
     /*runs until modularity improvement is not positive*/
@@ -174,7 +184,7 @@ void optimize(division *d, BMat *B, double *s, int M) {
         B->Bv(B, s, res);
 
         /*calculates initial score for all vertices*/
-        maxIdx = initScore(B->getKPtr(B), M, score, res, s, groupSize);
+        maxIdx = initScore(k, M, score, res, s, groupSize);
 
         /*runs until all vertices have been moved once (unmoved array is empty)*/
         for (i = 0; i < groupSize; ++i) {
@@ -198,7 +208,7 @@ void optimize(division *d, BMat *B, double *s, int M) {
 
             /*updates for all vertices modularity score after vertice movement*/
             unmoved[maxIdx] = movedFlag;
-            updateScore(B, s, score, unmoved, maxIdx, movedFlag, &maxIdx);
+            maxIdx = updateScore(B, s, score, unmoved, maxIdx, movedFlag, M, k);
             indices++;
             prevImp = improve;
             improve++;

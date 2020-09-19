@@ -21,8 +21,6 @@ int main(int argc, char **argv) {
     division *div;
     FILE *input;
     FILE *output;
-    double start;
-    double end;
 
     /*Checks if program arguments are OK */
     srand(time(NULL));
@@ -34,7 +32,6 @@ int main(int argc, char **argv) {
     /*Reads input */
     input = fopen(argv[1], "rb");
     output = fopen(argv[2], "wb");
-    start = clock();
     graphs = readGraph(input);
 
     /* Allocates group division struct, runs findGroup Algorithm */
@@ -43,12 +40,9 @@ int main(int argc, char **argv) {
 
     /*Writes division to binary file */
     div->writeDivision(div, output);
-
     /*Frees all allocated data*/
     graphs->free(graphs, div->numOfGroups);
     div->free(div);
-    end = clock();
-    printf("took %f seconds\n", ((double) (end - start) / CLOCKS_PER_SEC));
     free(graphs);
     free(div);
     fclose(input);

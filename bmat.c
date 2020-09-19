@@ -241,7 +241,7 @@ double eigenValue(BMat *B, double *vec, double *tmp) {
  */
 double modularityCalc(BMat *B, double *vec, double *tmp) {
     spmat *sp = B->sp;
-    double res = 0, *vecF = B->vecF;
+    double res, *vecF = B->vecF;
     int groupSize = sp->n;
     multBRoof(sp, vec, tmp, vecF);
     res = dotDoubleProd(tmp, vec, groupSize);
@@ -272,35 +272,16 @@ int *getBIterator(BMat *B, int i){
 }
 
 /**
- * Outer function to be used outside, returns the value B from a B matrix, when iterated upon
- * used mostly for Optimization
- * @param B : B matrix
- * @param i : row index
- * @param j : the moved vertice
- * @param ptr :pointer to row values
- * @return the value of B in indexes i,j
- */
-double getBValue(BMat *B, int i, int j, const int *ptr){
+* iterates upon a row of B matrix
+* @param B : B matrix
+* @param i : row index
+* @param j  : the last index in the row
+* @param ptr : pointer to the current value
+* @return 1 if the iterator should move, 0 o/w
+*/
+int iterHasNext(BMat *B, int i, int j, int *ptr){
     spmat *sp = B->sp;
-    int M = sp->M;
-    int Aval = (ptr != NULL && *ptr == j) ? 1 : 0;
-    return (Aval - (double) (sp->k[i] * sp->k[j]) / M);
-}
-
-/**
- * iterates upon a row of B matrix
- * @param B : B matrix
- * @param i : row index
- * @param j  : the last index in the row
- * @param ptr : pointer to first row value
- * @return the next value in the specific row
- */
-int *getNext(BMat *B, int i, int j, int *ptr){
-    spmat *sp = B->sp;
-    if (ptr != NULL && *ptr <= j && sp->hasNextARow(sp, i, ptr)) {
-        ptr++;
-    }
-    return ptr;
+    return (ptr != NULL && *ptr <= j && sp->hasNextARow(sp, i, ptr));
 }
 
 /**
@@ -372,8 +353,7 @@ BMat *allocateB() {
     B->eigenValue = eigenValue;
     B->powerIter = powerIter;
     B->getBIterator = getBIterator;
-    B->getNext = getNext;
-    B->getBValue = getBValue;
+    B->iterHasNext = iterHasNext;
     B->getKPtr = getKPtr;
     B->updateFields = updateFields;
     B->splitGraphB = splitGraphB;

@@ -71,25 +71,14 @@ typedef struct _bmat {
     int *(*getBIterator)(struct _bmat *B, int i);
 
     /**
- * Outer function to be used outside, returns the value B from a B matrix, when iterated upon
- * used mostly for Optimization
- * @param B : B matrix
- * @param i : row index
- * @param j : the moved vertice
- * @param ptr :pointer to row values
- * @return the value of B in indexes i,j
- */
-    double (*getBValue)(struct _bmat *B, int i, int j, const int *ptr);
-
-    /**
  * iterates upon a row of B matrix
  * @param B : B matrix
  * @param i : row index
  * @param j  : the last index in the row
- * @param ptr : pointer to first row value
- * @return the next value in the specific row
+ * @param ptr : pointer to the current value
+ * @return 1 if the iterator should move, zero o/w
  */
-    int *(*getNext)(struct _bmat *B, int i, int j, int *ptr);
+    int (*iterHasNext)(struct _bmat *B, int i, int j, int *ptr);
 
     /**
  * Outer function, returns pointer to K array (vertice ranks)
