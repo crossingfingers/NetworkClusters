@@ -185,7 +185,7 @@ multBRoof(spmat *sp, double *vec, double *res, double *vecF) {
  * @return the power iteration result into the result vector
  */
 void powerIter(BMat *B, double *b0, double *result) {
-    int flag = 1, i;
+    register int flag = 1, i;
     spmat *sp = B->sp;
     int groupSize = sp->n;
     int counter = 0;

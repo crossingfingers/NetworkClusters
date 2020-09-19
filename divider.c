@@ -77,7 +77,6 @@ void updateScore(spmat *sp, double *s, double *score, const int *unmoved, int k,
         else {
             *score -= (4 * *s * sk * (Aval - (double) (sp->k[i] * sp->k[k]) / M));
         }
-        //if (*score > max) {
 		if (IS_POSITIVE(*score - max)) {
             max = *score;
             idx = i;
@@ -131,7 +130,6 @@ int calcInitialScore(int *k,int M, double *score,double *res, double *s,int grou
     for (i = 0; i < groupSize; ++i) {
         square = *k * *k;
         *score = -2 * ((*s * *res) + ((double) square) / M);
-        //if (*score >= maxScore) {
         if(IS_POSITIVE(*score - *maxScore)){
             *maxScore = *score;
             maxIdx = i;
@@ -300,7 +298,6 @@ double split(struct _division *d, BMat *B, networks *graphs, double *vec, int gr
     int counter = 0;
 
     eigen = eigenValue(B, vec, graphs->tmp);
-//    printf("eigen value is %f\n", eigen);
     if (!IS_POSITIVE(eigen))
         initOneValVec(vec, size, 1);
     else
@@ -321,10 +318,7 @@ double split(struct _division *d, BMat *B, networks *graphs, double *vec, int gr
         d->numOfGroups += 1;
 
         /*splits the sparse matrix into two new matrices*/
-        int start = clock();
         splitGraph(graphs, groupIdx, newGroupIdx, vec, g, size - counter, counter);
-        int end = clock();
-//        printf("split took %f seconds \n", ((double) (end - start) / CLOCKS_PER_SEC));
         groups[newGroupIdx] = malloc(sizeof(int) * counter);
         tempGroup = malloc(sizeof(int) * (size - counter));
         if (groups[newGroupIdx] == NULL || tempGroup == NULL) {
@@ -361,13 +355,10 @@ double split(struct _division *d, BMat *B, networks *graphs, double *vec, int gr
  * @return 1 if split was made, 0 if split with increase in modularity hasn't been found
  */
 int divideToTwo(division *div, BMat *B, networks *graphs, int groupIdx, double *res, double *b0) {
-    double delta, eigen;
+    double delta;
     int groupSize = div->nodesforGroup[groupIdx];
     randomizeVec(b0, groupSize);
-    double start = clock();
     powerIter(B, b0, res);
-    double end = clock();
-//    printf("PI took %f seconds \n", ((double) (end - start) / CLOCKS_PER_SEC));
     /*calculates eigen value of the division vector found*/
 
     /*calls split function*/
@@ -436,7 +427,6 @@ void findGroups(division *div, networks *graphs) {
     double *res;
     double *unitVec;
     double *vecF;
-    double *tmp;
     if (graphs->M == 0) {
         error(ZERODIV);
         exit(EXIT_FAILURE);
@@ -451,11 +441,9 @@ void findGroups(division *div, networks *graphs) {
     }
 
     initOneValVec(unitVec, size, 1);
-    int counter = 0;
     while (groupIdx < div->numOfGroups) {
         delta = 1;
         while (delta == 1) {
-//            printf("counter is %d\n", counter++);
             B = *mats;
             spmat *sp = B->sp;
             multBv(sp, unitVec, vecF);

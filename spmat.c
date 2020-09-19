@@ -149,7 +149,7 @@ void mult_array(const struct _spmat *A, const double *vec, double *result, int g
     array *sparray = (array *) A->private;
     int *rowPtr = sparray->rowptr;
     register int *cols;
-    int i;
+    register int i;
     register int colStart;
     register int colEnd;
     register double res;
