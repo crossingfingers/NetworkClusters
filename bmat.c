@@ -39,7 +39,7 @@
 void randomizeVec(double *vec, int groupSize) {
     int i;
     for (i = 0; i < groupSize; i++) {
-       *vec=i;
+       *vec=rand();
         vec++;
     }
 }

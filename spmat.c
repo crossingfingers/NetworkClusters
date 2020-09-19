@@ -24,7 +24,8 @@
  * getNewNnz - gets the non zero values of the sparse matrix after a split of a group into two
  * splitArray - splits a sparse matrix array into two small ones (based on modularity split)
  * splitGraphArray - creates to new sparse matrix struct during group split
- * readGraphA - reads an graph from a file into a sparse matrix array
+ * readArray - reads a graph into the internal implementation (sparse matrix array)
+ * readGraphA - reads an graph from a file into a sparse matrix 
 */
 
 /**
@@ -304,7 +305,7 @@ int find_nnz(FILE *input) {
 }
 
 /**
- * Reads the initial graph from a file input
+ * Reads the initial graph from a file input into a array inner implementation
  * @param input : the input file
  * @return a pointer to the struct
  */
@@ -500,7 +501,6 @@ spmat **splitGraphArray(spmat *currSp, double *s, int *group, int g1Size, int g2
     newSpMats[1] = g2Sp;
     return newSpMats;
 }
-//TODO why do we need this?
 /**
  * when called, reads the array from a file into a sparse matrix
  * @param input : a pointer to the input binary file
