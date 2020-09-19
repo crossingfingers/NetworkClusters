@@ -29,9 +29,7 @@
  * @function free : frees the struct
  * @function Bv : multiplies BxV
  * @function getBIterator
- * @function getBValue
- * @function getBIterator
- * @function getNext
+ * @function iterHasNext
  * @function getKPtr
  * @function updateFields
  * @function splitGraphB

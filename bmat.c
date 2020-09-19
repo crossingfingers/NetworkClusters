@@ -28,8 +28,7 @@
  * modularityCalc - calculates the group's modularity
  * Bv - Outer function to multiply B matrix with vector v
  * getBIterator - outer function to get row iterator of B matrix values
- * getBValue- gets B matrix value in specific place
- * getNext - checks if theres a next value in the row
+ * iterHasNext - checks if theres a next value in the row
  * getKPtr - returns pointer to K (vertice rank) array of group
  * updateFields - updates B struct fields
  * splitGraphB - splits the B struct into two new B structs (one for each new subgroup)
