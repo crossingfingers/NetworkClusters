@@ -296,7 +296,6 @@ double split(struct _division *d, BMat *B, networks *graphs, double *vec, int gr
     delta = B->modularityCalc(B, vec, graphs->tmp);
     if (!IS_POSITIVE(delta))
         return 0;
-    d->Q += delta;
 
     /*create a new group for the -1 indexes in the +-1 vector*/
     if (counter != 0) {
@@ -439,7 +438,6 @@ void findGroups(division *div, networks *graphs) {
         nodesForGroup++;
         mats++;
     }
-    printf("modularity is %f\n", div->Q);
     free(b0);
     free(res);
     free(vecF);
@@ -467,7 +465,6 @@ division *allocateDivision(int n) {
     d->res = malloc(sizeof(double) * n);
     d->writeDivision = writeDivision;
     d->findGroups = findGroups;
-    d->Q = 0;
     d->groups[0] = malloc(sizeof(int) * n);
     if (d->groups == NULL || d->nodesforGroup == NULL || d->groups[0] == NULL) {
         error(ALLOCERROR);

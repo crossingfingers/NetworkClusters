@@ -9,7 +9,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d72e17c9-b368-45d9-969f-79f941cb0a07" name="Default Changelist" comment="" />
+    <list default="true" id="d72e17c9-b368-45d9-969f-79f941cb0a07" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/bmat.c" beforeDir="false" afterPath="$PROJECT_DIR$/bmat.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/divider.c" beforeDir="false" afterPath="$PROJECT_DIR$/divider.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spmat.c" beforeDir="false" afterPath="$PROJECT_DIR$/spmat.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +62,7 @@
       <workItem from="1600456369356" duration="596000" />
       <workItem from="1600493910105" duration="157000" />
       <workItem from="1600494086983" duration="12000" />
+      <workItem from="1600505658397" duration="682000" />
     </task>
     <servers />
   </component>
@@ -65,13 +70,17 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1600494097582">
+    <state x="422" y="96" key="FileChooserDialogImpl" timestamp="1600505724929">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1600494097582" />
+    <state x="422" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1600505724929" />
     <state x="338" y="165" key="com.intellij.ide.util.TipDialog" timestamp="1600494086739">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="338" y="165" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1600494086739" />
+    <state x="94" y="94" width="1092" height="492" key="git4idea.log.GitShowExternalLogAction" timestamp="1600505744349">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="94" y="94" width="1092" height="492" key="git4idea.log.GitShowExternalLogAction/0.0.1280.680@0.0.1280.680" timestamp="1600505744349" />
   </component>
 </project>

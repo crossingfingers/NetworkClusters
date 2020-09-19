@@ -42,7 +42,6 @@ typedef struct _networks{
  * @param unmoved : an array that keeps track which vertice hasn't been moved
  * @param score : an array keeping the score(modularity) of each vertice in the subgroup
  * @param res : a vector used for calculations
- * @param Q : the modularity of the division
  * */
 typedef struct _division {
     int **groups;
@@ -53,7 +52,6 @@ typedef struct _division {
     double *score;
     double *improve;
     double *res;
-    double Q;
 
     /**frees the division struct*/
     void (*free)(struct _division *d);

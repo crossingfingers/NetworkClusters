@@ -41,7 +41,6 @@ typedef struct _array {
     int *rowptr;
     int lastindex;
     int lastRowPtr;
-    int nnz;
 } array;
 
 /**
@@ -262,7 +261,6 @@ spmat *spmat_allocate_array(int n, int nnz) {
     sparray->lastindex = 0;
     sparray->lastRowPtr = 0;
     sparray->rowptr[0] = 0;
-    sparray->nnz = nnz;
     sp = malloc(sizeof(spmat));
     if (sp == NULL) {
         error(ALLOCERROR);
