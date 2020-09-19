@@ -252,13 +252,14 @@ void createSVector(double *vec, int groupSize) {
 
 /**
  * splits the B matrix designating a group into two
- * @param graphs
- * @param groupIdx
- * @param newGroupIdx
- * @param s
- * @param g
- * @param g1Size
- * @param g2Size
+ * @param graphs : the networks struct
+ * @param groupIdx : the group index to split
+ * @param newGroupIdx : the new group index to insert the new group
+ * @param s : the division vector
+ * @param g : the original group
+ * @param g1Size : new group 1 size
+ * @param g2Size : new group 2 size
+ * @return two new groups, saved in networks struct 'graphs'
  */
 void splitGraph(networks *graphs, int groupIdx, int newGroupIdx, double *s, int *g, int g1Size, int g2Size) {
     BMat **BMats = graphs->B, *currB = BMats[groupIdx], *g2B;
@@ -277,11 +278,10 @@ void splitGraph(networks *graphs, int groupIdx, int newGroupIdx, double *s, int 
  * the designated groups into 2 subgroups
  * Calls Sparse matrix split function to create a new sparse matrix for each subgroup
  * @param d : the division vector
- * @param sp : the Sparse matrix
+ * @param B : the B matrix
  * @param graphs :an array containing all the sparse matrices for each subgroup
  * @param vec : a general vector created for calculations
  * @param groupIdx : the group index that will be split
- * @param vecF : vector containing column sums of the sparse matrix, useful for calculations
  * @return delta : modularity added to the graph after split is called
  */
 double split(struct _division *d, BMat *B, networks *graphs, double *vec, int groupIdx) {
@@ -353,12 +353,11 @@ double split(struct _division *d, BMat *B, networks *graphs, double *vec, int gr
 
 /**Finds an initial group division into two subgroups using power iteration
  * @param div : the division struct storing all the subdivisions
- * @param sp : the sparse matrix of the group to be split
+ * @param B : the B matrix of the group to be split
  * @param graphs : an array containing the group sparse matrices
+ * @param groupIdx : the group index to be split (in the networks struct)
  * @param res : vector result used for calculations
  * @param b0 : initial random vector used for power iteration
- * @param vecF : sum of columns from B matrice
- * @param shifting : shifting value to get max positive eigenvalue
  * @return 1 if split was made, 0 if split with increase in modularity hasn't been found
  */
 int divideToTwo(division *div, BMat *B, networks *graphs, int groupIdx, double *res, double *b0) {
