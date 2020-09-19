@@ -77,7 +77,7 @@ void updateScore(spmat *sp, double *s, double *score, const int *unmoved, int k,
         else {
             *score -= (4 * *s * sk * (Aval - (double) (sp->k[i] * sp->k[k]) / M));
         }
-		if (IS_POSITIVE(*score - max)) {
+        if (IS_POSITIVE(*score - max)) {
             max = *score;
             idx = i;
         }
@@ -123,14 +123,14 @@ double findMaxImprove(double *s, const double *improve, const int *indices, int 
  * @param maxScore : a pointer to the max score found
  * @return updates all scores & saves the index with max modularity found in maxScore
  */
-int calcInitialScore(int *k,int M, double *score,double *res, double *s,int groupSize,double *maxScore)
-{   register int i,square;
-    int maxIdx=-1;
+int calcInitialScore(int *k, int M, double *score, double *res, double *s, int groupSize, double *maxScore) {
+    register int i, square;
+    int maxIdx = -1;
 
     for (i = 0; i < groupSize; ++i) {
         square = *k * *k;
         *score = -2 * ((*s * *res) + ((double) square) / M);
-        if(IS_POSITIVE(*score - *maxScore)){
+        if (IS_POSITIVE(*score - *maxScore)) {
             *maxScore = *score;
             maxIdx = i;
         }
@@ -158,18 +158,22 @@ int calcInitialScore(int *k,int M, double *score,double *res, double *s,int grou
 
  * */
 void optimize(division *d, BMat *B, double *s) {
-    spmat *sp = B->sp;
-    register int i, *k = sp->k, groupSize = sp->n;
+    spmat *sp;
+    register int i, *k, groupSize;
     int maxIdx;
     int movedFlag = 1;
-    double delta,maxScore;
+    double delta, maxScore;
     register int *unmoved = d->unmoved;
     register int *indices = d->indices;
     register double *score = d->score;
     register double *improve = d->improve;
     register double *res = d->res;
     register double maxImp, *prevImp = improve, *sMaxIdx;
-    register int maxImpIdx, M = sp->M;
+    register int maxImpIdx, M;
+    sp = B->sp;
+    M = sp->M;
+    k = sp->k;
+    groupSize = sp->n;
     resetUnmoved(unmoved, groupSize);
 
     /*runs until modularity improvement is not positive*/
@@ -182,7 +186,7 @@ void optimize(division *d, BMat *B, double *s) {
         multBv(sp, s, res);
 
         /*calculates initial score for all vertices*/
-        maxIdx=calcInitialScore(k,M,score,res,s,groupSize,&maxScore);
+        maxIdx = calcInitialScore(k, M, score, res, s, groupSize, &maxScore);
 
         /*runs until all vertices have been moved once (unmoved array is empty)*/
         for (i = 0; i < groupSize; ++i) {
@@ -236,10 +240,10 @@ int getNewGroupSize(const double *s, int groupSize) {
 /** make the leading eigen-vector a +-1 vector*/
 void createSVector(double *vec, int groupSize) {
     int i, flag;
-    flag = IS_POSITIVE(*vec) ? 1: 0;
+    flag = IS_POSITIVE(*vec) ? 1 : 0;
     *vec = 1;
-    vec ++;
-    for(i = 1; i<groupSize; ++i){
+    vec++;
+    for (i = 1; i < groupSize; ++i) {
         if (IS_POSITIVE(*vec) != flag)
             *vec = -1;
         else
@@ -427,6 +431,7 @@ void findGroups(division *div, networks *graphs) {
     double *res;
     double *unitVec;
     double *vecF;
+    spmat *sp;
     if (graphs->M == 0) {
         error(ZERODIV);
         exit(EXIT_FAILURE);
@@ -445,10 +450,10 @@ void findGroups(division *div, networks *graphs) {
         delta = 1;
         while (delta == 1) {
             B = *mats;
-            spmat *sp = B->sp;
+            sp = B->sp;
             multBv(sp, unitVec, vecF);
-            if(shifting == -1)
-                shifting = sp->matShifting(sp,  div->nodesforGroup[groupIdx], vecF);
+            if (shifting == -1)
+                shifting = sp->matShifting(sp, div->nodesforGroup[groupIdx], vecF);
             B->shifting = shifting;
             B->vecF = vecF;
             delta = divideToTwo(div, B, graphs, groupIdx, res, b0);
@@ -533,7 +538,7 @@ networks *allocateNetworks(int n) {
     }
     graphs->n = n;
     graphs->B = malloc(sizeof(BMat *) * n);
-    graphs->tmp=malloc(sizeof(double)*n);
+    graphs->tmp = malloc(sizeof(double) * n);
     if (graphs->B == NULL || graphs->tmp == NULL) {
         error(ALLOCERROR);
         exit(EXIT_FAILURE);

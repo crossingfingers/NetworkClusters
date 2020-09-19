@@ -247,6 +247,7 @@ double modularityCalc(spmat *sp, double *vec, double *tmp, double *vecF) {
  */
 void freeB(BMat *B) {
     B->sp->free(B->sp);
+    free(B->sp);
 }
 
 /**
