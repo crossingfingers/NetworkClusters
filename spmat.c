@@ -25,7 +25,7 @@
  * splitArray - splits a sparse matrix array into two small ones (based on modularity split)
  * splitGraphArray - creates to new sparse matrix struct during group split
  * readArray - reads a graph into the internal implementation (sparse matrix array)
- * readGraphA - reads an graph from a file into a sparse matrix 
+ * readGraphA - reads an graph from a file into a sparse matrix
 */
 
 /**
@@ -312,7 +312,7 @@ int find_nnz(FILE *input) {
 spmat *readArray(FILE *input) {
     spmat *graph;
     int i, size, elem, *row;
-    unsigned int n;
+    int n;
     int nnz;
     if (input == NULL) {
         error(FILECORR);
