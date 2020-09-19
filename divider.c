@@ -122,7 +122,7 @@ double findMaxImprove(double *s, const double *improve, const int *indices, int 
  * @param s : the division vector
  * @param groupSize : size of the subgroup to be split
  * @param maxScore : a pointer to the max score found
- * @return
+ * @return updates all scores & saves the index with max modularity found in maxScore
  */
 int calcInitialScore(int *k,int M, double *score,double *res, double *s,int groupSize,double *maxScore)
 {   register int i,square;
@@ -150,13 +150,14 @@ int calcInitialScore(int *k,int M, double *score,double *res, double *s,int grou
  * We revert to the division that gives max modularity
  * if there was an improvement in modularity, we run the algorithm again
  * we stop when there is no improvement possible (max modularity is not positive)
- * @param d : the division struct containing all elements needed for the function
+ * @param d : the division struct containing all elements needed for the function containing:
+ *  * @param improve : an array keeping the improvement in modularity after each vertice movement
+ *  * @param indices : an array that keeps the order of vertices moved, during the optimization
+ *  * @param unmoved : an array that keeps track which vertice hasn't been moved
+ *  * @param score : an array keeping the score(modularity) of each vertice in the subgroup
+ *  * @param res : a vector used for calculations
  * @param s : the division vector
- * @param improve : an array keeping the improvement in modularity after each vertice movement
- * @param indices : an array that keeps the order of vertices moved, during the optimization
- * @param unmoved : an array that keeps track which vertice hasn't been moved
- * @param score : an array keeping the score(modularity) of each vertice in the subgroup
- * @param res : a vector used for calculations
+
  * */
 void optimize(division *d, BMat *B, double *s) {
     spmat *sp = B->sp;
@@ -170,7 +171,7 @@ void optimize(division *d, BMat *B, double *s) {
     register double *improve = d->improve;
     register double *res = d->res;
     register double maxImp, *prevImp = improve, *sMaxIdx;
-    register int maxImpIdx,square, M = sp->M;
+    register int maxImpIdx, M = sp->M;
     resetUnmoved(unmoved, groupSize);
 
     /*runs until modularity improvement is not positive*/
@@ -249,6 +250,16 @@ void createSVector(double *vec, int groupSize) {
     }
 }
 
+/**
+ * splits the B matrix designating a group into two
+ * @param graphs
+ * @param groupIdx
+ * @param newGroupIdx
+ * @param s
+ * @param g
+ * @param g1Size
+ * @param g2Size
+ */
 void splitGraph(networks *graphs, int groupIdx, int newGroupIdx, double *s, int *g, int g1Size, int g2Size) {
     BMat **BMats = graphs->B, *currB = BMats[groupIdx], *g2B;
     spmat **spMats, *currSp = currB->sp;
