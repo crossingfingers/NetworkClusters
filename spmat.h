@@ -62,7 +62,7 @@ typedef struct _spmat {
      * **/
     void (*mult)(const struct _spmat *A, const double *vec, double *result);
 
-    /**calculates matrix shifting value to get positive eigen values*/
+    /**calculates matrix shifting value to get positive eigen values, returns the value*/
     double (*matShifting)(struct _spmat *A, const double *F);
 
     /**method to split sparse matrix into two subgroups (each sparse matrix contains only vertices in subgroup)*/

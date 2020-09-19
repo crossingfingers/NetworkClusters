@@ -43,6 +43,7 @@ void resetUnmoved(int *unmoved, int groupSize) {
 }
 
 /**calculates the difference in modularity if a certain vertice is moved
+ *  updates all vertice scores after a vertice movement, and saves the max index in maxIdx
  * @param B : the B matrix
  * @param s : the division vector
  * @param score : an array keeping the score(modularity) of each vertice in the subgroup
@@ -50,7 +51,6 @@ void resetUnmoved(int *unmoved, int groupSize) {
  * @param k : array containing vertice ranks
  * @param movedFlag : indicates which value is kept in unmoved for unmoved vertices
  * @param maxIdx : a pointer to update the max index found during the function
- * @return : updates all vertice scores after a vertice movement, and saves the max index in maxIdx
  * */
 void updateScore(BMat *B, double *s, double *score, const int *unmoved, int k, int movedFlag, int *maxIdx) {
     register int i, groupSize = B->n;
@@ -114,7 +114,7 @@ double findMaxImprove(double *s, const double *improve, const int *indices, int 
  * @param s : the division vector
  * @param groupSize : size of the subgroup to be split
  * @param maxScore : a pointer to the max score found
- * @return updates all scores & saves the index with max modularity found in maxScore
+ * @return updates all scores & returns the index with max modularity found in maxScore
  */
 int initScore(int *k, int M, double *score, double *res, double *s, int groupSize) {
     register int i, square;
@@ -141,6 +141,7 @@ int initScore(int *k, int M, double *score, double *res, double *s, int groupSiz
  * We revert to the division that gives max modularity
  * if there was an improvement in modularity, we run the algorithm again
  * we stop when there is no improvement possible (max modularity is not positive)
+ * the vector s (group division) will be updated with the optimized split
  *@param B : the B matrix
  * @param d : the division struct containing all elements needed for the function containing:
  *  * @param improve : an array keeping the improvement in modularity after each vertice movement
@@ -150,7 +151,6 @@ int initScore(int *k, int M, double *score, double *res, double *s, int groupSiz
  *  * @param res : a vector used for calculations
  * @param s : the division vector
  * @param M : sum of vertice ranks
- @return the vector s (group division), optimized
  * */
 void optimize(division *d, BMat *B, double *s, int M) {
     register int i, groupSize = B->n;
@@ -241,7 +241,7 @@ void createSVector(double *vec, int groupSize) {
 }
 
 /**
- * splits the B matrix designating a group into two
+ * splits the B matrix designating a group into two new groups, saved in networks struct 'graphs'
  * @param graphs : the networks struct
  * @param groupIdx : the group index to split
  * @param newGroupIdx : the new group index to insert the new group
@@ -249,7 +249,6 @@ void createSVector(double *vec, int groupSize) {
  * @param g : the original group
  * @param g1Size : new group 1 size
  * @param g2Size : new group 2 size
- * @return two new groups, saved in networks struct 'graphs'
  */
 void splitGraph(networks *graphs, int groupIdx, int newGroupIdx, double *s, int *g, int g1Size, int g2Size) {
     BMat **BMats = graphs->B, *currB = BMats[groupIdx], *g2B;
@@ -396,11 +395,10 @@ void writeDivision(struct _division *div, FILE *output) {
 
 /**
  * The main iterative method to find subgroups the the graph
- * called upon to split group into 2
+ * called upon to split group into 2, updates the struct division with the subgroups which give max modularity
  * runs until the modularity isn't increased
  * @param div : the division struct storing all groups
  * @param graphs : a struct containing all sparse matrices of the graphs
- * @return updates the struct division with the subgroups which give max modularity
  */
 void findGroups(division *div, networks *graphs) {
     double delta;

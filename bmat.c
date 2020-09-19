@@ -65,11 +65,10 @@ void vecSum(double *vec, const double *b0, double shifting, int n) {
     }
 }
 
-/**multiplies a scalar value with a vector
+/**multiplies a scalar value with a vector, updates the vector values received
  * @param vec : the vector
  * @param x : the scalar
  * @param n : the group size
- * @return vec*x
  * */
 void scalarMult(double *vec, double x, int n) {
     int i;
@@ -78,7 +77,7 @@ void scalarMult(double *vec, double x, int n) {
     }
 }
 
-/**calculates the dot product of integer vector with double vector (size n) */
+/**calculates the dot product of integer vector with double vector (size n), returns the dot product */
 double dotProd(const int *vec1, const double *vec2, int n) {
     register double res;
     int i;
@@ -89,7 +88,7 @@ double dotProd(const int *vec1, const double *vec2, int n) {
     return res;
 }
 
-/**calculates the dot product of two double vectors (size n)*/
+/**calculates the dot product of two double vectors (size n), returns the dot product*/
 double dotDoubleProd(const double *vec1, const double *vec2, int n) {
     register double res = 0;
     int i;
@@ -107,12 +106,11 @@ void normalize(double *vec, int groupSize) {
 }
 
 /**function used for the calculation of multiplying B matrix with a vector v by spliting B :
- * to A (sparse matrix) and KiKj matrix (rank matrix)
+ * to A (sparse matrix) and KiKj matrix (rank matrix), the result is saved in vec1
  * @param vec1 : the multiplication vector
  * @param sp : the sparse matrix
  * @param n : the size of the group to be multiplied
  * @param dotM : the dot product
- * @return the result is saved in vec1
  */
 void vecDecK(double *vec1, spmat *sp, int n, double dotM) {
     int i, *k = sp->k;
@@ -185,11 +183,11 @@ multBRoof(spmat *sp, double *vec, double *res, double *vecF) {
 }
 
 /**
- * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector
+ * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector,
+ * saves the power iteration result into the result vector
  * @param B : the B matrix
  * @param b0  : initial random vector
  * @param result : the vector result of the power iteration
- * @return the power iteration result into the result vector
  */
 void powerIter(BMat *B, double *b0, double *result) {
     register int flag = 1, i;

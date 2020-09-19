@@ -99,10 +99,9 @@ typedef struct _bmat {
     int *(*getKPtr)(struct _bmat *B);
 
     /**
- * updates B struct fields
+ * updates B struct fields (with vector F and shifting value)
  * @param B : B matrix
  * @param vecF : vector F (sum of columns)
- * @return updated B struct (with vector F and shifting value)
  */
     void (*updateFields)(struct _bmat *B, double *vecF);
 
