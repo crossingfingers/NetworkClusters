@@ -23,12 +23,12 @@
  * initOneValVec - initializes a vector, all values are equal to the value input of the function
  * vecDecFv - Decreases the vector F (sum of colums) from the vector result of Bv
  * multBRoof - multiplies a vector v with the B^ matrix (B roof matrix of a subgroup)
- * powerIter - power iteration algorithm
+ * powerIter - power iteration algorithm (has a max iteration counter limit)
  * eigenValue - calculates the eigenvalue
  * modularityCalc - calculates the group's modularity
  * Bv - Outer function to multiply B matrix with vector v
  * getBIterator - outer function to get row iterator of B matrix values
- * iterHasNext - checks if theres a next value in the row
+ * iterHasNext - checks if theres a next value in the row iterator
  * getKPtr - returns pointer to K (vertice rank) array of group
  * updateFields - updates B struct fields
  * splitGraphB - splits the B struct into two new B structs (one for each new subgroup)
@@ -184,6 +184,7 @@ multBRoof(spmat *sp, double *vec, double *res, double *vecF) {
 /**
  * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector,
  * saves the power iteration result into the result vector
+ * This methood has a maximum iteration upper limit ( 5000*groupSize+80,000), when met an error will be given.
  * @param B : the B matrix
  * @param b0  : initial random vector
  * @param result : the vector result of the power iteration

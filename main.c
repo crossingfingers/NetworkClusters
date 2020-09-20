@@ -10,8 +10,10 @@
  * main.c Summary:
  * This is the main file, reads the program input, runs the algorithms,
  * and saves the output to the specified directory.
- * if the specified path is incorrect or not found, an error will be given.
-
+ * if the specified path is incorrect or not found, an error will be given,
+ * if the input is corrupt or incorrect, and error will be given,
+ * if the input graph has zero edges, an error will be given
+ * if there is an unsuccessful memory allocation during the program run, an error will be given.
 */
 
 

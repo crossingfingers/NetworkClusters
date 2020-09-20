@@ -8,7 +8,7 @@
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
 *Summary:
- * This is the Divider C file, mantains all main methods to find the graph subgroups, and contains two structs 'Networks' & 'Division'
+ * This is the Divider C file, maintains all main methods to find the graph subgroups, and contains two structs 'Networks' & 'Division'
  * 'Networks' - > a struct containing an array of B matrices
  * 'Division' -> a struct containing all data to find the communities in the input graph, including all subgroups found
  * Functions:
@@ -47,7 +47,7 @@ void resetUnmoved(int *unmoved, int groupSize) {
  * @param B : the B matrix
  * @param s : the division vector
  * @param score : an array keeping the score(modularity) of each vertice in the subgroup
- * @param *unmoved : an array that keeps track which vertice hasn't been moved
+ * @param unmoved : an array that keeps track which vertice hasn't been moved
  * @param k : array containing vertice ranks
  * @param movedFlag : indicates which value is kept in unmoved for unmoved vertices
  * @param M : sum of vertice ranks
@@ -151,8 +151,8 @@ int initScore(int *k, int M, double *score, double *res, double *s, int groupSiz
  * if there was an improvement in modularity, we run the algorithm again
  * we stop when there is no improvement possible (max modularity is not positive)
  * the vector s (group division) will be updated with the optimized split
- *@param B : the B matrix
- * @param d : the division struct containing all elements needed for the function containing:
+ *  @param B : the B matrix
+ *  @param d : the division struct containing all elements needed for the function containing:
  *  * @param improve : an array keeping the improvement in modularity after each vertice movement
  *  * @param indices : an array that keeps the order of vertices moved, during the optimization
  *  * @param unmoved : an array that keeps track which vertice hasn't been moved

@@ -25,17 +25,19 @@
  * The B struct
  * @param sp : a pointer to the Sparse matrix associated with the B matrix
  * @param vecF : a vector containing the sum of colums for each row in the matrix
+ * @param n : the size of the subgroup associated with B
+ * @param M : the sum of all graph vertice ranks
  * @param shifting : the shifting value, we shift the matrix with this value to get positive eigenvalues
  * @function free : frees the struct
  * @function Bv : multiplies BxV
- * @function getBIterator
- * @function iterHasNext
- * @function getKPtr
- * @function updateFields
- * @function splitGraphB
- * @function powerIter
- * @function eigenValue
- * @function modularityCalc
+ * @function getBIterator - gets an iterator that iterates upon a specific row
+ * @function iterHasNext - checks if the iterator can get a next value
+ * @function getKPtr - returns a pointer to the K array (vertice rank to index)
+ * @function updateFields - updates B struct fields
+ * @function splitGraphB - splits a B struct into two subgroups, two new B matrices (after a split is found)
+ * @function powerIter - Power Iteration function, to find leading eigenvector (function has an upper iteration limit)
+ * @function eigenValue - function to calculate eigenvalue
+ * @function modularityCalc - function to calculate matrix modularity
  */
 typedef struct _bmat {
     spmat *sp;
@@ -46,7 +48,7 @@ typedef struct _bmat {
 
 
     /**
-     * frees the B matrix allocated memory
+    * frees the B matrix allocated memory
     * @param B matrix
     */
     void (*free)(struct _bmat *B);
@@ -60,75 +62,76 @@ typedef struct _bmat {
     void (*Bv)(struct _bmat *B, double *vec, double *res);
 
     /**
- * Outer function to be used outside of Bmat module,
- * returns an iterator to iterate upon row values of a B matrix
- * @param B : B matrix
- * @param i : row index
- * @return  : pointer to first row value
- */
+    * Outer function to be used outside of Bmat module,
+    * returns an iterator to iterate upon row values of a B matrix
+    * @param B : B matrix
+    * @param i : row index
+    * @return  : pointer to first row value
+    */
     int *(*getBIterator)(struct _bmat *B, int i);
 
     /**
- * iterates upon a row of B matrix
- * @param B : B matrix
- * @param i : row index
- * @param j  : the last index in the row
- * @param ptr : pointer to the current value
- * @return 1 if the iterator should move, zero o/w
- */
+    * iterates upon a row of B matrix
+    * @param B : B matrix
+    * @param i : row index
+    * @param j  : the last index in the row
+    * @param ptr : pointer to the current value
+    * @return 1 if the iterator should move, zero o/w
+    */
     int (*iterHasNext)(struct _bmat *B, int i, int j, int *ptr);
 
     /**
- * Outer function, returns pointer to K array (vertice ranks)
- * @param B : the B matrix
- * @return pointer to K array
- */
+    * Outer function, returns pointer to K array (vertice ranks)
+    * @param B : the B matrix
+    * @return pointer to K array
+    */
     int *(*getKPtr)(struct _bmat *B);
 
     /**
- * updates B struct fields (with vector F and shifting value)
- * @param B : B matrix
- * @param vecF : vector F (sum of columns)
- */
+    * updates B struct fields (with vector F and shifting value)
+    * @param B : B matrix
+    * @param vecF : vector F (sum of columns)
+    */
     void (*updateFields)(struct _bmat *B, double *vecF);
 
     /**
- * Splits a B struct into two subgroups, including inner implementation of A sparse matrix
- * @param currB :current B struct
- * @param s : division vector
- * @param g : current group
- * @param g1Size : new group 1 size
- * @param g2Size : new group 2 size
- * @return : a pointer to the second group, first group is saved in original pointer
- */
+    * Splits a B struct into two subgroups, including inner implementation of A sparse matrix
+    * @param currB :current B struct
+    * @param s : division vector
+    * @param g : current group
+    * @param g1Size : new group 1 size
+    * @param g2Size : new group 2 size
+    * @return : a pointer to the second group, first group is saved in original pointer
+    */
     struct _bmat *(*splitGraphB)(struct _bmat *B, double *s, int *g, int g1Size, int g2Size);
 
     /**
- * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector
- * @param B : the B matrix
- * @param b0  : initial random vector
- * @param result : the vector result of the power iteration
- * @return the power iteration result into the result vector
- */
+     * Power iteration method, multiplying a random vector with the matrix B, to find max eigenvector.
+     * this method has a maximum iteration counter(5000*size + 80,000), when met an error will be given
+     * @param B : the B matrix
+     * @param b0  : initial random vector
+     * @param result : the vector result of the power iteration
+     * @return the power iteration result into the result vector
+     */
     void (*powerIter)(struct _bmat *B, double *b0, double *result);
 
     /**
- * Calculates the eigenvalue of a vector
- * @param B : B matrix
- * @param vec : the eigenvector
- * @param tmp : a temporary vector to assist calculation
- * @return : the eigenvalue
- */
+     * Calculates the eigenvalue of a vector
+     * @param B : B matrix
+     * @param vec : the eigenvector
+     * @param tmp : a temporary vector to assist calculation
+     * @return : the eigenvalue
+     */
     double (*eigenValue)(struct _bmat *B, double *vec, double *tmp);
 
     /**
- * calculates the modularity of a division vector for a subgroup
- * @param B : B matrix
- * @param vec : the eigenvector
- * @param tmp : a temporary vector to assist calculation
- * @param vecF : an array containing the sum of values for each column
- * @return the modularity of the division
- */
+    * calculates the modularity of a division vector for a subgroup
+    * @param B : B matrix
+    * @param vec : the eigenvector
+    * @param tmp : a temporary vector to assist calculation
+    * @param vecF : an array containing the sum of values for each column
+    * @return the modularity of the division
+     */
     double (*modularityCalc)(struct _bmat *B, double *vec, double *tmp);
 
 } BMat;

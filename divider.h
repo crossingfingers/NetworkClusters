@@ -9,12 +9,16 @@
 **Author:** Ofek Bransky & Gal Cohen
 **Date:**  18.9.2020
 *Summary:
- * This is the Divider header file, mantains all main methods to find the graph subgroups
+ * This is the Divider header file, mantains all main methods to find the graph subgroups.
+ * Our program runs on the initial input, and divides the group into two, then again and again, each division increasing modularity
+ * To keep our program running fast, we have an array containing pointers to struct B matrices (in sparse form),
+ * after each division, we split the B struct as well, for efficiency, keeping two new, smaller B matrix structs in the program.
  * the struct 'networks' maintains an array to gather all data for the B matrices during the algorithm
- * the struct 'Division' maintains all data to find the communities in the input graph
+ * the struct 'Division' maintains all data to find the communities (subgroups) in the input graph
  * the function 'allocateDivision' allocates the division struct
  * the function 'readGraph' reads the input graph into the program, gives an error if there are any problems during read
 */
+
 
 
 /** a struct that contains all the B matrices in the program
